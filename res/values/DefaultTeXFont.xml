@@ -1,0 +1,68 @@
+<?xml version='1.0'?>
+<!--
+  DefaultTeXFont.xml
+  =========================================================================
+  This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+  
+  Copyright (C) 2004-2007 Universiteit Gent
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+  
+-->
+
+<resources>
+  <string name ="jlm_msbm10">jlm_msbm10.ttf</string>
+  <string name ="jlm_cmex10">jlm_cmex10.ttf</string>
+  <string name ="jlm_cmmi10">jlm_cmmi10.ttf</string>
+  <string name ="jlm_cmmib10">jlm_cmmib10.ttf</string>
+  <string name ="jlm_moustache">jlm_moustache.ttf</string>
+  <string name ="jlm_cmmi10_unchanged">jlm_cmmi10_unchanged.ttf</string>
+  <string name ="jlm_cmmib10_unchanged">jlm_cmmib10_unchanged.ttf</string>
+  <string name ="jlm_stmary10">jlm_stmary10.ttf</string>
+  <string name ="jlm_cmsy10">jlm_cmsy10.ttf</string>
+  <string name ="jlm_msam10">jlm_msam10.ttf</string>
+  <string name ="jlm_cmbsy10">jlm_cmbsy10.ttf</string>
+  <string name ="jlm_dsrom10">jlm_dsrom10.ttf</string> 
+  <string name ="jlm_rsfs10">jlm_rsfs10.ttf</string>
+  <string name ="jlm_eufm10">jlm_eufm10.ttf</string>  
+  <string name ="jlm_eufb10">jlm_eufb10.ttf</string>
+  <string name ="jlm_cmti10">jlm_cmti10.ttf</string>
+  <string name ="jlm_cmti10_unchanged">jlm_cmti10_unchanged.ttf</string>
+  <string name ="jlm_cmbxti10">jlm_cmbxti10.ttf</string>
+  <string name ="jlm_cmr10">jlm_cmr10.ttf</string>
+  <string name ="jlm_cmss10">jlm_cmss10.ttf</string>
+  <string name ="jlm_cmssi10">jlm_cmssi10.ttf</string>
+  <string name ="jlm_cmtt10">jlm_cmtt10.ttf</string>
+  <string name ="jlm_cmbx10">jlm_cmbx10.ttf</string>
+  <string name ="jlm_cmssbx10">jlm_cmssbx10.ttf</string>
+  <string name ="jlm_special">jlm_special.ttf</string>
+  <string name ="jlm_jlmr10">jlm_jlmr10.ttf</string>
+  <string name ="jlm_jlmr10_unchanged">jlm_jlmr10_unchanged.ttf</string>
+  <string name ="jlm_jlmss10">jlm_jlmss10.ttf</string>
+  <string name ="jlm_jlmsi10">jlm_jlmsi10.ttf</string>
+  <string name ="jlm_jlmi10">jlm_jlmi10.ttf</string>
+  <string name ="jlm_jlmbx10">jlm_jlmbx10.ttf</string>
+  <string name ="jlm_jlmbi10">jlm_jlmbi10.ttf</string>
+  <string name ="jlm_jlmsbi10">jlm_jlmsbi10.ttf</string>
+  <string name ="jlm_jlmsb10">jlm_jlmsb10.ttf</string>
+  <string name ="jlm_jlmtt10">jlm_jlmtt10.ttf</string>
+</resources>
