@@ -34,7 +34,9 @@ import java.net.MalformedURLException;
 import java.util.Map;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
 
 /**
  * An atom representing an atom containing a graphic.
@@ -43,7 +45,7 @@ public class GraphicsAtom extends Atom {
     
     private Bitmap image = null;
     private Bitmap bimage;
-    private Label c;
+   // private Label c;
     private int w, h;
 
     private Atom base;
@@ -51,7 +53,8 @@ public class GraphicsAtom extends Atom {
     private int interp = -1;
 
     public GraphicsAtom(String path, String option) {
-	File f = new File(path);
+    	image = BitmapFactory.decodeFile(path);
+	/*File f = new File(path);
 	if (!f.exists()) {
 	    try {
 		URL url = new URL(path);
@@ -72,7 +75,7 @@ public class GraphicsAtom extends Atom {
 	    } catch (InterruptedException e) {
 		image = null;
 	    }
-	}
+	}*/
 	draw();
 	buildAtom(option);
     }
@@ -104,12 +107,11 @@ public class GraphicsAtom extends Atom {
 	
     public void draw() {
 	if (image != null) {
-	    w = image.getWidth(c);
-	    h = image.getHeight(c);
+	    //w = image.getWidth(c);
+	   // h = image.getHeight(c);
 	    bimage =Bitmap.createBitmap(w, h, Config.ARGB_8888);
-	    Graphics2D g2d = bimage.createGraphics();
-	    g2d.drawImage(image, 0, 0, null);
-	    g2d.dispose();
+	    Canvas g2d = new Canvas(bimage);
+	    g2d.drawBitmap(image, 0, 0, null);
 	}
     }
 

@@ -87,8 +87,9 @@ public class JavaFontRenderingBox extends Box {
         this(str, type, size, font, true);
     }
 
-    public static void setFont(int i,String name) {
-    	font = Typeface.createFromAsset(name);
+    public static void setFont(String name) {
+    	AssetManager mng = jLatexMath.getAssetManager();
+    	font = Typeface.createFromAsset(mng, name);
     }
 
     public void draw(Canvas g2, float x, float y) {
@@ -108,4 +109,5 @@ public class JavaFontRenderingBox extends Box {
     public int getLastFontId() {
         return 0;
     }
+
 }

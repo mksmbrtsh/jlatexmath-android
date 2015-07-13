@@ -32,6 +32,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.RectF;
 
 
 /**
@@ -64,7 +65,7 @@ public class GeoGebraLogoBox extends Box {
 	st.setColor(gray);
 	g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
 	g2.rotate((float)(-26 * Math.PI / 180), 20.5f, 17.5f);
-	g2.drawArc(0f, 0f, 43f, 32f, 0f, 360f, false, st);
+	g2.drawArc(new RectF(0f, 0f, 43f, 32f), 0f, 360f, false, st);
 	g2.rotate((float)(26 * Math.PI / 180), 20.5f, 17.5f);
 	st.setColor(foreground);
 	drawCircle(g2, 16f, -5f);

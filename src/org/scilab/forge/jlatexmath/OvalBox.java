@@ -30,6 +30,7 @@ package org.scilab.forge.jlatexmath;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 
 /**
@@ -50,7 +51,7 @@ public class OvalBox extends FramedBox {
 	st.setColor(foreground);
 	float th = thickness / 2;
 	float r = 0.5f * Math.min(width - thickness, height + depth - thickness);
-	g2.drawRoundRect(x + th, y - height + th, width - thickness, height + depth - thickness, r, r, st);
+	g2.drawRoundRect(new RectF(x + th, y - height + th, width - thickness, height + depth - thickness), r, r, st);
 	//drawDebug(g2, x, y);
     }
 
