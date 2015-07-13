@@ -94,7 +94,11 @@ public class JavaFontRenderingBox extends Box {
 
     public void draw(Canvas g2, float x, float y) {
         drawDebug(g2, x, y);
-        Paint st = new Paint();
+        Paint st = jLatexMath.getPaint();
+        float w = st.getStrokeWidth();
+        Style s = st.getStyle();
+        Typeface f = st.getTypeface();
+        
         st.setStrokeWidth(1);
         st.setStyle(Style.FILL_AND_STROKE);
         st.setTypeface(font);
@@ -104,6 +108,9 @@ public class JavaFontRenderingBox extends Box {
         g2.drawText(str, x, y, st);
         g2.drawText(str, 0, 0, st);
         g2.restore();
+        st.setStyle(s);
+        st.setStrokeWidth(w);
+        st.setTypeface(f);
     }
 
     public int getLastFontId() {

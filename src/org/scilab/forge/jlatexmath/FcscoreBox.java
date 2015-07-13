@@ -54,7 +54,7 @@ public class FcscoreBox extends Box {
     }
 
     public void draw(Canvas g2, float x, float y) {
-    Paint st = new Paint();
+    Paint st = jLatexMath.getPaint();
 	/*AffineTransform transf = g2.getTransform();
 	Stroke oldStroke = g2.getStroke();
 
@@ -70,9 +70,10 @@ public class FcscoreBox extends Box {
 	    t.scale(1 / sx, 1 / sy);
 	    g2.setTransform(t);
 	}*/
-    st.setColor(foreground);
-    st.setStyle(Style.FILL_AND_STROKE);
+	float w = st.getStrokeWidth();
+	Style ss = st.getStyle();
     st.setStrokeWidth((float) (s * thickness));
+    st.setStyle(Style.STROKE);
 	float th = thickness / 2.f;
 	float xx = x + space;
 	xx = (float) (xx * s + (space / 2.f) * s);
@@ -89,6 +90,8 @@ public class FcscoreBox extends Box {
 	
 	//g2.setTransform(transf);
 	//g2.setStroke(oldStroke);
+	st.setStrokeWidth(w);
+	st.setStyle(ss);
     }
 
     public int getLastFontId() {

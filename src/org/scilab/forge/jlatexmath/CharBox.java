@@ -30,6 +30,7 @@
 package org.scilab.forge.jlatexmath;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
@@ -66,9 +67,7 @@ public class CharBox extends Box {
         if (size != 1) {
 	    g2.scale(size, size);
 	}
-    Paint st = new Paint();
-    st.setColor(foreground);
-    st.setStyle(Style.FILL_AND_STROKE);
+    Paint st = jLatexMath.getPaint();
 	arr[0] = cf.c;
 	g2.drawText(arr, 0, 1, 0, 0, st);
     }

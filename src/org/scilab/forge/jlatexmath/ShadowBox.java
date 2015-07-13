@@ -50,13 +50,21 @@ public class ShadowBox extends FramedBox {
     public void draw(Canvas g2, float x, float y) {
 	float th = thickness / 2;
 	box.draw(g2, x + space + thickness, y);
-	Paint st = new Paint();
+	Paint st = jLatexMath.getPaint();
+	float w = st.getStrokeWidth();
+	int c = st.getColor();
+	Style s = st.getStyle();
 	st.setStrokeWidth(thickness);
 	st.setColor(foreground);
 	st.setStyle(Style.FILL_AND_STROKE);
 	st.setShadowLayer(shadowRule, shadowRule, depth, foreground);
 	g2.drawRect(x + th, y - height + th, width - shadowRule - thickness, height + depth - shadowRule - thickness, st);
-	st.setStrokeWidth(2);
+	st.setColor(c);
+	st.setStrokeWidth(w);
+	st.setStyle(s);
+	st.setShadowLayer(0, 0, 0, c);
+	
+	//st.setStrokeWidth(2);
 	
 	//float penth = (float) Math.abs(1 / g2.getTransform().getScaleX());
 	//g2.setStroke(new BasicStroke(penth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));

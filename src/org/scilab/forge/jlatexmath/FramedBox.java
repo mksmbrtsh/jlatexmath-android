@@ -62,9 +62,9 @@ public class FramedBox extends Box {
     }
 
     public void draw(Canvas g2, float x, float y) {
-	Paint st = new Paint();
-	st.setColor(foreground);
-	st.setStyle(Style.FILL_AND_STROKE);
+	Paint st = jLatexMath.getPaint();
+	float w = st.getStrokeWidth();
+	Style s = st.getStyle();
 	st.setStrokeWidth(thickness);
 	float th = thickness / 2;
 	if (bg != null) {
@@ -78,7 +78,9 @@ public class FramedBox extends Box {
 	    g2.drawRect(x + th, y - height + th, width - thickness, height + depth - thickness, st);
 	}
 	//drawDebug(g2, x, y);
+	st.setStrokeWidth(w);
 	box.draw(g2, x + space + thickness, y);
+	st.setStyle(s);
     }
 
     public int getLastFontId() {

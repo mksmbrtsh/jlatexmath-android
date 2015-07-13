@@ -66,13 +66,13 @@ public abstract class Box {
 	 * parent will be used. If it has no parent, the foreground color of the
 	 * component on which it will be painted, will be used.
 	 */
-	protected Integer foreground;
+	protected Integer foreground = Color.BLACK;
 
 	/**
 	 * The background color of the whole box. Child boxes can paint a background
 	 * on top of this background. If it's null, no background will be painted.
 	 */
-	protected Integer background;
+	protected Integer background = Color.WHITE;
 
 	/**
 	 * The width of this box, i.e. the value that will be used for further
@@ -289,8 +289,9 @@ public abstract class Box {
 	}
 
 	protected void drawDebug(Canvas g2, float x, float y, boolean showDepth) {
-		Paint st = new Paint();
 		if (DEBUG) {
+			Paint st = jLatexMath.getPaint();
+			int c = st.getColor();
 			st.setColor(markForDEBUG);
 			st.setStyle(Style.FILL_AND_STROKE);
 			if (markForDEBUG != null) {
@@ -310,6 +311,7 @@ public abstract class Box {
 				} else {
 				}
 			}
+			st.setColor(c);
 		}
 	}
 
@@ -324,6 +326,6 @@ public abstract class Box {
      * @param g2 the graphics (2D) context
      */
     protected void endDraw(Canvas g2) {
-        g2.restore();
+        //g2.restore();
     }
 }

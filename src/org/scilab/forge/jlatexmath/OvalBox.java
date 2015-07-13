@@ -46,12 +46,16 @@ public class OvalBox extends FramedBox {
 
     public void draw(Canvas g2, float x, float y) {
 	box.draw(g2, x + space + thickness, y);
-	Paint st = new Paint();
+	Paint st = jLatexMath.getPaint();
+	float w = st.getStrokeWidth();
+	int c = st.getColor();
 	st.setStrokeWidth(thickness);
 	st.setColor(foreground);
 	float th = thickness / 2;
 	float r = 0.5f * Math.min(width - thickness, height + depth - thickness);
 	g2.drawRoundRect(new RectF(x + th, y - height + th, width - thickness, height + depth - thickness), r, r, st);
+	st.setColor(c);
+	st.setStrokeWidth(w);
 	//drawDebug(g2, x, y);
     }
 
