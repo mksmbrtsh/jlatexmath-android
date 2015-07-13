@@ -33,7 +33,7 @@ final class PredefinedCommands {
     PredefinedCommands() { }
 
     static {
- /*       MacroInfo.Commands.put("newcommand", new PredefMacroInfo(0, 2, 2));
+        MacroInfo.Commands.put("newcommand", new PredefMacroInfo(0, 2, 2));
         MacroInfo.Commands.put("renewcommand", new PredefMacroInfo(1, 2, 2));
         MacroInfo.Commands.put("rule", new PredefMacroInfo(2, 2, 1));
         MacroInfo.Commands.put("hspace", new PredefMacroInfo(3, 1));
@@ -309,6 +309,6 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("above", new PredefMacroInfo(273, 0));
         MacroInfo.Commands.put("abovewithdelims", new PredefMacroInfo(274, 2));
         MacroInfo.Commands.put("st", new PredefMacroInfo(275, 1));
-        MacroInfo.Commands.put("fcscore", new PredefMacroInfo(276, 1));*/
+        MacroInfo.Commands.put("fcscore", new PredefMacroInfo(276, 1));
     }
 }

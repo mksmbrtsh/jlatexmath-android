@@ -87,7 +87,7 @@ public class JavaFontRenderingBox extends Box {
         this(str, type, size, font, true);
     }
 
-    public static void setFont(String name) {
+    public static void setFont(int i,String name) {
     	font = Typeface.createFromAsset(name);
     }
 

@@ -40,25 +40,22 @@ import android.content.res.AssetManager;
 class PredefMacroInfo extends MacroInfo {
 
     private int id;
-    AssetManager mgr;
     
-    public PredefMacroInfo(AssetManager mgr, int id, int nbArgs, int posOpts) {
+    public PredefMacroInfo(int id, int nbArgs, int posOpts) {
         super(nbArgs, posOpts);
         this.id = id;
-        this.mgr = mgr;
     }
 
-    public PredefMacroInfo(AssetManager mgr, int id, int nbArgs) {
+    public PredefMacroInfo(int id, int nbArgs) {
         super(nbArgs);
         this.id = id;
-        this.mgr = mgr;
     }
 
     public Object invoke(final TeXParser tp, final String[] args) throws ParseException {
-        return invokeID(mgr, id, tp, args);
+        return invokeID(id, tp, args);
     }
 
-    private static final Object invokeID(AssetManager mgr, final int id, final TeXParser tp, final String[] args) throws ParseException {
+    private static final Object invokeID(final int id, final TeXParser tp, final String[] args) throws ParseException {
         try {
             
 			switch (id) {
