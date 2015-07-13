@@ -79,7 +79,7 @@ public class DefaultTeXFont implements TeXFont {
     public static List<Character.UnicodeBlock> loadedAlphabets = new ArrayList<Character.UnicodeBlock>();
     public static Map<Character.UnicodeBlock, AlphabetRegistration> registeredAlphabets = new HashMap<Character.UnicodeBlock, AlphabetRegistration>();
 
-	private static Context context;
+	private static Context context = jLatexMath.getContext();
 
     protected float factor = 1f;
 

@@ -15,6 +15,11 @@ public class jLatexMath {
 		AssetManager mng = mContext.getAssets();
 		return mng;
 	}
+
+	public static Context getContext() {
+		// TODO Auto-generated method stub
+		return mContext;
+	}
 	
 	
 	

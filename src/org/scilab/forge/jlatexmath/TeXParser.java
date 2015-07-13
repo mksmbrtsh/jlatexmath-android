@@ -1102,9 +1102,9 @@ public class TeXParser {
         c = convertToRomanNumber(c);
         if (((c < '0' || c > '9') && (c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))) {
             Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
-            if (!isLoading && !DefaultTeXFont.loadedAlphabets.contains(block)) {
-                DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));
-            }
+            //if (!isLoading && !DefaultTeXFont.loadedAlphabets.contains(block)) {
+            //    DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));
+            //}
 
             String symbolName = TeXFormula.symbolMappings[c];
             if (symbolName == null && (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {
