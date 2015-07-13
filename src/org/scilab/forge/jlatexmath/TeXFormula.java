@@ -130,7 +130,13 @@ public class TeXFormula {
 
     static {
         // character-to-symbol and character-to-delimiter mappings
-        TeXFormulaSettingsParser parser = new TeXFormulaSettingsParser();
+        TeXFormulaSettingsParser parser = null;
+		try {
+			parser = new TeXFormulaSettingsParser();
+		} catch (ResourceParseException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         parser.parseSymbolMappings(symbolMappings, symbolTextMappings);
 
         new PredefinedCommands();
@@ -147,7 +153,7 @@ public class TeXFormula {
         //setDefaultDPI();
     }
 
-    public static void addSymbolMappings(String file) throws ResourceParseException {
+    public static void addSymbolMappings(String file) throws ResourceParseException, IOException {
         FileInputStream in;
         try {
             in = new FileInputStream(file);
@@ -157,7 +163,7 @@ public class TeXFormula {
         addSymbolMappings(in, file);
     }
 
-    public static void addSymbolMappings(InputStream in, String name) throws ResourceParseException {
+    public static void addSymbolMappings(InputStream in, String name) throws ResourceParseException, IOException {
         TeXFormulaSettingsParser tfsp = new TeXFormulaSettingsParser(in, name);
         tfsp.parseSymbolMappings(symbolMappings, symbolTextMappings);
         tfsp.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);
@@ -516,11 +522,11 @@ public class TeXFormula {
         return this;
     }
 
-    public static void addPredefinedTeXFormula(InputStream xmlFile) throws ResourceParseException {
+    public static void addPredefinedTeXFormula(InputStream xmlFile) throws ResourceParseException, IOException {
         new PredefinedTeXFormulaParser(xmlFile, "TeXFormula").parse(predefinedTeXFormulas);
     }
 
-    public static void addPredefinedCommands(InputStream xmlFile) throws ResourceParseException {
+    public static void addPredefinedCommands(InputStream xmlFile) throws ResourceParseException, IOException {
         new PredefinedTeXFormulaParser(xmlFile, "Command").parse(MacroInfo.Commands);
     }
 

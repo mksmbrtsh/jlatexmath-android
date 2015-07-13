@@ -99,12 +99,10 @@ public class FontInfo {
     protected final String ttVersion;
     protected final String itVersion;
 
-	private Context context;
 
-    public FontInfo(Context context, int fontId, Object base, String fontName, int unicode, float xHeight, float space, float quad, String boldVersion, String romanVersion, String ssVersion, String ttVersion, String itVersion) {
+    public FontInfo(int fontId, Object base, String fontName, int unicode, float xHeight, float space, float quad, String boldVersion, String romanVersion, String ssVersion, String ttVersion, String itVersion) {
         this.fontId = fontId;
 	this.base = base;
-	this.context = context;
 	this.fontName = fontName;
         this.xHeight = xHeight;
         this.space = space;
@@ -291,7 +289,7 @@ public class FontInfo {
 
     public Typeface getFont() {
 	if (font == null) {
-		font = DefaultTeXFontParser.createFont(context, fontName);
+		font = DefaultTeXFontParser.createFont(fontName);
 	}
         return font;
     }

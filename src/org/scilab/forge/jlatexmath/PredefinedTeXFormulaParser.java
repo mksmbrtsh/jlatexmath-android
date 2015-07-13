@@ -30,9 +30,11 @@
 package org.scilab.forge.jlatexmath;
 
 import java.util.Map;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -48,7 +50,7 @@ public class PredefinedTeXFormulaParser {
     private Element root;
     private String type;
         
-    public PredefinedTeXFormulaParser(InputStream file, String type) throws ResourceParseException {
+    public PredefinedTeXFormulaParser(InputStream file, String type) throws ResourceParseException, IOException {
         try {
 	    this.type = type;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -58,10 +60,11 @@ public class PredefinedTeXFormulaParser {
 	} catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException("", e);
         }
+        file.close();
     }
     
-    public PredefinedTeXFormulaParser(String PredefFile, String type) throws ResourceParseException {
-        this(PredefinedTeXFormulaParser.class.getResourceAsStream(PredefFile), type);
+    public PredefinedTeXFormulaParser(String PredefFile, String type) throws ResourceParseException, IOException {
+        this(jLatexMath.getAssetManager().open(PredefFile), type);
     }
 
     public void parse(Map predefinedTeXFormulas) {

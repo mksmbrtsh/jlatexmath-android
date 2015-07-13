@@ -50,6 +50,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 
@@ -158,9 +159,7 @@ public class DefaultTeXFontParser {
     
     private Element root;
     private Object base = null;
-    
-    Context context;
-    
+       
     static {
         // string-to-constant mappings
         setRangeTypeMappings();
@@ -168,11 +167,11 @@ public class DefaultTeXFontParser {
         setCharChildParsers();
     }
     
-    public DefaultTeXFontParser(Context context) throws ResourceParseException {
-	this(context, DefaultTeXFontParser.class.getResourceAsStream(RESOURCE_NAME), RESOURCE_NAME);
+    public DefaultTeXFontParser() throws ResourceParseException, IOException {
+	this(jLatexMath.getAssetManager().open(RESOURCE_NAME), RESOURCE_NAME);
     }
     
-    public DefaultTeXFontParser(Context context, InputStream file, String name) throws ResourceParseException {
+    public DefaultTeXFontParser(InputStream file, String name) throws ResourceParseException, IOException {
 	factory.setIgnoringElementContentWhitespace(true);
 	factory.setIgnoringComments(true);
 	try {
@@ -180,9 +179,10 @@ public class DefaultTeXFontParser {
         } catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(name, e);
         }
+	file.close();
     }
 
-    public DefaultTeXFontParser(Context context, Object base , InputStream file, String name) throws ResourceParseException {
+    public DefaultTeXFontParser(Object base , InputStream file, String name) throws ResourceParseException, IOException {
 	this.base = base;
 	factory.setIgnoringElementContentWhitespace(true);
 	factory.setIgnoringComments(true);
@@ -191,6 +191,7 @@ public class DefaultTeXFontParser {
         } catch (Exception e) { // JDOMException or IOException
 	    throw new XMLResourceParseException(name, e);
         }
+	file.close();
     }
     
     private static void setCharChildParsers() {
@@ -254,7 +255,7 @@ public class DefaultTeXFontParser {
 	
 	
 	// create FontInfo-object
-	FontInfo info = new FontInfo(context, Font_ID.indexOf(fontId), base,fontName, unicode, xHeight, space, quad, bold, roman, ss, tt, it);
+	FontInfo info = new FontInfo(Font_ID.indexOf(fontId), base,fontName, unicode, xHeight, space, quad, bold, roman, ss, tt, it);
 	
 	if (skewChar != -1) // attribute set
 	    info.setSkewChar((char) skewChar);
@@ -280,24 +281,26 @@ public class DefaultTeXFontParser {
 	return res.toArray(fi);
     }
     
-    public FontInfo[] parseFontDescriptions(FontInfo[] fi) throws ResourceParseException {
+    public FontInfo[] parseFontDescriptions(FontInfo[] fi) throws ResourceParseException, IOException {
 	Element fontDescriptions = (Element)root.getElementsByTagName("FontDescriptions").item(0);
         if (fontDescriptions != null) { // element present
 	    NodeList list = fontDescriptions.getElementsByTagName("Metrics");
             for (int i = 0; i < list.getLength(); i++) {
 		// get required string attribute
 		String include = getAttrValueAndCheckIfNotNull("include", (Element)list.item(i));
+		InputStream is = null;
 		if (base == null) {
-		    fi = parseFontDescriptions(fi, DefaultTeXFontParser.class.getResourceAsStream(include), include);
+		    fi = parseFontDescriptions(fi, is = jLatexMath.getAssetManager().open(include), include);
 		} else {
 		    fi = parseFontDescriptions(fi, base.getClass().getResourceAsStream(include), include);
 		}
+		is.close();
 	    }
 	}
 	return fi;
     }
 
-    protected void parseExtraPath() throws ResourceParseException {
+    protected void parseExtraPath() throws ResourceParseException, IOException {
 	Element syms = (Element)root.getElementsByTagName("TeXSymbols").item(0);
         if (syms != null) { // element present
 	    // get required string attribute
@@ -348,8 +351,8 @@ public class DefaultTeXFontParser {
     }
     
 
-    public static Typeface createFont(Context context, String name) throws ResourceParseException {
-        	Typeface f = Typeface.createFromAsset(context.getAssets(),"fonts/Kokila.ttf"); 
+    public static Typeface createFont(String name) throws ResourceParseException {
+        	Typeface f = Typeface.createFromAsset(jLatexMath.getAssetManager(),"fonts/" + name); 
 	    return f;
         
     }
@@ -367,11 +370,13 @@ public class DefaultTeXFontParser {
 		String include = getAttrValueAndCheckIfNotNull("include", (Element)list.item(i));
 		Element map;
 		try {
+			InputStream is = null;
 		    if (base == null) {
-			map = factory.newDocumentBuilder().parse(DefaultTeXFontParser.class.getResourceAsStream(include)).getDocumentElement();
+			map = factory.newDocumentBuilder().parse(is = jLatexMath.getAssetManager().open(include)).getDocumentElement();
 		    } else {
 			map = factory.newDocumentBuilder().parse(base.getClass().getResourceAsStream(include)).getDocumentElement();
 		    }
+		    is.close();
 		} catch (Exception e) {
 		    throw new XMLResourceParseException("Cannot find the file " + include + "!");
 		}
@@ -484,7 +489,7 @@ public class DefaultTeXFontParser {
         return res;
     }
     
-    public Map<String,CharFont[]> parseTextStyleMappings() {
+    Map<String,CharFont[]> parseTextStyleMappings() {
         return parsedTextStyles;
     }
     

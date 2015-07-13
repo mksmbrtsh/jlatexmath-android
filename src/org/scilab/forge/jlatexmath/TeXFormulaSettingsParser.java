@@ -32,9 +32,11 @@ package org.scilab.forge.jlatexmath;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -48,11 +50,11 @@ public class TeXFormulaSettingsParser {
     
     private Element root;
     
-    public TeXFormulaSettingsParser() throws ResourceParseException {
-	this(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME), RESOURCE_NAME);
+    public TeXFormulaSettingsParser() throws ResourceParseException, IOException {
+	this(jLatexMath.getAssetManager().open(RESOURCE_NAME), RESOURCE_NAME);
     }
 
-    public TeXFormulaSettingsParser(InputStream file, String name) throws ResourceParseException {
+    public TeXFormulaSettingsParser(InputStream file, String name) throws ResourceParseException, IOException {
 	try {
    	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    factory.setIgnoringElementContentWhitespace(true);
@@ -61,6 +63,7 @@ public class TeXFormulaSettingsParser {
 	} catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(name, e);
         }
+	file.close();
     }
 
     public void parseSymbolToFormulaMappings(String[] mappings, String[] textMappings) throws ResourceParseException {

@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.lang.Character.UnicodeBlock;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
 
@@ -79,7 +80,6 @@ public class DefaultTeXFont implements TeXFont {
     public static List<Character.UnicodeBlock> loadedAlphabets = new ArrayList<Character.UnicodeBlock>();
     public static Map<Character.UnicodeBlock, AlphabetRegistration> registeredAlphabets = new HashMap<Character.UnicodeBlock, AlphabetRegistration>();
 
-	private static Context context = jLatexMath.getContext();
 
     protected float factor = 1f;
 
@@ -90,11 +90,25 @@ public class DefaultTeXFont implements TeXFont {
     public boolean isIt = false;
 
     static {
-        DefaultTeXFontParser parser = new DefaultTeXFontParser(context);
+        DefaultTeXFontParser parser = null;
+		try {
+			parser = new DefaultTeXFontParser();
+		} catch (ResourceParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         //load LATIN block
         loadedAlphabets.add(Character.UnicodeBlock.of('a'));
         // fonts + font descriptions
-        fontInfo = parser.parseFontDescriptions(fontInfo);
+        try {
+			fontInfo = parser.parseFontDescriptions(fontInfo);
+		} catch (ResourceParseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         // general font parameters
         parameters = parser.parseParameters();
         // text style mappings
@@ -137,41 +151,41 @@ public class DefaultTeXFont implements TeXFont {
         isIt = it;
     }
 
-    public static void addTeXFontDescription(String file) throws ResourceParseException {
+    public static void addTeXFontDescription(String file) throws ResourceParseException, IOException {
         FileInputStream in;
         try {
             in = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             throw new ResourceParseException(file, e);
         }
-        addTeXFontDescription(context, in, file);
+        addTeXFontDescription(in, file);
     }
 
-    public static void addTeXFontDescription(Context context, InputStream in, String name) throws ResourceParseException {
-        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(context, in, name);
+    private static void addTeXFontDescription(InputStream in, String name) throws ResourceParseException, IOException {
+        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(in, name);
         fontInfo = dtfp.parseFontDescriptions(fontInfo);
         textStyleMappings.putAll(dtfp.parseTextStyleMappings());
         symbolMappings.putAll(dtfp.parseSymbolMappings());
     }
 
-    public static void addTeXFontDescription(Object base, InputStream in, String name) throws ResourceParseException {
-        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(context, base, in, name);
+    private static void addTeXFontDescription(Object base, InputStream in, String name) throws ResourceParseException, IOException {
+        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(base, in, name);
         fontInfo = dtfp.parseFontDescriptions(fontInfo);
         dtfp.parseExtraPath();
         textStyleMappings.putAll(dtfp.parseTextStyleMappings());
         symbolMappings.putAll(dtfp.parseSymbolMappings());
     }
 
-    public static void addAlphabet(Character.UnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException {
+    public static void addAlphabet(Character.UnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException, IOException {
         if (!loadedAlphabets.contains(alphabet)) {
-            addTeXFontDescription(context, inlanguage, language);
+            addTeXFontDescription(inlanguage, language);
             SymbolAtom.addSymbolAtom(insymbols, symbols);
             TeXFormula.addSymbolMappings(inmappings, mappings);
             loadedAlphabets.add(alphabet);
         }
     }
 
-    public static void addAlphabet(Object base, Character.UnicodeBlock[] alphabet, String language) throws ResourceParseException {
+    public static void addAlphabet(Object base, Character.UnicodeBlock[] alphabet, String language) throws ResourceParseException, IOException {
         boolean b = false;
         for (int i = 0; !b && i < alphabet.length; i++) {
             b = loadedAlphabets.contains(alphabet[i]) || b;
@@ -186,7 +200,7 @@ public class DefaultTeXFont implements TeXFont {
         }
     }
 
-    public static void addAlphabet(Character.UnicodeBlock alphabet, String name) {
+    public static void addAlphabet(Character.UnicodeBlock alphabet, String name) throws ResourceParseException, IOException {
         String lg = "fonts/" + name + "/language_" + name+ ".xml";
         String sym = "fonts/" + name + "/symbols_" + name+ ".xml";
         String map = "fonts/" + name + "/mappings_" + name+ ".xml";
@@ -196,7 +210,7 @@ public class DefaultTeXFont implements TeXFont {
         } catch (FontAlreadyLoadedException e) { }
     }
 
-    public static void addAlphabet(AlphabetRegistration reg) {
+    public static void addAlphabet(AlphabetRegistration reg) throws ResourceParseException, IOException {
         try {
             if (reg != null) {
                 DefaultTeXFont.addAlphabet(reg.getPackage(), reg.getUnicodeBlock(), reg.getTeXFontFileName());

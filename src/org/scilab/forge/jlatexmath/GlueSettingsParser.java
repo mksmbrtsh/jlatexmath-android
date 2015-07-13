@@ -61,7 +61,7 @@ public class GlueSettingsParser {
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    factory.setIgnoringElementContentWhitespace(true);
 	    factory.setIgnoringComments(true);
-	    root = factory.newDocumentBuilder().parse(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME)).getDocumentElement();
+	    root = factory.newDocumentBuilder().parse(jLatexMath.getAssetManager().open(RESOURCE_NAME)).getDocumentElement();
 	    parseGlueTypes();
 	    } catch (Exception e) { // JDOMException or IOException
 		throw new XMLResourceParseException(RESOURCE_NAME, e);

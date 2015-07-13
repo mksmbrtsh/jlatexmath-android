@@ -35,6 +35,7 @@ import java.util.BitSet;
 import java.util.Map;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -57,7 +58,12 @@ public class SymbolAtom extends CharSymbol {
     private char unicode;
     
     static {
-        symbols = new TeXSymbolParser().readSymbols();
+        try {
+			symbols = new TeXSymbolParser().readSymbols();
+		} catch (ResourceParseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         // set valid symbol types
         validSymbolTypes =  new BitSet(16);
