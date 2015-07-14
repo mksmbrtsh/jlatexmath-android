@@ -166,6 +166,7 @@ public class DefaultTeXFont implements TeXFont {
         fontInfo = dtfp.parseFontDescriptions(fontInfo);
         textStyleMappings.putAll(dtfp.parseTextStyleMappings());
         symbolMappings.putAll(dtfp.parseSymbolMappings());
+        in.close();
     }
 
     private static void addTeXFontDescription(Object base, InputStream in, String name) throws ResourceParseException, IOException {
@@ -174,6 +175,7 @@ public class DefaultTeXFont implements TeXFont {
         dtfp.parseExtraPath();
         textStyleMappings.putAll(dtfp.parseTextStyleMappings());
         symbolMappings.putAll(dtfp.parseSymbolMappings());
+        in.close();
     }
 
     public static void addAlphabet(Character.UnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException, IOException {
@@ -185,14 +187,14 @@ public class DefaultTeXFont implements TeXFont {
         }
     }
 
-    public static void addAlphabet(Object base, Character.UnicodeBlock[] alphabet, String language) throws ResourceParseException, IOException {
+    private static void addAlphabet(Object base, Character.UnicodeBlock[] alphabet, String language) throws ResourceParseException, IOException {
         boolean b = false;
         for (int i = 0; !b && i < alphabet.length; i++) {
             b = loadedAlphabets.contains(alphabet[i]) || b;
         }
         if (!b) {
             TeXParser.isLoading = true;
-            addTeXFontDescription(base, base.getClass().getResourceAsStream(language), language);
+            addTeXFontDescription(base, jLatexMath.getAssetManager().open(language), language);
             for (int i = 0; i < alphabet.length; i++) {
                 loadedAlphabets.add(alphabet[i]);
             }
@@ -206,7 +208,7 @@ public class DefaultTeXFont implements TeXFont {
         String map = "fonts/" + name + "/mappings_" + name+ ".xml";
 
         try {
-            DefaultTeXFont.addAlphabet(alphabet, TeXFormula.class.getResourceAsStream(lg), lg, TeXFormula.class.getResourceAsStream(sym), sym, TeXFormula.class.getResourceAsStream(map), map);
+            DefaultTeXFont.addAlphabet(alphabet, jLatexMath.getAssetManager().open(lg), lg, TeXFormula.class.getResourceAsStream(sym), sym, TeXFormula.class.getResourceAsStream(map), map);
         } catch (FontAlreadyLoadedException e) { }
     }
 

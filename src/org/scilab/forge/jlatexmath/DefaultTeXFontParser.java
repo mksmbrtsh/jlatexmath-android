@@ -292,7 +292,7 @@ public class DefaultTeXFontParser {
 		if (base == null) {
 		    fi = parseFontDescriptions(fi, is = jLatexMath.getAssetManager().open(include), include);
 		} else {
-		    fi = parseFontDescriptions(fi, base.getClass().getResourceAsStream(include), include);
+		    fi = parseFontDescriptions(fi, is = jLatexMath.getAssetManager().open(include), include);
 		}
 		is.close();
 	    }
@@ -305,13 +305,13 @@ public class DefaultTeXFontParser {
         if (syms != null) { // element present
 	    // get required string attribute
 	    String include = getAttrValueAndCheckIfNotNull("include", syms);
-	    SymbolAtom.addSymbolAtom(base.getClass().getResourceAsStream(include), include);
+	    SymbolAtom.addSymbolAtom(jLatexMath.getAssetManager().open(include), include);
 	}
 	Element settings = (Element)root.getElementsByTagName("FormulaSettings").item(0);
         if (settings != null) { // element present
 	    // get required string attribute
 	    String include = getAttrValueAndCheckIfNotNull("include", settings);
-	    TeXFormula.addSymbolMappings(base.getClass().getResourceAsStream(include), include);
+	    TeXFormula.addSymbolMappings(jLatexMath.getAssetManager().open(include), include);
 	}
     }
     
@@ -374,7 +374,7 @@ public class DefaultTeXFontParser {
 		    if (base == null) {
 			map = factory.newDocumentBuilder().parse(is = jLatexMath.getAssetManager().open(include)).getDocumentElement();
 		    } else {
-			map = factory.newDocumentBuilder().parse(base.getClass().getResourceAsStream(include)).getDocumentElement();
+			map = factory.newDocumentBuilder().parse(is = jLatexMath.getAssetManager().open(include)).getDocumentElement();
 		    }
 		    is.close();
 		} catch (Exception e) {

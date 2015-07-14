@@ -28,6 +28,7 @@
 
 package org.scilab.forge.jlatexmath;
 
+import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
 import java.util.HashSet;
 import java.util.Set;
@@ -1102,9 +1103,17 @@ public class TeXParser {
         c = convertToRomanNumber(c);
         if (((c < '0' || c > '9') && (c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))) {
             Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
-            //if (!isLoading && !DefaultTeXFont.loadedAlphabets.contains(block)) {
-            //    DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));
-            //}
+            if (!isLoading && !DefaultTeXFont.loadedAlphabets.contains(block)) {
+                try {
+					DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));
+				} catch (ResourceParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
 
             String symbolName = TeXFormula.symbolMappings[c];
             if (symbolName == null && (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {
