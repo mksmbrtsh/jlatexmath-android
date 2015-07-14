@@ -58,7 +58,7 @@ import android.graphics.Paint.Style;
  */
 public abstract class Box {
 
-	public static boolean DEBUG = false;
+	public static boolean DEBUG = true;
 
 	/**
 	 * The foreground color of the whole box. Child boxes can override this
@@ -106,7 +106,7 @@ public abstract class Box {
 	protected LinkedList<Box> children = new LinkedList<Box>();
 	protected Box parent;
 	protected Box elderParent;
-	protected Integer markForDEBUG;
+	protected Integer markForDEBUG = Color.RED;
 
 	/**
 	 * Inserts the given box at the end of the list of child boxes.

@@ -29,54 +29,72 @@
 
 package org.scilab.forge.jlatexmath;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
-
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 /**
  * A box representing a single character.
  */
 public class CharBox extends Box {
 
-    private final CharFont cf;
-    private final float size;
-    
-    private final char[] arr = new char[1]; 
+	private final CharFont cf;
+	private final float size;
 
-    /**
-     * Create a new CharBox that will represent the character defined by the given
-     * Char-object.
-     * 
-     * @param c a Char-object containing the character's font information.
-     */
-    public CharBox(Char c) {
-	cf = c.getCharFont();
-	size = c.getMetrics().getSize();
-	width = c.getWidth();
-	height = c.getHeight();
-	depth = c.getDepth();
-    }
-    
-    public void draw(Canvas g2, float x, float y) {
-	drawDebug(g2, x, y);
-        g2.translate(x, y);
-        Typeface font = FontInfo.getFont(cf.fontId);
-        if (size != 1) {
-	    g2.scale(size, size);
+	private final char[] arr = new char[1];
+
+	/**
+	 * Create a new CharBox that will represent the character defined by the
+	 * given Char-object.
+	 * 
+	 * @param c
+	 *            a Char-object containing the character's font information.
+	 */
+	public CharBox(Char c) {
+		cf = c.getCharFont();
+		size = c.getMetrics().getSize();
+		width = c.getWidth();
+		height = c.getHeight();
+		depth = c.getDepth();
 	}
-    Paint st = jLatexMath.getPaint();
-	arr[0] = cf.c;
-	g2.drawText(arr, 0, 1, 0, 0, st);
-    }
-    
-    public int getLastFontId() {
-	return cf.fontId;
-    }
+	public static float pxToSp(Context context, float px) {
+	    float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+	    return px/scaledDensity;
+	}
+	
+	public static float pxToDp(Context context, int dp) {
+	    float density = context.getResources().getDisplayMetrics().density;
+	    return dp/density;
+	}
+	
+	public void draw(Canvas g2, float x, float y) {
+		drawDebug(g2, x, y);
+		g2.translate(x, y);
+		Typeface font = FontInfo.getFont(cf.fontId);
+		if (size != 1) {
+			g2.scale(size, size);
+		}
+		Paint st = jLatexMath.getPaint();
+		st.setTextSize(pxToSp(jLatexMath.getContext(), height));
+		st.setTypeface(font);
+		st.setStrokeWidth(0);
+		
+		st.setColor(Color.BLUE);
+		arr[0] = cf.c;
+		g2.drawText(arr, 0, 1, 0, 0, st);
+		g2.translate(-x, -y);
+	}
 
-    public String toString() {
-	return super.toString() + "=" + cf.c;
-    }
+	public int getLastFontId() {
+		return cf.fontId;
+	}
+
+	public String toString() {
+		return super.toString() + "=" + cf.c;
+	}
 }

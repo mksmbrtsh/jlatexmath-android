@@ -16,7 +16,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white"
         android:scaleType="centerInside" />
 
 </RelativeLayout>

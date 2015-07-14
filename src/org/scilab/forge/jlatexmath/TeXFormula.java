@@ -150,7 +150,7 @@ public class TeXFormula {
             DefaultTeXFont.registerAlphabet((AlphabetRegistration) Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration").newInstance());
         } catch (Exception e) { }
 
-        //setDefaultDPI();
+        setDefaultDPI();
     }
 
     public static void addSymbolMappings(String file) throws ResourceParseException, IOException {
@@ -210,9 +210,7 @@ public class TeXFormula {
      * Set the default target DPI to the screen dpi (only if we're in non-headless mode)
      */
     public static void setDefaultDPI() {
-        //if (!GraphicsEnvironment.isHeadless()) {
-        //    setDPITarget((float) Toolkit.getDefaultToolkit().getScreenResolution());
-        //}
+    	setDPITarget(jLatexMath.getContext().getResources().getDisplayMetrics().xdpi);
     }
 
     // the root atom of the "atom tree" that represents the formula
