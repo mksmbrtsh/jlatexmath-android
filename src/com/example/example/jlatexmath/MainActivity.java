@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 		latex += "\\mbox{прывітаньне Свет}&\\mbox{привіт світ}\\\\";
 		latex += "\\end{array}";
 		*/
-		String latex = "2*2=4";
+		String latex = "\\sum_{i=1}^{5}i^2";//"2+2=4";
 
 		TeXFormula formula = new TeXFormula(latex);
 		// Note: Old interface for creating icons:

@@ -58,7 +58,7 @@ import android.graphics.Paint.Style;
  */
 public abstract class Box {
 
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 
 	/**
 	 * The foreground color of the whole box. Child boxes can override this
