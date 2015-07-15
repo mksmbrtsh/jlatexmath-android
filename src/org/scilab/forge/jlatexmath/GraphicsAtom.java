@@ -29,6 +29,8 @@
 package org.scilab.forge.jlatexmath;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -53,7 +55,17 @@ public class GraphicsAtom extends Atom {
     private int interp = -1;
 
     public GraphicsAtom(String path, String option) {
-    	image = BitmapFactory.decodeFile(path);
+    	InputStream is;
+		try {
+			is = jLatexMath.getAssetManager().open(path);
+			image = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	//image = BitmapFactory.decodeFile(path);
 	/*File f = new File(path);
 	if (!f.exists()) {
 	    try {
@@ -106,13 +118,14 @@ public class GraphicsAtom extends Atom {
     }
 	
     public void draw() {
-	if (image != null) {
-	    //w = image.getWidth(c);
-	   // h = image.getHeight(c);
+	/*if (image != null) {
+	    w = image.getWidth();
+	    h = image.getHeight();
 	    bimage =Bitmap.createBitmap(w, h, Config.ARGB_8888);
 	    Canvas g2d = new Canvas(bimage);
 	    g2d.drawBitmap(image, 0, 0, null);
-	}
+	}*/
+    	bimage = image;
     }
 
     public Box createBox(TeXEnvironment env) {

@@ -55,10 +55,9 @@ public class ShadowBox extends FramedBox {
 	int c = st.getColor();
 	Style s = st.getStyle();
 	st.setStrokeWidth(thickness);
-	st.setColor(foreground);
 	st.setStyle(Style.FILL_AND_STROKE);
-	st.setShadowLayer(shadowRule, shadowRule, depth, foreground);
-	g2.drawRect(x + th, y - height + th, width - shadowRule - thickness, height + depth - shadowRule - thickness, st);
+	st.setShadowLayer(shadowRule, shadowRule, depth, c);
+	g2.drawRect(x + th, y - height + th, x + th + width - shadowRule - thickness, y + th + depth - shadowRule - thickness, st);
 	st.setColor(c);
 	st.setStrokeWidth(w);
 	st.setStyle(s);

@@ -65,22 +65,27 @@ public class FramedBox extends Box {
 	Paint st = jLatexMath.getPaint();
 	float w = st.getStrokeWidth();
 	Style s = st.getStyle();
+	int c = st.getColor();
 	st.setStrokeWidth(thickness);
+	st.setStyle(Style.FILL_AND_STROKE);
 	float th = thickness / 2;
 	if (bg != null) {
 	    st.setColor(bg);
-	    g2.drawRect(x + th, y - height + th, width - thickness, height + depth - thickness, st);
+	    g2.drawRect(x + th, y - height + th, x + th + width - thickness, y + th + depth - thickness, st);
 	}
+	st.setStyle(Style.STROKE);
 	if (line != null) {
 	    st.setColor(line);
-	    g2.drawRect(x + th, y - height + th, width - thickness, height + depth - thickness, st);
+	    g2.drawRect(x + th, y - height + th, x + th + width - thickness, y + th + depth - thickness, st);
 	} else {
-	    g2.drawRect(x + th, y - height + th, width - thickness, height + depth - thickness, st);
+	    g2.drawRect(x + th, y - height + th, x + th + width - thickness, y + th + depth - thickness, st);
 	}
 	//drawDebug(g2, x, y);
 	st.setStrokeWidth(w);
-	box.draw(g2, x + space + thickness, y);
 	st.setStyle(s);
+	box.draw(g2, x + space + thickness, y);
+	//st.setStyle(s);
+	st.setColor(c);
     }
 
     public int getLastFontId() {

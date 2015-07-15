@@ -78,6 +78,7 @@ public class GraphicsBox extends Box {
 	g2.translate(x, y - height);
 	g2.scale(scl, scl);
 	g2.drawBitmap(image, 0, 0,null);
+	image.recycle();
 	//g2.setTransform(oldAt);
 	//if (oldKey != null) {
 	//    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldKey);

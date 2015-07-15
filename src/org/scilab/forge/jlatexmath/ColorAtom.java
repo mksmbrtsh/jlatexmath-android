@@ -252,6 +252,6 @@ public class ColorAtom extends Atom implements Row {
 
     private static int convColor(final float c, final float m, final float y, final float k) {
         final float kk = 1 - k;
-        return Color.rgb((int)(kk * (1 - c)), (int)(kk * (1 - m)), (int)(kk * (1 - y)));
+        return Color.rgb((int)(255*kk * (1 - c)), (int)(255*kk * (1 - m)), (int)(255*kk * (1 - y)));
     }
 }

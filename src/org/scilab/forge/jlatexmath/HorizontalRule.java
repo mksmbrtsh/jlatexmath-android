@@ -69,15 +69,21 @@ public class HorizontalRule extends Box {
 
     public void draw(Canvas g2, float x, float y) {
 	Paint st = jLatexMath.getPaint();
+	Style s = st.getStyle();
+	float w = st.getStrokeWidth();
+	st.setStyle(Style.FILL);
+	st.setStrokeWidth(0);
 	int c = st.getColor();
 	if (color != null)
 	    st.setColor(color);
 	if (speShift == 0) {
-	    g2.drawRect(x, y - height, width, height, st);
+		g2.drawRect(x, y - height, x + width, y, st);
 	} else {
-	    g2.drawRect(x, y - height + speShift, width, height, st);
+	    g2.drawRect(x, y - height + speShift, x + width, height + speShift, st);
 	}
 	st.setColor(c);
+	st.setStyle(s);
+	st.setStrokeWidth(w);
     }
     
     public int getLastFontId() {

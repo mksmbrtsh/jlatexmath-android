@@ -81,19 +81,11 @@ public class CharBox extends Box {
 			g2.scale(size, size);
 		}
 		Paint st = jLatexMath.getPaint();
-		float f = TeXFormula.PIXELS_PER_POINT;
-		float d = f;
-		 float scaledDensity = jLatexMath.getContext().getResources().getDisplayMetrics().scaledDensity;
-		 float density = jLatexMath.getContext().getResources().getDisplayMetrics().density;
-		f+=1;
-		
 		st.setTextSize(TeXFormula.PIXELS_PER_POINT);
 		st.setTypeface(font);
 		st.setStyle(Style.FILL);
 		st.setAntiAlias(true);
 		st.setStrokeWidth(0);
-		
-		st.setColor(Color.BLACK);
 		arr[0] = cf.c;
 		g2.drawText(arr, 0, 1, 0, 0, st);
 		g2.restore();

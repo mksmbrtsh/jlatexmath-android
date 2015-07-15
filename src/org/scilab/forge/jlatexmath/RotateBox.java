@@ -184,10 +184,10 @@ public class RotateBox extends Box {
         box.drawDebug(g2, x, y, true);
         y -= shiftY;
         x += shiftX - xmin;
-        g2.rotate((float)-angle, x, y);
+        g2.rotate((float)Math.toDegrees((float)-angle), x, y);
         box.draw(g2, x, y);
         box.drawDebug(g2, x, y, true);
-        g2.rotate((float)angle, x, y);
+        g2.rotate((float)Math.toDegrees(angle), x, y);
     }
 
     public int getLastFontId() {

@@ -1274,7 +1274,7 @@ public class PredefMacros {
         int color;
         if ("gray".equals(args[2])) {
             float f = Float.parseFloat(args[3]);
-            color = Color.rgb((int)f, (int)f, (int)f);
+            color = Color.rgb((int)(255*f), (int)(255*f), (int)(255*f));
         } else if ("rgb".equals(args[2])) {
             StringTokenizer stok = new StringTokenizer(args[3], ";,");
             if (stok.countTokens() != 3)
@@ -1282,7 +1282,7 @@ public class PredefMacros {
             float r = Float.parseFloat(stok.nextToken().trim());
             float g = Float.parseFloat(stok.nextToken().trim());
             float b = Float.parseFloat(stok.nextToken().trim());
-            color = Color.rgb((int)r, (int)g, (int)b);
+            color = Color.rgb((int)(255*r), (int)(255*g), (int)(255*b));
         } else if ("cmyk".equals(args[2])) {
             StringTokenizer stok = new StringTokenizer(args[3], ",;");
             if (stok.countTokens() != 4)
@@ -1291,7 +1291,7 @@ public class PredefMacros {
             for (int i = 0; i < 4; i++)
                 cmyk[i] = Float.parseFloat(stok.nextToken().trim());
             float k = 1 - cmyk[3];
-            color = Color.rgb((int)(k * (1 - cmyk[0])), (int)(k * (1 - cmyk[1])), (int)(k * (1 - cmyk[2])));
+            color = Color.rgb((int)(255*k * (1 - cmyk[0])), (int)(255*k * (1 - cmyk[1])), (int)(255*k * (1 - cmyk[2])));
         } else
             throw new ParseException("The color model is incorrect !");
 

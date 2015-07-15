@@ -73,7 +73,8 @@ public abstract class Box {
 	 * on top of this background. If it's null, no background will be painted.
 	 */
 	protected Integer background = Color.WHITE;
-
+	
+	private Integer prevColor; // used temporarily in startDraw and endDraw
 	/**
 	 * The width of this box, i.e. the value that will be used for further
 	 * calculations.
@@ -285,6 +286,17 @@ public abstract class Box {
 	 *            the y-coordinate
 	 */
 	protected void startDraw(Canvas g2, float x, float y) {
+		// old color
+        prevColor = jLatexMath.getPaint().getColor();
+        if (background != null) { // draw background
+        	jLatexMath.getPaint().setColor(background);
+            //g2.fill(new Rectangle2D.Float(x, y - height, width, height + depth));
+        }
+        if (foreground == null) {
+        	jLatexMath.getPaint().setColor(prevColor); // old foreground color
+        } else {
+        	jLatexMath.getPaint().setColor(foreground); // overriding foreground color
+        }
 		drawDebug(g2, x, y);
 	}
 
@@ -326,6 +338,6 @@ public abstract class Box {
      * @param g2 the graphics (2D) context
      */
     protected void endDraw(Canvas g2) {
-        //g2.restore();
+    	jLatexMath.getPaint().setColor(prevColor);
     }
 }
