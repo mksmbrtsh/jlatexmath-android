@@ -30,28 +30,28 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing another atom vertically centered with respect to the axis 
- * (determined by a general TeXFont parameter)
+ * An atom representing another atom vertically centered with respect to the
+ * axis (determined by a general TeXFont parameter)
  */
 public class VCenteredAtom extends Atom {
 
-   // atom to be centered vertically with respect to the axis
-   private final Atom atom;
+	// atom to be centered vertically with respect to the axis
+	private final Atom atom;
 
-   public VCenteredAtom(Atom atom) {
-      this.atom = atom;
-   }
+	public VCenteredAtom(Atom atom) {
+		this.atom = atom;
+	}
 
-   public Box createBox(TeXEnvironment env) {
-      Box b = atom.createBox(env);
+	public Box createBox(TeXEnvironment env) {
+		Box b = atom.createBox(env);
 
-      float total = b.getHeight() + b.getDepth(), axis = env.getTeXFont()
-            .getAxisHeight(env.getStyle());
+		float total = b.getHeight() + b.getDepth(), axis = env.getTeXFont()
+				.getAxisHeight(env.getStyle());
 
-      // center on axis
-      b.setShift(-(total / 2) - axis);
-      
-      // put in horizontal box, so shifting will be vertically!
-      return new HorizontalBox(b);
-   }
+		// center on axis
+		b.setShift(-(total / 2) - axis);
+
+		// put in horizontal box, so shifting will be vertically!
+		return new HorizontalBox(b);
+	}
 }

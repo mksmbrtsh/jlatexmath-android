@@ -36,67 +36,67 @@ import org.scilab.forge.jlatexmath.TeXEnvironment;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 /**
- * This kind of atom is used to have a dynamic content
- * which comes from an other soft such as ggb.
- * The goal is to avoid the reparsing (and the reatomization)
- * of the expression. 
+ * This kind of atom is used to have a dynamic content which comes from an other
+ * soft such as ggb. The goal is to avoid the reparsing (and the reatomization)
+ * of the expression.
  */
 public class DynamicAtom extends Atom {
-    
-    private static ExternalConverterFactory ecFactory;
-    private ExternalConverter converter;
-    private TeXFormula formula = new TeXFormula();
-    private String externalCode;
-    private boolean insert;
-    private boolean refreshed;
 
-    public DynamicAtom(String externalCode, String option) {
-	this.externalCode = externalCode;
-	if (ecFactory != null) {
-	    this.converter = ecFactory.getExternalConverter();
-	}
-	if (option != null && option.equals("i")) {
-	    insert = true;
-	}
-    }
+	private static ExternalConverterFactory ecFactory;
+	private ExternalConverter converter;
+	private TeXFormula formula = new TeXFormula();
+	private String externalCode;
+	private boolean insert;
+	private boolean refreshed;
 
-    public static boolean hasAnExternalConverterFactory() {
-	return ecFactory != null;
-    }
-
-    public static void setExternalConverterFactory(ExternalConverterFactory factory) {
-	ecFactory = factory;
-    }
-
-    public boolean getInsertMode() {
-	return insert;
-    }
-
-    public Atom getAtom() {
-	if (!refreshed) {
-	    formula.setLaTeX(converter.getLaTeXString(externalCode));
-	    refreshed = true;
-	}
-	
-	if (formula.root == null) {
-	    return new EmptyAtom();
+	public DynamicAtom(String externalCode, String option) {
+		this.externalCode = externalCode;
+		if (ecFactory != null) {
+			this.converter = ecFactory.getExternalConverter();
+		}
+		if (option != null && option.equals("i")) {
+			insert = true;
+		}
 	}
 
-	return formula.root;
-    }
-
-    public Box createBox(TeXEnvironment env) {
-	if (converter != null) {
-	    if (refreshed) {
-		refreshed = false;
-	    } else {
-		formula.setLaTeX(converter.getLaTeXString(externalCode));
-	    }
-	    if (formula.root != null) {
-		return formula.root.createBox(env);
-	    }
+	public static boolean hasAnExternalConverterFactory() {
+		return ecFactory != null;
 	}
 
-	return new StrutBox(0, 0, 0, 0);
-    }
+	public static void setExternalConverterFactory(
+			ExternalConverterFactory factory) {
+		ecFactory = factory;
+	}
+
+	public boolean getInsertMode() {
+		return insert;
+	}
+
+	public Atom getAtom() {
+		if (!refreshed) {
+			formula.setLaTeX(converter.getLaTeXString(externalCode));
+			refreshed = true;
+		}
+
+		if (formula.root == null) {
+			return new EmptyAtom();
+		}
+
+		return formula.root;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		if (converter != null) {
+			if (refreshed) {
+				refreshed = false;
+			} else {
+				formula.setLaTeX(converter.getLaTeXString(externalCode));
+			}
+			if (formula.root != null) {
+				return formula.root.createBox(env);
+			}
+		}
+
+		return new StrutBox(0, 0, 0, 0);
+	}
 }

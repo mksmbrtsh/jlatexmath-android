@@ -29,46 +29,54 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing an extensible left or right arrow to handle xleftarrow and xrightarrow commands in LaTeX.
+ * An atom representing an extensible left or right arrow to handle xleftarrow
+ * and xrightarrow commands in LaTeX.
  */
 public class XArrowAtom extends Atom {
 
-    private Atom over, under;
-    private boolean left;
+	private Atom over, under;
+	private boolean left;
 
-    public XArrowAtom(Atom over, Atom under, boolean left) {
-        this.over = over;
-	this.under = under;
-	this.left = left;
-    } 
+	public XArrowAtom(Atom over, Atom under, boolean left) {
+		this.over = over;
+		this.under = under;
+		this.left = left;
+	}
 
-    public Box createBox(TeXEnvironment env) {
-	TeXFont tf = env.getTeXFont();
-        int style = env.getStyle();
-	Box O = over != null ? over.createBox(env.supStyle()) : new StrutBox(0, 0, 0, 0);
-	Box U = under != null ? under.createBox(env.subStyle()) : new StrutBox(0, 0, 0, 0);
-	Box oside = new SpaceAtom(TeXConstants.UNIT_EM, 1.5f, 0, 0).createBox(env.supStyle());
-	Box uside = new SpaceAtom(TeXConstants.UNIT_EM, 1.5f, 0, 0).createBox(env.subStyle());
-	Box sep = new SpaceAtom(TeXConstants.UNIT_MU, 0, 2f, 0).createBox(env);
-	float width = Math.max(O.getWidth() + 2 * oside.getWidth(), U.getWidth() + 2 * uside.getWidth());
-	Box arrow = XLeftRightArrowFactory.create(left, env, width);
-	
-	Box ohb = new HorizontalBox(O, width, TeXConstants.ALIGN_CENTER);
-	Box uhb = new HorizontalBox(U, width, TeXConstants.ALIGN_CENTER);
-    
-	VerticalBox vb = new VerticalBox();
-	vb.add(ohb);
-	vb.add(sep);
-	vb.add(arrow);
-	vb.add(sep);
-	vb.add(uhb);
+	public Box createBox(TeXEnvironment env) {
+		TeXFont tf = env.getTeXFont();
+		int style = env.getStyle();
+		Box O = over != null ? over.createBox(env.supStyle()) : new StrutBox(0,
+				0, 0, 0);
+		Box U = under != null ? under.createBox(env.subStyle()) : new StrutBox(
+				0, 0, 0, 0);
+		Box oside = new SpaceAtom(TeXConstants.UNIT_EM, 1.5f, 0, 0)
+				.createBox(env.supStyle());
+		Box uside = new SpaceAtom(TeXConstants.UNIT_EM, 1.5f, 0, 0)
+				.createBox(env.subStyle());
+		Box sep = new SpaceAtom(TeXConstants.UNIT_MU, 0, 2f, 0).createBox(env);
+		float width = Math.max(O.getWidth() + 2 * oside.getWidth(),
+				U.getWidth() + 2 * uside.getWidth());
+		Box arrow = XLeftRightArrowFactory.create(left, env, width);
 
-	float h = vb.getHeight() + vb.getDepth();
-	float d = sep.getHeight() + sep.getDepth() + uhb.getHeight() + uhb.getDepth();
-	vb.setDepth(d);
-	vb.setHeight(h - d);
-	
-	HorizontalBox hb = new HorizontalBox(vb, vb.getWidth() + 2*sep.getHeight(), TeXConstants.ALIGN_CENTER);
-	return hb;	
-    }
+		Box ohb = new HorizontalBox(O, width, TeXConstants.ALIGN_CENTER);
+		Box uhb = new HorizontalBox(U, width, TeXConstants.ALIGN_CENTER);
+
+		VerticalBox vb = new VerticalBox();
+		vb.add(ohb);
+		vb.add(sep);
+		vb.add(arrow);
+		vb.add(sep);
+		vb.add(uhb);
+
+		float h = vb.getHeight() + vb.getDepth();
+		float d = sep.getHeight() + sep.getDepth() + uhb.getHeight()
+				+ uhb.getDepth();
+		vb.setDepth(d);
+		vb.setHeight(h - d);
+
+		HorizontalBox hb = new HorizontalBox(vb, vb.getWidth() + 2
+				* sep.getHeight(), TeXConstants.ALIGN_CENTER);
+		return hb;
+	}
 }

@@ -33,16 +33,16 @@ package org.scilab.forge.jlatexmath;
  */
 public class UnderscoreAtom extends Atom {
 
-    public static SpaceAtom w = new SpaceAtom(TeXConstants.UNIT_EM, 0.7f, 0, 0);
-    public static SpaceAtom s = new SpaceAtom(TeXConstants.UNIT_EM, 0.06f, 0, 0);
+	public static SpaceAtom w = new SpaceAtom(TeXConstants.UNIT_EM, 0.7f, 0, 0);
+	public static SpaceAtom s = new SpaceAtom(TeXConstants.UNIT_EM, 0.06f, 0, 0);
 
-    public UnderscoreAtom() {
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	HorizontalBox hb = new HorizontalBox(s.createBox(env));
-	hb.add(new HorizontalRule(drt, w.createBox(env).getWidth(), 0));
-	return hb;
-    } 
+	public UnderscoreAtom() {
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+		HorizontalBox hb = new HorizontalBox(s.createBox(env));
+		hb.add(new HorizontalRule(drt, w.createBox(env).getWidth(), 0));
+		return hb;
+	}
 }

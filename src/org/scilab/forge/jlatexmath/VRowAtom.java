@@ -40,69 +40,69 @@ import java.util.ListIterator;
  * An atom representing a vertical row of other atoms.
  */
 public class VRowAtom extends Atom {
-    
-    // atoms to be displayed horizontally next to eachother
-    protected LinkedList<Atom> elements = new LinkedList<Atom>();
-    private SpaceAtom raise = new SpaceAtom(TeXConstants.UNIT_EX, 0, 0, 0);
-    protected boolean addInterline = false;
-    
-    public VRowAtom() {
-        // empty
-    }
-    
-    public VRowAtom(Atom el) {
-        if (el != null) {
-            if (el instanceof VRowAtom)
-                // no need to make an mrow the only element of an mrow
-                elements.addAll(((VRowAtom) el).elements);
-            else
-                elements.add(el);
-        }
-    }
 
-    public void setAddInterline(boolean addInterline) {
-	this.addInterline = addInterline;
-    }
+	// atoms to be displayed horizontally next to eachother
+	protected LinkedList<Atom> elements = new LinkedList<Atom>();
+	private SpaceAtom raise = new SpaceAtom(TeXConstants.UNIT_EX, 0, 0, 0);
+	protected boolean addInterline = false;
 
-    public boolean getAddInterline() {
-	return this.addInterline;
-    }
-
-    public void setRaise(int unit, float r) {
-	raise = new SpaceAtom(unit, r, 0, 0);
-    }
-    
-    public Atom getLastAtom() {
-	return elements.removeLast();
-    }
-	
-    public final void add(Atom el) {
-        if (el != null)
-            elements.add(0, el);
-    }
-
-    public final void append(Atom el) {
-        if (el != null)
-            elements.add(el);
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-        VerticalBox vb = new VerticalBox();
-	Box interline = new StrutBox(0, env.getInterline(), 0, 0);
-
-        // convert atoms to boxes and add to the horizontal box
-        for (ListIterator it = elements.listIterator(); it.hasNext();) {
-            vb.add(((Atom)it.next()).createBox(env));
-	    if (addInterline && it.hasNext()) {
-		vb.add(interline);
-	    }
+	public VRowAtom() {
+		// empty
 	}
 
-	vb.setShift(-raise.createBox(env).getWidth());
-	float t = vb.getSize() == 0 ? 0 : vb.children.getLast().getDepth();
-	vb.setHeight(vb.getDepth() + vb.getHeight() - t);
-	vb.setDepth(t);
-		
-	return vb;
-    }
+	public VRowAtom(Atom el) {
+		if (el != null) {
+			if (el instanceof VRowAtom)
+				// no need to make an mrow the only element of an mrow
+				elements.addAll(((VRowAtom) el).elements);
+			else
+				elements.add(el);
+		}
+	}
+
+	public void setAddInterline(boolean addInterline) {
+		this.addInterline = addInterline;
+	}
+
+	public boolean getAddInterline() {
+		return this.addInterline;
+	}
+
+	public void setRaise(int unit, float r) {
+		raise = new SpaceAtom(unit, r, 0, 0);
+	}
+
+	public Atom getLastAtom() {
+		return elements.removeLast();
+	}
+
+	public final void add(Atom el) {
+		if (el != null)
+			elements.add(0, el);
+	}
+
+	public final void append(Atom el) {
+		if (el != null)
+			elements.add(el);
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		VerticalBox vb = new VerticalBox();
+		Box interline = new StrutBox(0, env.getInterline(), 0, 0);
+
+		// convert atoms to boxes and add to the horizontal box
+		for (ListIterator it = elements.listIterator(); it.hasNext();) {
+			vb.add(((Atom) it.next()).createBox(env));
+			if (addInterline && it.hasNext()) {
+				vb.add(interline);
+			}
+		}
+
+		vb.setShift(-raise.createBox(env).getWidth());
+		float t = vb.getSize() == 0 ? 0 : vb.children.getLast().getDepth();
+		vb.setHeight(vb.getDepth() + vb.getHeight() - t);
+		vb.setDepth(t);
+
+		return vb;
+	}
 }

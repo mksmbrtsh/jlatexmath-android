@@ -29,28 +29,29 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing a smashed atom (i.e. with no height and no depth). 
+ * An atom representing a smashed atom (i.e. with no height and no depth).
  */
 public class StrikeThroughAtom extends Atom {
 
-    private Atom at;
-    
-    public StrikeThroughAtom(Atom at) {
-        this.at = at;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-        TeXFont tf = env.getTeXFont();
-        int style = env.getStyle();
-	float axis = tf.getAxisHeight(style);
-        float drt = tf.getDefaultRuleThickness(style);
-	Box b = at.createBox(env);
-	HorizontalRule rule = new HorizontalRule(drt, b.getWidth(), -axis + drt, false);
-	HorizontalBox hb = new HorizontalBox();
-	hb.add(b);
-	hb.add(new StrutBox(-b.getWidth(), 0, 0, 0));
-	hb.add(rule);
-	
-	return hb;
-    }
+	private Atom at;
+
+	public StrikeThroughAtom(Atom at) {
+		this.at = at;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		TeXFont tf = env.getTeXFont();
+		int style = env.getStyle();
+		float axis = tf.getAxisHeight(style);
+		float drt = tf.getDefaultRuleThickness(style);
+		Box b = at.createBox(env);
+		HorizontalRule rule = new HorizontalRule(drt, b.getWidth(),
+				-axis + drt, false);
+		HorizontalBox hb = new HorizontalBox();
+		hb.add(b);
+		hb.add(new StrutBox(-b.getWidth(), 0, 0, 0));
+		hb.add(rule);
+
+		return hb;
+	}
 }

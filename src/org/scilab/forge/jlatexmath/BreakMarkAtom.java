@@ -33,9 +33,10 @@ package org.scilab.forge.jlatexmath;
  */
 public class BreakMarkAtom extends Atom {
 
-    public BreakMarkAtom() { }
+	public BreakMarkAtom() {
+	}
 
-    public Box createBox(TeXEnvironment env) {
-        return new StrutBox(0, 0, 0, 0);
-    }
+	public Box createBox(TeXEnvironment env) {
+		return new StrutBox(0, 0, 0, 0);
+	}
 }

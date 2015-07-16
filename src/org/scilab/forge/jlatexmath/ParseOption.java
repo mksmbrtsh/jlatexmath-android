@@ -33,29 +33,30 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * Parse command options, e.g. \includegraphics[width=1cm,height=2in,keepaspectratio]{...}
+ * Parse command options, e.g.
+ * \includegraphics[width=1cm,height=2in,keepaspectratio]{...}
  */
 public final class ParseOption {
 
-    public final static Map<String, String> parseMap(String options) {
-	Map<String, String> map = new HashMap<String, String>();
-	if (options == null || options.length() == 0) {
-	    return map;
-	}
-	StringTokenizer tokens = new StringTokenizer(options, ",");
-	while (tokens.hasMoreTokens()) {
-	    String tok = tokens.nextToken().trim();
-	    String[] optarg = tok.split("=");
-	    if (optarg != null){
-		if (optarg.length == 2) {
-		    map.put(optarg[0].trim(), optarg[1].trim());
-		} else if (optarg.length == 1) {
-		    map.put(optarg[0].trim(), null);
+	public final static Map<String, String> parseMap(String options) {
+		Map<String, String> map = new HashMap<String, String>();
+		if (options == null || options.length() == 0) {
+			return map;
 		}
-	    }
+		StringTokenizer tokens = new StringTokenizer(options, ",");
+		while (tokens.hasMoreTokens()) {
+			String tok = tokens.nextToken().trim();
+			String[] optarg = tok.split("=");
+			if (optarg != null) {
+				if (optarg.length == 2) {
+					map.put(optarg[0].trim(), optarg[1].trim());
+				} else if (optarg.length == 1) {
+					map.put(optarg[0].trim(), null);
+				}
+			}
+		}
+
+		return map;
 	}
-	
-	return map;
-    }
 
 }

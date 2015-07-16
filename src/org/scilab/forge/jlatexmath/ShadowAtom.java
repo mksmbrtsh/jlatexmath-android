@@ -28,17 +28,17 @@
 
 package org.scilab.forge.jlatexmath;
 
-
 /**
- * An atom representing a boxed base atom. 
+ * An atom representing a boxed base atom.
  */
 public class ShadowAtom extends FBoxAtom {
 
-    public ShadowAtom(Atom base) {
-	super(base);
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	return new ShadowBox((FramedBox) super.createBox(env), env.getTeXFont().getDefaultRuleThickness(env.getStyle()) * 4);
-    }
+	public ShadowAtom(Atom base) {
+		super(base);
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		return new ShadowBox((FramedBox) super.createBox(env), env.getTeXFont()
+				.getDefaultRuleThickness(env.getStyle()) * 4);
+	}
 }

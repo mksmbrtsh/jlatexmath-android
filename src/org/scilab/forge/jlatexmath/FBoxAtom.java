@@ -30,42 +30,42 @@ package org.scilab.forge.jlatexmath;
 
 import android.graphics.Color;
 
-
 /**
- * An atom representing a boxed base atom. 
+ * An atom representing a boxed base atom.
  */
 public class FBoxAtom extends Atom {
 
-    public float INTERSPACE = 0.65f;
+	public float INTERSPACE = 0.65f;
 
-    // base atom
-    protected final Atom base;
-    protected Integer bg = null, line = null;
-	
-    public FBoxAtom(Atom base) {
-	if (base == null)
-	    this.base = new RowAtom(); // empty base
-	else {
-	    this.base = base;
-	    this.type = base.type;
-	}
-    }
-    
-    public FBoxAtom(Atom base, Integer bg, Integer line) {
-	this(base);
-	this.bg = bg;
-	this.line = line;
-    }
+	// base atom
+	protected final Atom base;
+	protected Integer bg = null, line = null;
 
-    public Box createBox(TeXEnvironment env) {
-	Box bbase = base.createBox(env);
-	float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	float space = INTERSPACE * SpaceAtom.getFactor(TeXConstants.UNIT_EM, env);
-	if (bg == null) {
-	    return new FramedBox(bbase, drt, space);
-	} else {
-	    env.isColored = true;
-	    return new FramedBox(bbase, drt, space, line, bg);
+	public FBoxAtom(Atom base) {
+		if (base == null)
+			this.base = new RowAtom(); // empty base
+		else {
+			this.base = base;
+			this.type = base.type;
+		}
 	}
-    }
+
+	public FBoxAtom(Atom base, Integer bg, Integer line) {
+		this(base);
+		this.bg = bg;
+		this.line = line;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		Box bbase = base.createBox(env);
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+		float space = INTERSPACE
+				* SpaceAtom.getFactor(TeXConstants.UNIT_EM, env);
+		if (bg == null) {
+			return new FramedBox(bbase, drt, space);
+		} else {
+			env.isColored = true;
+			return new FramedBox(bbase, drt, space, line, bg);
+		}
+	}
 }

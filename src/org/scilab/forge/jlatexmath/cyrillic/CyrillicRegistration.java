@@ -34,18 +34,18 @@ import org.scilab.forge.jlatexmath.AlphabetRegistration;
 
 public class CyrillicRegistration implements AlphabetRegistration {
 
-    public CyrillicRegistration() {
-    }
+	public CyrillicRegistration() {
+	}
 
-    public Character.UnicodeBlock[] getUnicodeBlock() {
-	return new Character.UnicodeBlock[]{Character.UnicodeBlock.CYRILLIC};
-    }
+	public Character.UnicodeBlock[] getUnicodeBlock() {
+		return new Character.UnicodeBlock[] { Character.UnicodeBlock.CYRILLIC };
+	}
 
-    public Object getPackage() {
-	return this;
-    }
+	public Object getPackage() {
+		return this;
+	}
 
-    public String getTeXFontFileName() {
-	return "fonts/language_cyrillic.xml";
-    }
+	public String getTeXFontFileName() {
+		return "fonts/language_cyrillic.xml";
+	}
 }

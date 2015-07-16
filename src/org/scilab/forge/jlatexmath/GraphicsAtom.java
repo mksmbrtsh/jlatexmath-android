@@ -28,119 +28,84 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
 
 /**
  * An atom representing an atom containing a graphic.
  */
 public class GraphicsAtom extends Atom {
-    
-    private Bitmap image = null;
-    private Bitmap bimage;
-   // private Label c;
-    private int w, h;
 
-    private Atom base;
-    private boolean first = true;
-    private int interp = -1;
+	private Bitmap image = null;
+	private Bitmap bimage;
+	private int w, h;
 
-    public GraphicsAtom(String path, String option) {
-    	InputStream is;
-		try {
-			is = jLatexMath.getAssetManager().open(path);
-			image = BitmapFactory.decodeStream(is);
-			is.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private Atom base;
+	private boolean first = true;
+	private int interp = -1;
+
+	public GraphicsAtom(String path, String option) {
+		image = BitmapFactory.decodeFile(path);
+		draw();
+		buildAtom(option);
+	}
+
+	protected void buildAtom(String option) {
+		base = this;
+		Map<String, String> options = ParseOption.parseMap(option);
+		if (options.containsKey("width") || options.containsKey("height")) {
+			base = new ResizeAtom(base, options.get("width"),
+					options.get("height"),
+					options.containsKey("keepaspectratio"));
 		}
-    	
-    	//image = BitmapFactory.decodeFile(path);
-	/*File f = new File(path);
-	if (!f.exists()) {
-	    try {
-		URL url = new URL(path);
-		image = Toolkit.getDefaultToolkit().getImage(url);
-	    } catch (MalformedURLException e) {
-		image = null;
-	    }
-	} else {
-	    image = Toolkit.getDefaultToolkit().getImage(path);
-	}
-	
-	if (image != null) {
-	    c = new Label();
-	    MediaTracker tracker = new MediaTracker(c);
-	    tracker.addImage(image, 0);
-	    try {
-		tracker.waitForID(0);
-	    } catch (InterruptedException e) {
-		image = null;
-	    }
-	}*/
-	draw();
-	buildAtom(option);
-    }
-
-    protected void buildAtom(String option) {
-	base = this;
-    	Map<String, String> options = ParseOption.parseMap(option);
-	if (options.containsKey("width") || options.containsKey("height")) {
-	    base = new ResizeAtom(base, options.get("width"), options.get("height"), options.containsKey("keepaspectratio"));
-	}
-	if (options.containsKey("scale")) {
-	    double scl = Double.parseDouble(options.get("scale"));
-	    base = new ScaleAtom(base, scl, scl); 
-	}
-	if (options.containsKey("angle") || options.containsKey("origin")) {
-	    base = new RotateAtom(base, options.get("angle"), options.get("origin"));
-	}
-	if (options.containsKey("interpolation")) {
-	    String meth = options.get("interpolation");
-	    if (meth.equalsIgnoreCase("bilinear")) {
-		interp = GraphicsBox.BILINEAR;
-	    } else if (meth.equalsIgnoreCase("bicubic")) {
-		interp = GraphicsBox.BICUBIC;
-	    } else if (meth.equalsIgnoreCase("nearest_neighbor")) {
-		interp = GraphicsBox.NEAREST_NEIGHBOR;
-	    }
-	}
-    }
-	
-    public void draw() {
-	/*if (image != null) {
-	    w = image.getWidth();
-	    h = image.getHeight();
-	    bimage =Bitmap.createBitmap(w, h, Config.ARGB_8888);
-	    Canvas g2d = new Canvas(bimage);
-	    g2d.drawBitmap(image, 0, 0, null);
-	}*/
-    	bimage = image;
-    }
-
-    public Box createBox(TeXEnvironment env) {
-	if (image != null) {
-	    if (first) {
-		first = false;
-		return base.createBox(env);
-	    } else {
-		env.isColored = true;
-		float width = w * SpaceAtom.getFactor(TeXConstants.UNIT_PIXEL, env);
-		float height = h * SpaceAtom.getFactor(TeXConstants.UNIT_PIXEL, env);
-		return new GraphicsBox(bimage, width, height, env.getSize(), interp);
-	    }
+		if (options.containsKey("scale")) {
+			double scl = Double.parseDouble(options.get("scale"));
+			base = new ScaleAtom(base, scl, scl);
+		}
+		if (options.containsKey("angle") || options.containsKey("origin")) {
+			base = new RotateAtom(base, options.get("angle"),
+					options.get("origin"));
+		}
+		if (options.containsKey("interpolation")) {
+			String meth = options.get("interpolation");
+			if (meth.equalsIgnoreCase("bilinear")) {
+				interp = GraphicsBox.BILINEAR;
+			} else if (meth.equalsIgnoreCase("bicubic")) {
+				interp = GraphicsBox.BICUBIC;
+			} else if (meth.equalsIgnoreCase("nearest_neighbor")) {
+				interp = GraphicsBox.NEAREST_NEIGHBOR;
+			}
+		}
 	}
 
-	return new TeXFormula("\\text{ No such image file ! }").root.createBox(env);
-    }
+	public void draw() {
+		/*
+		 * if (image != null) { w = image.getWidth(); h = image.getHeight();
+		 * bimage =Bitmap.createBitmap(w, h, Config.ARGB_8888); Canvas g2d = new
+		 * Canvas(bimage); g2d.drawBitmap(image, 0, 0, null); }
+		 */
+		bimage = image;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		if (image != null) {
+			if (first) {
+				first = false;
+				return base.createBox(env);
+			} else {
+				env.isColored = true;
+				float width = w
+						* SpaceAtom.getFactor(TeXConstants.UNIT_PIXEL, env);
+				float height = h
+						* SpaceAtom.getFactor(TeXConstants.UNIT_PIXEL, env);
+				return new GraphicsBox(bimage, width, height, env.getSize(),
+						interp);
+			}
+		}
+
+		return new TeXFormula("\\text{ No such image file ! }").root
+				.createBox(env);
+	}
 }

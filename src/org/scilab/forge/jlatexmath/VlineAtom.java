@@ -32,49 +32,51 @@ package org.scilab.forge.jlatexmath;
  * An atom representing a hline in array environment
  */
 public class VlineAtom extends Atom {
-    
-    private float height;
-    private float shift;
-    private int n;
-    
-    public VlineAtom(int n) {
-	this.n = n;
-    }
-    
-    public void setHeight(float height) {
-	this.height = height;
-    }
 
-    public void setShift(float shift) {
-	this.shift = shift;
-    }
+	private float height;
+	private float shift;
+	private int n;
 
-    public float getWidth(TeXEnvironment env) {
-	if (n != 0) {
-	    float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	    return drt * (3 * n - 2);
-	} else
-	    return 0;
-    }
-
-    public Box createBox(TeXEnvironment env) {
-	if (n != 0) {
-	    float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	    Box b = new HorizontalRule(height, drt, shift);
-	    Box sep = new StrutBox(2 * drt, 0, 0, 0);
-	    HorizontalBox hb = new HorizontalBox();
-	    for (int i = 0; i < n - 1; i++) {
-		hb.add(b);
-		hb.add(sep);
-	    }
-	    
-	    if (n > 0) {
-		hb.add(b);
-	    }
-	    
-	    return hb;
+	public VlineAtom(int n) {
+		this.n = n;
 	}
-	
-	return new StrutBox(0, 0, 0, 0);
-    }
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public void setShift(float shift) {
+		this.shift = shift;
+	}
+
+	public float getWidth(TeXEnvironment env) {
+		if (n != 0) {
+			float drt = env.getTeXFont()
+					.getDefaultRuleThickness(env.getStyle());
+			return drt * (3 * n - 2);
+		} else
+			return 0;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		if (n != 0) {
+			float drt = env.getTeXFont()
+					.getDefaultRuleThickness(env.getStyle());
+			Box b = new HorizontalRule(height, drt, shift);
+			Box sep = new StrutBox(2 * drt, 0, 0, 0);
+			HorizontalBox hb = new HorizontalBox();
+			for (int i = 0; i < n - 1; i++) {
+				hb.add(b);
+				hb.add(sep);
+			}
+
+			if (n > 0) {
+				hb.add(b);
+			}
+
+			return hb;
+		}
+
+		return new StrutBox(0, 0, 0, 0);
+	}
 }

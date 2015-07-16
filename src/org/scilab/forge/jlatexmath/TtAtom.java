@@ -29,22 +29,22 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing a typewriter atom. 
+ * An atom representing a typewriter atom.
  */
 public class TtAtom extends Atom {
-    
-    private Atom base;
-    
-    public TtAtom(Atom base) {
-	this.base = base;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	env = env.copy(env.getTeXFont().copy());
-	env.getTeXFont().setTt(true);
-	Box box = base.createBox(env);
-	env.getTeXFont().setTt(false);
-	return box; 
-    }
-    
+
+	private Atom base;
+
+	public TtAtom(Atom base) {
+		this.base = base;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		env = env.copy(env.getTeXFont().copy());
+		env.getTeXFont().setTt(true);
+		Box box = base.createBox(env);
+		env.getTeXFont().setTt(false);
+		return box;
+	}
+
 }

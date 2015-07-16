@@ -2,49 +2,45 @@ package com.example.example.jlatexmath;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Random;
 
 import org.scilab.forge.jlatexmath.Insets;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
-import org.scilab.forge.jlatexmath.TeXFormula.TeXIconBuilder;
 import org.scilab.forge.jlatexmath.jLatexMath;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-public class MainActivity extends FragmentActivity {
+public class ExampleFragment extends Fragment {
 
-	private ViewPager mPager;
-	private PagesAdapter mAdapter;
+	public static android.support.v4.app.Fragment newInstance() {
+		android.support.v4.app.Fragment fragment = new ExampleFragment();
+		return fragment;
+	}
+
+	private ImageView mImageView;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		mPager = (ViewPager) findViewById(R.id.pager);
-		mAdapter = new PagesAdapter(getSupportFragmentManager());
-		mPager.setAdapter(mAdapter);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		
-		
-		/*ImageView i = (ImageView) findViewById(R.id.imageView1);
-		jLatexMath.init(this);
-
+		LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_example,
+				container, false);
+		mImageView = (ImageView)layout.findViewById(R.id.imageView1);
+		jLatexMath.init(getActivity());
 		String latex = "\\begin{array}{l}";
 		latex += "\\forall\\varepsilon\\in\\mathbb{R}_+^*\\ \\exists\\eta>0\\ |x-x_0|\\leq\\eta\\Longrightarrow|f(x)-f(x_0)|\\leq\\varepsilon\\\\";
 		latex += "\\det\\begin{bmatrix}a_{11}&a_{12}&\\cdots&a_{1n}\\\\a_{21}&\\ddots&&\\vdots\\\\\\vdots&&\\ddots&\\vdots\\\\a_{n1}&\\cdots&\\cdots&a_{nn}\\end{bmatrix}\\overset{\\mathrm{def}}{=}\\sum_{\\sigma\\in\\mathfrak{S}_n}\\varepsilon(\\sigma)\\prod_{k=1}^n a_{k\\sigma(k)}\\\\";
@@ -67,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 		Canvas g2 = new Canvas(image);
 		g2.drawColor(Color.WHITE);
 		icon.paintIcon(g2, 0, 0);
-		i.setImageBitmap(image);
+		mImageView.setImageBitmap(image);
 		String root = Environment.getExternalStorageDirectory().toString();
 		File myDir = new File(root + "/saved_images");
 		myDir.mkdirs();
@@ -86,27 +82,8 @@ public class MainActivity extends FragmentActivity {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
-	}
-	
-	private class PagesAdapter extends FragmentPagerAdapter {
-
-		public PagesAdapter(FragmentManager fragmentManager) {
-			super(fragmentManager);
-		}
-
-		@Override
-		public android.support.v4.app.Fragment getItem(int arg0) {
-			// TODO Auto-generated method stub
-			return ExampleFragment.newInstance();
-		}
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return 3;
 		}
 		
+		return layout;
 	}
-
 }

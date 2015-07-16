@@ -28,93 +28,98 @@
 
 package org.scilab.forge.jlatexmath;
 
-
 /**
- * Responsible for creating a box containing a delimiter symbol that exists
- * in different sizes.
+ * Responsible for creating a box containing a delimiter symbol that exists in
+ * different sizes.
  */
 public class XLeftRightArrowFactory {
-    
-    private static final Atom MINUS = SymbolAtom.get("minus");
-    private static final Atom LEFT = SymbolAtom.get("leftarrow");
-    private static final Atom RIGHT = SymbolAtom.get("rightarrow");
-    
-    public static Box create(boolean left, TeXEnvironment env, float width) {
-        TeXFont tf = env.getTeXFont();
-        int style = env.getStyle();
-	Box arr = left ? LEFT.createBox(env) : RIGHT.createBox(env);
-	float h = arr.getHeight();
-	float d = arr.getDepth();
-	
-	float swidth = arr.getWidth();
-	if (width <= swidth) {
-	    arr.setDepth(d / 2);
-	    return arr;
+
+	private static final Atom MINUS = SymbolAtom.get("minus");
+	private static final Atom LEFT = SymbolAtom.get("leftarrow");
+	private static final Atom RIGHT = SymbolAtom.get("rightarrow");
+
+	public static Box create(boolean left, TeXEnvironment env, float width) {
+		TeXFont tf = env.getTeXFont();
+		int style = env.getStyle();
+		Box arr = left ? LEFT.createBox(env) : RIGHT.createBox(env);
+		float h = arr.getHeight();
+		float d = arr.getDepth();
+
+		float swidth = arr.getWidth();
+		if (width <= swidth) {
+			arr.setDepth(d / 2);
+			return arr;
+		}
+
+		Box minus = new SmashedAtom(MINUS, "").createBox(env);
+		Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -4f, 0, 0)
+				.createBox(env);
+		float mwidth = minus.getWidth() + kern.getWidth();
+		swidth += kern.getWidth();
+		HorizontalBox hb = new HorizontalBox();
+		float w;
+		for (w = 0; w < width - swidth - mwidth; w += mwidth) {
+			hb.add(minus);
+			hb.add(kern);
+		}
+
+		float sf = (width - swidth - w) / minus.getWidth();
+
+		hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf, 0, 0)
+				.createBox(env));
+		hb.add(new ScaleAtom(MINUS, sf, 1).createBox(env));
+
+		if (left) {
+			hb.add(0, new SpaceAtom(TeXConstants.UNIT_MU, -3.5f, 0, 0)
+					.createBox(env));
+			hb.add(0, arr);
+		} else {
+			hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf - 2f, 0, 0)
+					.createBox(env));
+			hb.add(arr);
+		}
+
+		hb.setDepth(d / 2);
+		hb.setHeight(h);
+
+		return hb;
 	}
 
-	Box minus = new SmashedAtom(MINUS, "").createBox(env);
-	Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -4f, 0, 0).createBox(env);
-	float mwidth = minus.getWidth() + kern.getWidth();
-	swidth += kern.getWidth();
-	HorizontalBox hb = new HorizontalBox();
-	float w;
-	for (w = 0; w < width - swidth - mwidth; w += mwidth) {
-	    hb.add(minus);
-	    hb.add(kern);
+	public static Box create(TeXEnvironment env, float width) {
+		TeXFont tf = env.getTeXFont();
+		int style = env.getStyle();
+		Box left = LEFT.createBox(env);
+		Box right = RIGHT.createBox(env);
+		float swidth = left.getWidth() + right.getWidth();
+
+		if (width < swidth) {
+			HorizontalBox hb = new HorizontalBox(left);
+			hb.add(new StrutBox(-Math.min(swidth - width, left.getWidth()), 0,
+					0, 0));
+			hb.add(right);
+			return hb;
+		}
+
+		Box minus = new SmashedAtom(MINUS, "").createBox(env);
+		Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -3.4f, 0, 0)
+				.createBox(env);
+		float mwidth = minus.getWidth() + kern.getWidth();
+		swidth += 2 * kern.getWidth();
+
+		HorizontalBox hb = new HorizontalBox();
+		float w;
+		for (w = 0; w < width - swidth - mwidth; w += mwidth) {
+			hb.add(minus);
+			hb.add(kern);
+		}
+
+		hb.add(new ScaleBox(minus, (width - swidth - w) / minus.getWidth(), 1));
+
+		hb.add(0, kern);
+		hb.add(0, left);
+		hb.add(kern);
+		hb.add(right);
+
+		return hb;
 	}
-
-	float sf = (width - swidth - w) / minus.getWidth();
-
-	hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf, 0, 0).createBox(env));
-	hb.add(new ScaleAtom(MINUS, sf, 1).createBox(env));
-	
-	if (left) {
-	    hb.add(0, new SpaceAtom(TeXConstants.UNIT_MU, -3.5f, 0, 0).createBox(env));
-	    hb.add(0, arr);
-	} else {
-	    hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf - 2f, 0, 0).createBox(env));
-	    hb.add(arr);
-	}
-
-	hb.setDepth(d / 2);
-	hb.setHeight(h);
-
-	return hb;
-    }
-    
-    public static Box create(TeXEnvironment env, float width) {
-        TeXFont tf = env.getTeXFont();
-        int style = env.getStyle();
-	Box left = LEFT.createBox(env);
-	Box right = RIGHT.createBox(env);
-	float swidth = left.getWidth() + right.getWidth();
-
-	if (width < swidth) {
-	    HorizontalBox hb = new HorizontalBox(left);
-	    hb.add(new StrutBox(-Math.min(swidth - width, left.getWidth()), 0, 0, 0));
-	    hb.add(right);
-	    return hb;
-	}
-
-	Box minus = new SmashedAtom(MINUS, "").createBox(env);
-	Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -3.4f, 0, 0).createBox(env);
-	float mwidth = minus.getWidth() + kern.getWidth();
-	swidth += 2 * kern.getWidth();
-	
-	HorizontalBox hb = new HorizontalBox();
-	float w;
-	for (w = 0; w < width - swidth - mwidth; w += mwidth) {
-	    hb.add(minus);
-	    hb.add(kern);
-	}
-	
-	hb.add(new ScaleBox(minus, (width - swidth - w) / minus.getWidth(), 1));
-	
-	hb.add(0, kern);
-	hb.add(0, left);
-	hb.add(kern);
-	hb.add(right);
-
-	return hb;
-    }
 }

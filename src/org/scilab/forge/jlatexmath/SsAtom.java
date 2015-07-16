@@ -29,22 +29,22 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing a sans serif atom. 
+ * An atom representing a sans serif atom.
  */
 public class SsAtom extends Atom {
-    
-    private Atom base;
-    
-    public SsAtom(Atom base) {
-	this.base = base;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	env = env.copy(env.getTeXFont().copy());
-	env.getTeXFont().setSs(true);
-	Box box = base.createBox(env);
-	env.getTeXFont().setSs(false);
-	return box; 
-    }
-    
+
+	private Atom base;
+
+	public SsAtom(Atom base) {
+		this.base = base;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		env = env.copy(env.getTeXFont().copy());
+		env.getTeXFont().setSs(true);
+		Box box = base.createBox(env);
+		env.getTeXFont().setSs(false);
+		return box;
+	}
+
 }

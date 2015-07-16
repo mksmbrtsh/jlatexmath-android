@@ -33,60 +33,70 @@ import java.util.regex.Matcher;
 
 public class NewCommandMacro {
 
-    protected static HashMap<String, String> macrocode = new HashMap<String, String>();
-    protected static HashMap<String, String> macroreplacement = new HashMap<String, String>();
+	protected static HashMap<String, String> macrocode = new HashMap<String, String>();
+	protected static HashMap<String, String> macroreplacement = new HashMap<String, String>();
 
-    public NewCommandMacro() {
-    }
-    
-    public static void addNewCommand(String name, String code, int nbargs) throws ParseException {
-	//if (macrocode.get(name) != null)
-	//throw new ParseException("Command " + name + " already exists ! Use renewcommand instead ...");
-	macrocode.put(name, code);
-	MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs));
-    }
-    
-    public static void addNewCommand(String name, String code, int nbargs, String def) throws ParseException {
-	if (macrocode.get(name) != null)
-	    throw new ParseException("Command " + name + " already exists ! Use renewcommand instead ...");
-	macrocode.put(name, code);
-	macroreplacement.put(name, def);
-	MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs, 1));
-    }
-    
-    public static boolean isMacro(String name) {
-	return macrocode.containsKey(name);
-    }
-    
-    public static void addReNewCommand(String name, String code, int nbargs) {
-	if (macrocode.get(name) == null)
-	    throw new ParseException("Command " + name + " is not defined ! Use newcommand instead ...");
-	macrocode.put(name, code);
-	MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs));
-    }
-    
-    public String executeMacro(TeXParser tp, String[] args) {
-	String code = macrocode.get(args[0]);
-	String rep;
-	int nbargs = args.length - 11;
-	int dec = 0;
-	
-	
-	if (args[nbargs + 1] != null) {
-	    dec = 1;
-	    rep = Matcher.quoteReplacement(args[nbargs + 1]);
-	    code = code.replaceAll("#1", rep);
-	} else if (macroreplacement.get(args[0]) != null) {
-	    dec = 1;
-	    rep = Matcher.quoteReplacement(macroreplacement.get(args[0]));
-	    code = code.replaceAll("#1", rep);
+	public NewCommandMacro() {
 	}
 
-	for (int i = 1; i <= nbargs; i++) {
-	    rep = Matcher.quoteReplacement(args[i]);
-	    code = code.replaceAll("#" + (i + dec), rep);
+	public static void addNewCommand(String name, String code, int nbargs)
+			throws ParseException {
+		// if (macrocode.get(name) != null)
+		// throw new ParseException("Command " + name +
+		// " already exists ! Use renewcommand instead ...");
+		macrocode.put(name, code);
+		MacroInfo.Commands.put(name, new MacroInfo(
+				"org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro",
+				nbargs));
 	}
-	
-	return code;
-    }
+
+	public static void addNewCommand(String name, String code, int nbargs,
+			String def) throws ParseException {
+		if (macrocode.get(name) != null)
+			throw new ParseException("Command " + name
+					+ " already exists ! Use renewcommand instead ...");
+		macrocode.put(name, code);
+		macroreplacement.put(name, def);
+		MacroInfo.Commands.put(name, new MacroInfo(
+				"org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro",
+				nbargs, 1));
+	}
+
+	public static boolean isMacro(String name) {
+		return macrocode.containsKey(name);
+	}
+
+	public static void addReNewCommand(String name, String code, int nbargs) {
+		if (macrocode.get(name) == null)
+			throw new ParseException("Command " + name
+					+ " is not defined ! Use newcommand instead ...");
+		macrocode.put(name, code);
+		MacroInfo.Commands.put(name, new MacroInfo(
+				"org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro",
+				nbargs));
+	}
+
+	public String executeMacro(TeXParser tp, String[] args) {
+		String code = macrocode.get(args[0]);
+		String rep;
+		int nbargs = args.length - 11;
+		int dec = 0;
+
+		if (args[nbargs + 1] != null) {
+			dec = 1;
+			rep = Matcher.quoteReplacement(args[nbargs + 1]);
+			code = code.replaceAll("#1", rep);
+		} else if (macroreplacement.get(args[0]) != null) {
+			dec = 1;
+			rep = Matcher.quoteReplacement(macroreplacement.get(args[0]));
+			code = code.replaceAll("#1", rep);
+		}
+
+		for (int i = 1; i <= nbargs; i++) {
+			rep = Matcher.quoteReplacement(args[i]);
+			code = code.replaceAll("#" + (i + dec), rep);
+		}
+
+		return code;
+	}
 }

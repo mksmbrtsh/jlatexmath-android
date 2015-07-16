@@ -33,99 +33,99 @@ package org.scilab.forge.jlatexmath;
  */
 public class MulticolumnAtom extends Atom {
 
-    protected int n;
-    protected int align;
-    protected float w = 0;
-    protected Atom cols;
-    protected int beforeVlines;
-    protected int afterVlines;
-    protected int row, col;
+	protected int n;
+	protected int align;
+	protected float w = 0;
+	protected Atom cols;
+	protected int beforeVlines;
+	protected int afterVlines;
+	protected int row, col;
 
-    public MulticolumnAtom(int n, String align, Atom cols) {
-	this.n = n >= 1 ? n : 1;
-	this.cols = cols;
-	this.align = parseAlign(align);
-    }
+	public MulticolumnAtom(int n, String align, Atom cols) {
+		this.n = n >= 1 ? n : 1;
+		this.cols = cols;
+		this.align = parseAlign(align);
+	}
 
-    public void setWidth(float w) {
-	this.w = w;
-    }
+	public void setWidth(float w) {
+		this.w = w;
+	}
 
-    public int getSkipped() {
-	return n;
-    }
+	public int getSkipped() {
+		return n;
+	}
 
-    public boolean hasRightVline() {
-	return afterVlines != 0;
-    }
+	public boolean hasRightVline() {
+		return afterVlines != 0;
+	}
 
-    public void setRowColumn(int i, int j) {
-	this.row = i;
-	this.col = j;
-    }
-    
-    public int getRow() {
-	return row;
-    }
+	public void setRowColumn(int i, int j) {
+		this.row = i;
+		this.col = j;
+	}
 
-    public int getCol() {
-	return col;
-    }
+	public int getRow() {
+		return row;
+	}
 
-    private int parseAlign(String str) {
-	int pos = 0;
-	int len = str.length();
-	int align = TeXConstants.ALIGN_CENTER;
-	boolean first = true;
-	while (pos < len) {
-	    char c = str.charAt(pos);
-	    switch (c) {
-	    case 'l' :
-		align = TeXConstants.ALIGN_LEFT;
-		first = false;
-		break;
-	    case 'r':
-		align = TeXConstants.ALIGN_RIGHT;
-		first = false;
-		break;
-	    case 'c':
-		align = TeXConstants.ALIGN_CENTER;
-		first = false;
-		break;
-	    case '|':
-		if (first) {
-		    beforeVlines = 1;
-		} else {
-		    afterVlines = 1;
-		}
-		while (++pos < len) {
-		    c = str.charAt(pos);
-		    if (c != '|') {
-			pos--;
-			break;
-		    } else {
-			if (first) {
-			    beforeVlines++;
-			} else {
-			    afterVlines++;
+	public int getCol() {
+		return col;
+	}
+
+	private int parseAlign(String str) {
+		int pos = 0;
+		int len = str.length();
+		int align = TeXConstants.ALIGN_CENTER;
+		boolean first = true;
+		while (pos < len) {
+			char c = str.charAt(pos);
+			switch (c) {
+			case 'l':
+				align = TeXConstants.ALIGN_LEFT;
+				first = false;
+				break;
+			case 'r':
+				align = TeXConstants.ALIGN_RIGHT;
+				first = false;
+				break;
+			case 'c':
+				align = TeXConstants.ALIGN_CENTER;
+				first = false;
+				break;
+			case '|':
+				if (first) {
+					beforeVlines = 1;
+				} else {
+					afterVlines = 1;
+				}
+				while (++pos < len) {
+					c = str.charAt(pos);
+					if (c != '|') {
+						pos--;
+						break;
+					} else {
+						if (first) {
+							beforeVlines++;
+						} else {
+							afterVlines++;
+						}
+					}
+				}
 			}
-		    }
+			pos++;
 		}
-	    }
-	    pos++;
+		return align;
 	}
-	return align;
-    }
 
-    public Box createBox(TeXEnvironment env) {
-	Box b;
-	if (w == 0) {
-	    b = cols.createBox(env);
-	} else {
-	    b = new HorizontalBox(cols.createBox(env), w, align);	    
+	public Box createBox(TeXEnvironment env) {
+		Box b;
+		if (w == 0) {
+			b = cols.createBox(env);
+		} else {
+			b = new HorizontalBox(cols.createBox(env), w, align);
+		}
+
+		b.type = TeXConstants.TYPE_MULTICOLUMN;
+		return b;
 	}
-	
-	b.type = TeXConstants.TYPE_MULTICOLUMN;
-	return b;
-    } 
 }

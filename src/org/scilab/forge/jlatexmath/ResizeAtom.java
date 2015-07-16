@@ -33,62 +33,62 @@ package org.scilab.forge.jlatexmath;
  */
 public class ResizeAtom extends Atom {
 
-    private Atom base;
-    private int wunit, hunit;
-    private float w, h;
-    private boolean keepaspectratio;
+	private Atom base;
+	private int wunit, hunit;
+	private float w, h;
+	private boolean keepaspectratio;
 
-    public ResizeAtom(Atom base, String ws, String hs, boolean keepaspectratio) {
-        this.type = base.type;
-        this.base = base;
-	this.keepaspectratio = keepaspectratio;
-	float[] w = SpaceAtom.getLength(ws == null ? "" : ws);
-	float[] h = SpaceAtom.getLength(hs == null ? "" : hs);
-	if (w.length != 2) {
-	    this.wunit = -1;
-	} else {
-	    this.wunit = (int) w[0];
-	    this.w = w[1];
-	}
-	if (h.length != 2) {
-	    this.hunit = -1;
-	} else {
-	    this.hunit = (int) h[0];
-	    this.h = h[1];
-	}
-    }
-    
-    public int getLeftType() {
-        return base.getLeftType();
-    }
-
-    public int getRightType() {
-        return base.getRightType();
-    }
-
-    public Box createBox(TeXEnvironment env) {
-        Box bbox = base.createBox(env);
-	if (wunit == -1 && hunit == -1) {
-	    return bbox;
-	} else {
-	    double xscl = 1;
-	    double yscl = 1;
-	    if (wunit != -1 && hunit != -1) {
-		xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;
-		yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;
-		if (keepaspectratio) {
-		    xscl = Math.min(xscl, yscl);
-		    yscl = xscl;
+	public ResizeAtom(Atom base, String ws, String hs, boolean keepaspectratio) {
+		this.type = base.type;
+		this.base = base;
+		this.keepaspectratio = keepaspectratio;
+		float[] w = SpaceAtom.getLength(ws == null ? "" : ws);
+		float[] h = SpaceAtom.getLength(hs == null ? "" : hs);
+		if (w.length != 2) {
+			this.wunit = -1;
+		} else {
+			this.wunit = (int) w[0];
+			this.w = w[1];
 		}
-	    } else if (wunit != -1 && hunit == -1) {
-		xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;
-		yscl = xscl;
-	    } else {
-		yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;
-		xscl = yscl;
-	    }
-
-	    return new ScaleBox(bbox, xscl, yscl);
+		if (h.length != 2) {
+			this.hunit = -1;
+		} else {
+			this.hunit = (int) h[0];
+			this.h = h[1];
+		}
 	}
-    }
+
+	public int getLeftType() {
+		return base.getLeftType();
+	}
+
+	public int getRightType() {
+		return base.getRightType();
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		Box bbox = base.createBox(env);
+		if (wunit == -1 && hunit == -1) {
+			return bbox;
+		} else {
+			double xscl = 1;
+			double yscl = 1;
+			if (wunit != -1 && hunit != -1) {
+				xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;
+				yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;
+				if (keepaspectratio) {
+					xscl = Math.min(xscl, yscl);
+					yscl = xscl;
+				}
+			} else if (wunit != -1 && hunit == -1) {
+				xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;
+				yscl = xscl;
+			} else {
+				yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;
+				xscl = yscl;
+			}
+
+			return new ScaleBox(bbox, xscl, yscl);
+		}
+	}
 }

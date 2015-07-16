@@ -32,61 +32,48 @@ package org.scilab.forge.jlatexmath;
  * An atom with a stroked T
  */
 public class TStrokeAtom extends Atom {
-    
-    private boolean upper;
 
-    public TStrokeAtom(boolean upper) {
-	this.upper = upper;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	Char ch = env.getTeXFont().getChar("bar", env.getStyle());
-	float italic = ch.getItalic();
-	CharBox T = new CharBox(env.getTeXFont().getChar(upper ? 'T' : 't', "mathnormal", env.getStyle()));
-	CharBox B = new CharBox(ch);
-	Box y;
-	if (Math.abs(italic) > TeXFormula.PREC) {
-            y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
-            y.add(B);
-        } else
-            y = B;
-	Box b = new HorizontalBox(y, T.getWidth(), TeXConstants.ALIGN_CENTER);
-	VerticalBox vb = new VerticalBox();
-	vb.add(T);
-	vb.add(new StrutBox(0, -0.5f * T.getHeight(), 0, 0));
-	vb.add(b);
-	return vb;
-    }
+	private boolean upper;
+
+	public TStrokeAtom(boolean upper) {
+		this.upper = upper;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		Char ch = env.getTeXFont().getChar("bar", env.getStyle());
+		float italic = ch.getItalic();
+		CharBox T = new CharBox(env.getTeXFont().getChar(upper ? 'T' : 't',
+				"mathnormal", env.getStyle()));
+		CharBox B = new CharBox(ch);
+		Box y;
+		if (Math.abs(italic) > TeXFormula.PREC) {
+			y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
+			y.add(B);
+		} else
+			y = B;
+		Box b = new HorizontalBox(y, T.getWidth(), TeXConstants.ALIGN_CENTER);
+		VerticalBox vb = new VerticalBox();
+		vb.add(T);
+		vb.add(new StrutBox(0, -0.5f * T.getHeight(), 0, 0));
+		vb.add(b);
+		return vb;
+	}
 }
-	/*if (upper) 
-	    hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.7f, 0, 0).createBox(env));
-	else
-	    hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.3f, 0, 0).createBox(env));
-	    hb.add(A);
-	return hb;
-    }
-
-    public Box createBox(TeXEnvironment env) {
-	Box b = base.createBox(env);
-	VerticalBox vb = new VerticalBox();
-	vb.add(b);
-	Char ch = env.getTeXFont().getChar("ogonek", env.getStyle());
-	float italic = ch.getItalic();
-	float x = new SpaceAtom(TeXConstants.UNIT_MU, 1f, 0, 0).createBox(env).getWidth();
-	Box ogonek = new CharBox(ch);
-	Box y;
-	if (Math.abs(italic) > TeXFormula.PREC) {
-            y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
-            y.add(ogonek);
-        } else
-            y = ogonek;
-
-	Box og = new HorizontalBox(y, b.getWidth(), TeXConstants.ALIGN_RIGHT);
-	vb.add(new StrutBox(0, -ogonek.getHeight(), 0, 0));
-	vb.add(og);
-	float f = vb.getHeight() + vb.getDepth();
-	vb.setHeight(b.getHeight());
-	vb.setDepth(f - b.getHeight());
-	return vb;
-	} 
-}*/
+/*
+ * if (upper) hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.7f, 0,
+ * 0).createBox(env)); else hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.3f, 0,
+ * 0).createBox(env)); hb.add(A); return hb; }
+ * 
+ * public Box createBox(TeXEnvironment env) { Box b = base.createBox(env);
+ * VerticalBox vb = new VerticalBox(); vb.add(b); Char ch =
+ * env.getTeXFont().getChar("ogonek", env.getStyle()); float italic =
+ * ch.getItalic(); float x = new SpaceAtom(TeXConstants.UNIT_MU, 1f, 0,
+ * 0).createBox(env).getWidth(); Box ogonek = new CharBox(ch); Box y; if
+ * (Math.abs(italic) > TeXFormula.PREC) { y = new HorizontalBox(new
+ * StrutBox(-italic, 0, 0, 0)); y.add(ogonek); } else y = ogonek;
+ * 
+ * Box og = new HorizontalBox(y, b.getWidth(), TeXConstants.ALIGN_RIGHT);
+ * vb.add(new StrutBox(0, -ogonek.getHeight(), 0, 0)); vb.add(og); float f =
+ * vb.getHeight() + vb.getDepth(); vb.setHeight(b.getHeight()); vb.setDepth(f -
+ * b.getHeight()); return vb; } }
+ */

@@ -30,36 +30,39 @@ package org.scilab.forge.jlatexmath;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.RectF;
-
 
 /**
  * A box representing a rotated box.
  */
 public class OvalBox extends FramedBox {
-    
-    private float shadowRule;
 
-    public OvalBox(FramedBox fbox) {
-	super(fbox.box, fbox.thickness, fbox.space);
-    }
+	private float shadowRule;
 
-    public void draw(Canvas g2, float x, float y) {
-	box.draw(g2, x + space + thickness, y);
-	Paint st = jLatexMath.getPaint();
-	float w = st.getStrokeWidth();
-	int c = st.getColor();
-	st.setStrokeWidth(thickness);
-	st.setColor(foreground);
-	float th = thickness / 2;
-	float r = 0.5f * Math.min(width - thickness, height + depth - thickness);
-	g2.drawRoundRect(new RectF(x + th, y - height + th, width - thickness, height + depth - thickness), r, r, st);
-	st.setColor(c);
-	st.setStrokeWidth(w);
-	//drawDebug(g2, x, y);
-    }
+	public OvalBox(FramedBox fbox) {
+		super(fbox.box, fbox.thickness, fbox.space);
+	}
 
-    public int getLastFontId() {
-	return box.getLastFontId();
-    }
+	public void draw(Canvas g2, float x, float y) {
+		box.draw(g2, x + space + thickness, y);
+		Paint st = jLatexMath.getPaint();
+		float w = st.getStrokeWidth();
+		st.setStrokeWidth(thickness);
+		Style s = st.getStyle();
+		st.setStyle(Style.STROKE);
+		float th = thickness / 2;
+		float r = 0.5f * Math
+				.min(width - thickness, height + depth - thickness);
+		g2.drawRoundRect(new RectF(x + th, y - height + th, x + th + width
+				- thickness, y - height + th + height + depth - thickness), r,
+				r, st);
+		st.setStrokeWidth(w);
+		st.setStyle(s);
+		// drawDebug(g2, x, y);
+	}
+
+	public int getLastFontId() {
+		return box.getLastFontId();
+	}
 }

@@ -73,7 +73,7 @@ public abstract class Box {
 	 * on top of this background. If it's null, no background will be painted.
 	 */
 	protected Integer background = Color.WHITE;
-	
+
 	private Integer prevColor; // used temporarily in startDraw and endDraw
 	/**
 	 * The width of this box, i.e. the value that will be used for further
@@ -287,16 +287,18 @@ public abstract class Box {
 	 */
 	protected void startDraw(Canvas g2, float x, float y) {
 		// old color
-        prevColor = jLatexMath.getPaint().getColor();
-        if (background != null) { // draw background
-        	jLatexMath.getPaint().setColor(background);
-            //g2.fill(new Rectangle2D.Float(x, y - height, width, height + depth));
-        }
-        if (foreground == null) {
-        	jLatexMath.getPaint().setColor(prevColor); // old foreground color
-        } else {
-        	jLatexMath.getPaint().setColor(foreground); // overriding foreground color
-        }
+		prevColor = jLatexMath.getPaint().getColor();
+		if (background != null) { // draw background
+			jLatexMath.getPaint().setColor(background);
+			// g2.fill(new Rectangle2D.Float(x, y - height, width, height +
+			// depth));
+		}
+		if (foreground == null) {
+			jLatexMath.getPaint().setColor(prevColor); // old foreground color
+		} else {
+			jLatexMath.getPaint().setColor(foreground); // overriding foreground
+														// color
+		}
 		drawDebug(g2, x, y);
 	}
 
@@ -332,12 +334,14 @@ public abstract class Box {
 			drawDebug(g2, x, y, true);
 		}
 	}
+
 	/**
-     * Restores the previous color setting.
-     *
-     * @param g2 the graphics (2D) context
-     */
-    protected void endDraw(Canvas g2) {
-    	jLatexMath.getPaint().setColor(prevColor);
-    }
+	 * Restores the previous color setting.
+	 *
+	 * @param g2
+	 *            the graphics (2D) context
+	 */
+	protected void endDraw(Canvas g2) {
+		jLatexMath.getPaint().setColor(prevColor);
+	}
 }

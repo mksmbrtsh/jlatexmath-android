@@ -33,21 +33,21 @@ package org.scilab.forge.jlatexmath;
  */
 public class MathAtom extends Atom {
 
-    private int style = TeXConstants.STYLE_DISPLAY;
-    protected Atom base;
+	private int style = TeXConstants.STYLE_DISPLAY;
+	protected Atom base;
 
-    public MathAtom(Atom base, int style) {
-        this.base = base;
-        this.style = style;
-    }
+	public MathAtom(Atom base, int style) {
+		this.base = base;
+		this.style = style;
+	}
 
-    public Box createBox(TeXEnvironment env) {
-        env = env.copy(env.getTeXFont().copy());
-        env.getTeXFont().setRoman(false);
-        int sstyle = env.getStyle();
-        env.setStyle(style);
-        Box box = base.createBox(env);
-        env.setStyle(sstyle);
-        return box;
-    }
+	public Box createBox(TeXEnvironment env) {
+		env = env.copy(env.getTeXFont().copy());
+		env.getTeXFont().setRoman(false);
+		int sstyle = env.getStyle();
+		env.setStyle(style);
+		Box box = base.createBox(env);
+		env.setStyle(sstyle);
+		return box;
+	}
 }

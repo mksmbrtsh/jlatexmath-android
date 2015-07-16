@@ -30,140 +30,143 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing another atom with an atom above it (if not null) seperated
- * by a kern and in a smaller size depending on "overScriptSize" and/or an atom under
- * it (if not null) seperated by a kern and in a smaller size depending on "underScriptSize"
+ * An atom representing another atom with an atom above it (if not null)
+ * seperated by a kern and in a smaller size depending on "overScriptSize"
+ * and/or an atom under it (if not null) seperated by a kern and in a smaller
+ * size depending on "underScriptSize"
  */
 public class UnderOverAtom extends Atom {
 
-    // base, underscript and overscript
-    private final Atom base;
-    private final Atom under;
-    private final Atom over;
+	// base, underscript and overscript
+	private final Atom base;
+	private final Atom under;
+	private final Atom over;
 
-    // kern between base and under- and overscript
-    private final float underSpace;
-    private final float overSpace;
+	// kern between base and under- and overscript
+	private final float underSpace;
+	private final float overSpace;
 
-    // units for the kerns
-    private final int underUnit; // NOPMD
-    // TODO: seems never to be used?
-    private final int overUnit;
+	// units for the kerns
+	private final int underUnit; // NOPMD
+	// TODO: seems never to be used?
+	private final int overUnit;
 
-    // whether the under- and overscript should be drawn in a smaller size
-    private final boolean underScriptSize;
-    private final boolean overScriptSize;
+	// whether the under- and overscript should be drawn in a smaller size
+	private final boolean underScriptSize;
+	private final boolean overScriptSize;
 
-    public UnderOverAtom(Atom base, Atom underOver, int underOverUnit,
-                         float underOverSpace, boolean underOverScriptSize, boolean over) {
-        // check if unit is valid
-        SpaceAtom.checkUnit(underOverUnit);
+	public UnderOverAtom(Atom base, Atom underOver, int underOverUnit,
+			float underOverSpace, boolean underOverScriptSize, boolean over) {
+		// check if unit is valid
+		SpaceAtom.checkUnit(underOverUnit);
 
-        // units valid
-        this.base = base;
-        this.type = type;
-        // TODO: split into two different classes?
+		// units valid
+		this.base = base;
+		this.type = type;
+		// TODO: split into two different classes?
 
-        if (over) {
-            this.under = null;
-            this.underSpace = 0.0f;
-            this.underUnit = 0;
-            this.underScriptSize = false;
-            this.over = underOver;
-            this.overUnit = underOverUnit;
-            this.overSpace = underOverSpace;
-            this.overScriptSize = underOverScriptSize;
-        } else {
-            this.under = underOver;
-            this.underUnit = underOverUnit;
-            this.underSpace = underOverSpace;
-            this.underScriptSize = underOverScriptSize;
-            this.overSpace = 0.0f;
-            this.over = null;
-            this.overUnit = 0;
-            this.overScriptSize = false;
-        }
-    }
+		if (over) {
+			this.under = null;
+			this.underSpace = 0.0f;
+			this.underUnit = 0;
+			this.underScriptSize = false;
+			this.over = underOver;
+			this.overUnit = underOverUnit;
+			this.overSpace = underOverSpace;
+			this.overScriptSize = underOverScriptSize;
+		} else {
+			this.under = underOver;
+			this.underUnit = underOverUnit;
+			this.underSpace = underOverSpace;
+			this.underScriptSize = underOverScriptSize;
+			this.overSpace = 0.0f;
+			this.over = null;
+			this.overUnit = 0;
+			this.overScriptSize = false;
+		}
+	}
 
-    public UnderOverAtom(Atom base, Atom under, int underUnit, float underSpace,
-                         boolean underScriptSize, Atom over, int overUnit, float overSpace,
-                         boolean overScriptSize) throws InvalidUnitException {
-        // check if units are valid
-        SpaceAtom.checkUnit(underUnit);
-        SpaceAtom.checkUnit(overUnit);
+	public UnderOverAtom(Atom base, Atom under, int underUnit,
+			float underSpace, boolean underScriptSize, Atom over, int overUnit,
+			float overSpace, boolean overScriptSize)
+			throws InvalidUnitException {
+		// check if units are valid
+		SpaceAtom.checkUnit(underUnit);
+		SpaceAtom.checkUnit(overUnit);
 
-        // units valid
-        this.base = base;
-        this.under = under;
-        this.underUnit = underUnit;
-        this.underSpace = underSpace;
-        this.underScriptSize = underScriptSize;
-        this.over = over;
-        this.overUnit = overUnit;
-        this.overSpace = overSpace;
-        this.overScriptSize = overScriptSize;
-    }
+		// units valid
+		this.base = base;
+		this.under = under;
+		this.underUnit = underUnit;
+		this.underSpace = underSpace;
+		this.underScriptSize = underScriptSize;
+		this.over = over;
+		this.overUnit = overUnit;
+		this.overSpace = overSpace;
+		this.overScriptSize = overScriptSize;
+	}
 
-    public Box createBox(TeXEnvironment env) {
-        // create boxes in right style and calculate maximum width
-        Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));
-        Box o = null, u = null;
-        float max = b.getWidth();
-        if (over != null) {
-            o = over.createBox(overScriptSize ? env.subStyle() : env);
-            max = Math.max(max, o.getWidth());
-        }
-        if (under != null) {
-            u = under.createBox(underScriptSize ? env.subStyle() : env);
-            max = Math.max(max, u.getWidth());
-        }
+	public Box createBox(TeXEnvironment env) {
+		// create boxes in right style and calculate maximum width
+		Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));
+		Box o = null, u = null;
+		float max = b.getWidth();
+		if (over != null) {
+			o = over.createBox(overScriptSize ? env.subStyle() : env);
+			max = Math.max(max, o.getWidth());
+		}
+		if (under != null) {
+			u = under.createBox(underScriptSize ? env.subStyle() : env);
+			max = Math.max(max, u.getWidth());
+		}
 
-        // create vertical box
-        VerticalBox vBox = new VerticalBox();
+		// create vertical box
+		VerticalBox vBox = new VerticalBox();
 
-        // last font used by the base (for Mspace atoms following)
-        env.setLastFontId(b.getLastFontId());
+		// last font used by the base (for Mspace atoms following)
+		env.setLastFontId(b.getLastFontId());
 
-        // overscript + space
-        if (over != null) {
-            vBox.add(changeWidth(o, max));
-            // unit will be valid (checked in constructor)
-            vBox.add(new SpaceAtom(overUnit, 0, overSpace, 0).createBox(env));
-        }
+		// overscript + space
+		if (over != null) {
+			vBox.add(changeWidth(o, max));
+			// unit will be valid (checked in constructor)
+			vBox.add(new SpaceAtom(overUnit, 0, overSpace, 0).createBox(env));
+		}
 
-        // base
-        Box c = changeWidth(b, max);
-        vBox.add(c);
+		// base
+		Box c = changeWidth(b, max);
+		vBox.add(c);
 
-        // calculate future height of the vertical box (to make sure that the base
-        // stays on the baseline!)
-        float h = vBox.getHeight() + vBox.getDepth() - c.getDepth();
+		// calculate future height of the vertical box (to make sure that the
+		// base
+		// stays on the baseline!)
+		float h = vBox.getHeight() + vBox.getDepth() - c.getDepth();
 
-        // underscript + space
-        if (under != null) {
-            // unit will be valid (checked in constructor)
-            vBox.add(new SpaceAtom(overUnit, 0, underSpace, 0).createBox(env));
-            vBox.add(changeWidth(u, max));
-        }
+		// underscript + space
+		if (under != null) {
+			// unit will be valid (checked in constructor)
+			vBox.add(new SpaceAtom(overUnit, 0, underSpace, 0).createBox(env));
+			vBox.add(changeWidth(u, max));
+		}
 
-        // set height and depth
-        vBox.setDepth(vBox.getHeight() + vBox.getDepth() - h);
-        vBox.setHeight(h);
-        return vBox;
-    }
+		// set height and depth
+		vBox.setDepth(vBox.getHeight() + vBox.getDepth() - h);
+		vBox.setHeight(h);
+		return vBox;
+	}
 
-    private static Box changeWidth(Box b, float maxWidth) {
-        if (b != null && Math.abs(maxWidth - b.getWidth()) > TeXFormula.PREC)
-            return new HorizontalBox(b, maxWidth, TeXConstants.ALIGN_CENTER);
-        else
-            return b;
-    }
+	private static Box changeWidth(Box b, float maxWidth) {
+		if (b != null && Math.abs(maxWidth - b.getWidth()) > TeXFormula.PREC)
+			return new HorizontalBox(b, maxWidth, TeXConstants.ALIGN_CENTER);
+		else
+			return b;
+	}
 
-    public int getLeftType() {
-        return base.getLeftType();
-    }
+	public int getLeftType() {
+		return base.getLeftType();
+	}
 
-    public int getRightType() {
-        return base.getRightType();
-    }
+	public int getRightType() {
+		return base.getRightType();
+	}
 }

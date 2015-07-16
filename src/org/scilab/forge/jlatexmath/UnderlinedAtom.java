@@ -30,35 +30,35 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing another atom with a line under it. 
+ * An atom representing another atom with a line under it.
  */
 class UnderlinedAtom extends Atom {
 
-   // the base to be underlined
-   private final Atom base;
+	// the base to be underlined
+	private final Atom base;
 
-   public UnderlinedAtom(Atom f) {
-      base = f;
-      type = TeXConstants.TYPE_ORDINARY; // for spacing rules
-   }
+	public UnderlinedAtom(Atom f) {
+		base = f;
+		type = TeXConstants.TYPE_ORDINARY; // for spacing rules
+	}
 
-   public Box createBox(TeXEnvironment env) {
-      float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+	public Box createBox(TeXEnvironment env) {
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
 
-      // create formula box in same style
-      Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));
+		// create formula box in same style
+		Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));
 
-      // create vertical box
-      VerticalBox vBox = new VerticalBox();
-      vBox.add(b);
-      vBox.add(new StrutBox(0, 3 * drt, 0, 0));
-      vBox.add(new HorizontalRule(drt, b.getWidth(), 0));
+		// create vertical box
+		VerticalBox vBox = new VerticalBox();
+		vBox.add(b);
+		vBox.add(new StrutBox(0, 3 * drt, 0, 0));
+		vBox.add(new HorizontalRule(drt, b.getWidth(), 0));
 
-      // baseline vertical box = baseline box b
-      // there's also an invisible strut of height drt under the rule
-      vBox.setDepth(b.getDepth() + 5 * drt);
-      vBox.setHeight(b.getHeight());
+		// baseline vertical box = baseline box b
+		// there's also an invisible strut of height drt under the rule
+		vBox.setDepth(b.getDepth() + 5 * drt);
+		vBox.setHeight(b.getHeight());
 
-      return vBox;
-   }
+		return vBox;
+	}
 }

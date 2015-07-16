@@ -30,19 +30,20 @@ package org.scilab.forge.jlatexmath;
 
 public class GeoGebraLogoAtom extends Atom {
 
-    public GeoGebraLogoAtom() {
-    }
-    
-    public int getLeftType() {
-	return TeXConstants.TYPE_ORDINARY;
-    }
-    
-    public int getRightType() {
-	return TeXConstants.TYPE_ORDINARY;
-    }
+	public GeoGebraLogoAtom() {
+	}
 
-    public Box createBox(TeXEnvironment env) {
-	CharBox o = new CharBox(env.getTeXFont().getDefaultChar('o', env.getStyle()));
-	return new GeoGebraLogoBox(o.width, o.height);
-    } 
+	public int getLeftType() {
+		return TeXConstants.TYPE_ORDINARY;
+	}
+
+	public int getRightType() {
+		return TeXConstants.TYPE_ORDINARY;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		CharBox o = new CharBox(env.getTeXFont().getDefaultChar('o',
+				env.getStyle()));
+		return new GeoGebraLogoBox(o.width, o.height);
+	}
 }

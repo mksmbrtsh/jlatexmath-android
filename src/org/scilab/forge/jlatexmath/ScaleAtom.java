@@ -32,26 +32,26 @@ package org.scilab.forge.jlatexmath;
  * An atom representing a scaled Atom.
  */
 public class ScaleAtom extends Atom {
-    
-    protected Atom base;
-    private double xscl, yscl;
 
-    public ScaleAtom(Atom base, double xscl, double yscl) {
-	this.type = base.type;
-	this.base = base;
-	this.xscl = xscl;
-	this.yscl = yscl;
-    }
-    
-    public int getLeftType() {
-	return base.getLeftType();
-    }
-    
-    public int getRightType() {
-	return base.getRightType();
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	return new ScaleBox(base.createBox(env), xscl, yscl);
-    } 	
+	protected Atom base;
+	private double xscl, yscl;
+
+	public ScaleAtom(Atom base, double xscl, double yscl) {
+		this.type = base.type;
+		this.base = base;
+		this.xscl = xscl;
+		this.yscl = yscl;
+	}
+
+	public int getLeftType() {
+		return base.getLeftType();
+	}
+
+	public int getRightType() {
+		return base.getRightType();
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		return new ScaleBox(base.createBox(env), xscl, yscl);
+	}
 }

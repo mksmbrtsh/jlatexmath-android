@@ -87,8 +87,8 @@ class VerticalBox extends Box {
     public void add(int pos, Box b) {
         super.add(pos, b);
         if (pos == 0) {
-            depth += b.depth + height;
-            height = b.height;
+			depth += b.depth + height;
+			height = b.height;
         } else
             depth += b.height + b.depth;
         recalculateWidth(b);

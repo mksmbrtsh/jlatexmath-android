@@ -28,7 +28,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-
 import java.awt.font.TextAttribute;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
@@ -45,76 +44,83 @@ import android.graphics.Typeface;
  */
 public class JavaFontRenderingBox extends Box {
 
-    //private static final Graphics2D TEMPGRAPHIC = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).createGraphics();
+	// private static final Graphics2D TEMPGRAPHIC = new BufferedImage(1, 1,
+	// BufferedImage.TYPE_INT_ARGB).createGraphics();
 
-    private static Typeface font = Typeface.SERIF;
+	private static Typeface font = Typeface.SERIF;
 
-    private String str;
-    private float size;
-    private static TextAttribute KERNING;
-    private static Integer KERNING_ON;
-    private static TextAttribute LIGATURES;
-    private static Integer LIGATURES_ON;
+	private String str;
+	private float size;
+	private static TextAttribute KERNING;
+	private static Integer KERNING_ON;
+	private static TextAttribute LIGATURES;
+	private static Integer LIGATURES_ON;
 
+	static {
+		try { // to avoid problems with Java 1.5
+			KERNING = (TextAttribute) (TextAttribute.class.getField("KERNING")
+					.get(TextAttribute.class));
+			KERNING_ON = (Integer) (TextAttribute.class.getField("KERNING_ON")
+					.get(TextAttribute.class));
+			LIGATURES = (TextAttribute) (TextAttribute.class
+					.getField("LIGATURES").get(TextAttribute.class));
+			LIGATURES_ON = (Integer) (TextAttribute.class
+					.getField("LIGATURES_ON").get(TextAttribute.class));
+		} catch (Exception e) {
+		}
+	}
 
-    static {
-        try { // to avoid problems with Java 1.5
-            KERNING = (TextAttribute) (TextAttribute.class.getField("KERNING").get(TextAttribute.class));
-            KERNING_ON = (Integer) (TextAttribute.class.getField("KERNING_ON").get(TextAttribute.class));
-            LIGATURES = (TextAttribute) (TextAttribute.class.getField("LIGATURES").get(TextAttribute.class));
-            LIGATURES_ON = (Integer) (TextAttribute.class.getField("LIGATURES_ON").get(TextAttribute.class));
-        } catch (Exception e) { }
-    }
+	public JavaFontRenderingBox(String str, int type, float size, Typeface f,
+			boolean kerning) {
+		this.str = str;
+		this.size = size;
+		/*
+		 * if (kerning && KERNING != null) { Map<TextAttribute, Object> map =
+		 * new Hashtable<TextAttribute, Object>(); map.put(KERNING, KERNING_ON);
+		 * map.put(LIGATURES, LIGATURES_ON); f = f.deriveFont(map); }
+		 */
 
-    public JavaFontRenderingBox(String str, int type, float size, Typeface f, boolean kerning) {
-        this.str = str;
-        this.size = size;
-        /*if (kerning && KERNING != null) {
-            Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
-            map.put(KERNING, KERNING_ON);
-            map.put(LIGATURES, LIGATURES_ON);
-            f = f.deriveFont(map);
-        }*/
-        
-        //this.text = new TextLayout(str, f.deriveFont(type), TEMPGRAPHIC.getFontRenderContext());
-        //Rectangle2D rect = text.getBounds();
-        //this.height = (float) (-rect.getY() * size / 10);
-        //this.depth = (float) (rect.getHeight() * size / 10) - this.height;
-        //this.width = (float) ((rect.getWidth() + rect.getX() + 0.4f) * size / 10);
-    }
+		// this.text = new TextLayout(str, f.deriveFont(type),
+		// TEMPGRAPHIC.getFontRenderContext());
+		// Rectangle2D rect = text.getBounds();
+		// this.height = (float) (-rect.getY() * size / 10);
+		// this.depth = (float) (rect.getHeight() * size / 10) - this.height;
+		// this.width = (float) ((rect.getWidth() + rect.getX() + 0.4f) * size /
+		// 10);
+	}
 
-    public JavaFontRenderingBox(String str, int type, float size) {
-        this(str, type, size, font, true);
-    }
+	public JavaFontRenderingBox(String str, int type, float size) {
+		this(str, type, size, font, true);
+	}
 
-    public static void setFont(String name) {
-    	AssetManager mng = jLatexMath.getAssetManager();
-    	font = Typeface.createFromAsset(mng, name);
-    }
+	public static void setFont(String name) {
+		AssetManager mng = jLatexMath.getAssetManager();
+		font = Typeface.createFromAsset(mng, name);
+	}
 
-    public void draw(Canvas g2, float x, float y) {
-        drawDebug(g2, x, y);
-        Paint st = jLatexMath.getPaint();
-        float w = st.getStrokeWidth();
-        Style s = st.getStyle();
-        Typeface f = st.getTypeface();
-        
-        st.setStrokeWidth(1);
-        st.setStyle(Style.FILL_AND_STROKE);
-        st.setTypeface(font);
-        g2.save();
-        g2.translate(x, y);
-        g2.scale(0.1f * size, 0.1f * size);
-        g2.drawText(str, x, y, st);
-        g2.drawText(str, 0, 0, st);
-        g2.restore();
-        st.setStyle(s);
-        st.setStrokeWidth(w);
-        st.setTypeface(f);
-    }
+	public void draw(Canvas g2, float x, float y) {
+		drawDebug(g2, x, y);
+		Paint st = jLatexMath.getPaint();
+		float w = st.getStrokeWidth();
+		Style s = st.getStyle();
+		Typeface f = st.getTypeface();
 
-    public int getLastFontId() {
-        return 0;
-    }
+		st.setStrokeWidth(1);
+		st.setStyle(Style.FILL_AND_STROKE);
+		st.setTypeface(font);
+		g2.save();
+		g2.translate(x, y);
+		g2.scale(0.1f * size, 0.1f * size);
+		g2.drawText(str, x, y, st);
+		g2.drawText(str, 0, 0, st);
+		g2.restore();
+		st.setStyle(s);
+		st.setStrokeWidth(w);
+		st.setTypeface(f);
+	}
+
+	public int getLastFontId() {
+		return 0;
+	}
 
 }

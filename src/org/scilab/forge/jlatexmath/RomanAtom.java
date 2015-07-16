@@ -33,22 +33,22 @@ package org.scilab.forge.jlatexmath;
  */
 public class RomanAtom extends Atom {
 
-    protected Atom base;
+	protected Atom base;
 
-    public RomanAtom(Atom base) {
-        this.base = base;
-    }
+	public RomanAtom(Atom base) {
+		this.base = base;
+	}
 
-    public Box createBox(TeXEnvironment env) {
-        Box box;
-        if (base != null) {
-            env = env.copy(env.getTeXFont().copy());
-            env.getTeXFont().setRoman(true);
-            box = base.createBox(env);
-        } else {
-            box = new StrutBox(0, 0, 0, 0);
-        }
+	public Box createBox(TeXEnvironment env) {
+		Box box;
+		if (base != null) {
+			env = env.copy(env.getTeXFont().copy());
+			env.getTeXFont().setRoman(true);
+			box = base.createBox(env);
+		} else {
+			box = new StrutBox(0, 0, 0, 0);
+		}
 
-        return box;
-    }
+		return box;
+	}
 }

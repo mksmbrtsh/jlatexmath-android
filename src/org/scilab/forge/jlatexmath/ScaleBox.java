@@ -30,44 +30,45 @@ package org.scilab.forge.jlatexmath;
 
 import android.graphics.Canvas;
 
-
 /**
  * A box representing a scaled box.
  */
 public class ScaleBox extends Box {
 
-    private Box box;
-    private double xscl, yscl;
-    private float factor = 1;
+	private Box box;
+	private double xscl, yscl;
+	private float factor = 1;
 
-    public ScaleBox(Box b, double xscl, double yscl) {
-	this.box = b;
-	this.xscl = (Double.isNaN(xscl) || Double.isInfinite(xscl)) ? 0 : xscl;
-	this.yscl = (Double.isNaN(yscl) || Double.isInfinite(yscl)) ? 0 : yscl;
-	width = b.width * (float) Math.abs(this.xscl);
-	height = this.yscl > 0 ? b.height * (float) this.yscl : -b.depth * (float) this.yscl;
-	depth = this.yscl > 0 ? b.depth * (float) this.yscl : -b.height * (float) this.yscl;
-	shift = b.shift * (float) this.yscl;
-    }
-
-    public ScaleBox(Box b, float factor) {
-	this(b, (double) factor, (double) factor);
-	this.factor = factor;
-    }
-    
-    public void draw(Canvas g2, float x, float y) {
-	drawDebug(g2, x, y);
-	if (xscl != 0 && yscl != 0) {
-	    float dec = xscl < 0 ? width : 0;
-	    g2.translate(x + dec, y);
-	    g2.scale((float)xscl, (float)yscl);
-	    box.draw(g2, 0, 0);
-	    g2.scale((float)(1f / xscl), (float)(1f / yscl));
-	    g2.translate(-x - dec, -y);
+	public ScaleBox(Box b, double xscl, double yscl) {
+		this.box = b;
+		this.xscl = (Double.isNaN(xscl) || Double.isInfinite(xscl)) ? 0 : xscl;
+		this.yscl = (Double.isNaN(yscl) || Double.isInfinite(yscl)) ? 0 : yscl;
+		width = b.width * (float) Math.abs(this.xscl);
+		height = this.yscl > 0 ? b.height * (float) this.yscl : -b.depth
+				* (float) this.yscl;
+		depth = this.yscl > 0 ? b.depth * (float) this.yscl : -b.height
+				* (float) this.yscl;
+		shift = b.shift * (float) this.yscl;
 	}
-    }
 
-    public int getLastFontId() {
-	return box.getLastFontId();
-    }
+	public ScaleBox(Box b, float factor) {
+		this(b, (double) factor, (double) factor);
+		this.factor = factor;
+	}
+
+	public void draw(Canvas g2, float x, float y) {
+		drawDebug(g2, x, y);
+		if (xscl != 0 && yscl != 0) {
+			float dec = xscl < 0 ? width : 0;
+			g2.translate(x + dec, y);
+			g2.scale((float) xscl, (float) yscl);
+			box.draw(g2, 0, 0);
+			g2.scale((float) (1f / xscl), (float) (1f / yscl));
+			g2.translate(-x - dec, -y);
+		}
+	}
+
+	public int getLastFontId() {
+		return box.getLastFontId();
+	}
 }

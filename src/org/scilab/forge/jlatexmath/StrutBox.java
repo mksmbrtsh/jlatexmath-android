@@ -29,26 +29,25 @@
 
 package org.scilab.forge.jlatexmath;
 
-
 import android.graphics.Canvas;
 
 /**
  * A box representing whitespace.
  */
 public class StrutBox extends Box {
-    
-    public StrutBox(float w, float h, float d, float s) {
-        width = w;
-        height = h;
-        depth = d;
-        shift = s;
-    }
-    
-    public void draw(Canvas g2, float x, float y) {
-        // no visual effect
-    }
-    
-    public int getLastFontId() {
-        return TeXFont.NO_FONT;
-    }
+
+	public StrutBox(float w, float h, float d, float s) {
+		width = w;
+		height = h;
+		depth = d;
+		shift = s;
+	}
+
+	public void draw(Canvas g2, float x, float y) {
+		// no visual effect
+	}
+
+	public int getLastFontId() {
+		return TeXFont.NO_FONT;
+	}
 }

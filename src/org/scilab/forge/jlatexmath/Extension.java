@@ -35,44 +35,44 @@ package org.scilab.forge.jlatexmath;
  */
 public class Extension {
 
-    // there ALLWAYS is a repeat character! (check TFM.isExtensionChar())
-    private final Char top;
-    private final Char middle;
-    private final Char bottom;
-    private final Char repeat;
-    
-    public Extension(Char t, Char m, Char r, Char b) {
-	top = t;
-	middle = m;
-	repeat = r;
-	bottom = b;
-    }
-    
-    public boolean hasTop() {
-	return top != null;
-    }
-    
-    public boolean hasMiddle() {
-	return middle != null;
-    }
+	// there ALLWAYS is a repeat character! (check TFM.isExtensionChar())
+	private final Char top;
+	private final Char middle;
+	private final Char bottom;
+	private final Char repeat;
 
-    public boolean hasBottom() {
-	return bottom != null;
-    }
-    
-    public Char getTop() {
-	return top;
-    }
-    
-    public Char getMiddle() {
-	return middle;
-    }
-    
-    public Char getRepeat() {
-	return repeat;
-    }
-    
-    public Char getBottom() {
-	return bottom;
-    }
+	public Extension(Char t, Char m, Char r, Char b) {
+		top = t;
+		middle = m;
+		repeat = r;
+		bottom = b;
+	}
+
+	public boolean hasTop() {
+		return top != null;
+	}
+
+	public boolean hasMiddle() {
+		return middle != null;
+	}
+
+	public boolean hasBottom() {
+		return bottom != null;
+	}
+
+	public Char getTop() {
+		return top;
+	}
+
+	public Char getMiddle() {
+		return middle;
+	}
+
+	public Char getRepeat() {
+		return repeat;
+	}
+
+	public Char getBottom() {
+		return bottom;
+	}
 }

@@ -31,91 +31,92 @@ package org.scilab.forge.jlatexmath;
 
 import android.graphics.Canvas;
 
-
 /**
- * A box representing another box with a delimiter box and a script box above or under it, 
- * with script and delimiter seperated by a kern.
+ * A box representing another box with a delimiter box and a script box above or
+ * under it, with script and delimiter seperated by a kern.
  */
 public class OverUnderBox extends Box {
 
-    // base, delimiter and script atom
-    private final Box base;
-    private final Box del;
-    private final Box script;
+	// base, delimiter and script atom
+	private final Box base;
+	private final Box del;
+	private final Box script;
 
-    // kern amount between the delimiter and the script
-    private final float kern;
+	// kern amount between the delimiter and the script
+	private final float kern;
 
-    // whether the delimiter should be drawn over (<-> under) the base atom 
-    private final boolean over;
+	// whether the delimiter should be drawn over (<-> under) the base atom
+	private final boolean over;
 
-    /**
-     * the parameter boxes must have an equal width!!
-     * 
-     * @param b
-     *           base box to be drawn on the baseline
-     * @param d
-     *           delimiter box
-     * @param script
-     *           subscript or superscript box
-     * @param over
-     *           true : draws delimiter and script box above the base box, false : under the
-     *           base box
-     */
-    public OverUnderBox(Box b, Box d, Box script, float kern, boolean over) {
-	base = b;
-	del = d;
-	this.script = script;
-	this.kern = kern;
-	this.over = over;
+	/**
+	 * the parameter boxes must have an equal width!!
+	 * 
+	 * @param b
+	 *            base box to be drawn on the baseline
+	 * @param d
+	 *            delimiter box
+	 * @param script
+	 *            subscript or superscript box
+	 * @param over
+	 *            true : draws delimiter and script box above the base box,
+	 *            false : under the base box
+	 */
+	public OverUnderBox(Box b, Box d, Box script, float kern, boolean over) {
+		base = b;
+		del = d;
+		this.script = script;
+		this.kern = kern;
+		this.over = over;
 
-	// calculate metrics of the box
-	width = b.getWidth();
-	height = b.height
-            + (over ? d.getWidth() : 0)
-            + (over && script != null ? script.height + script.depth + kern : 0);
-	depth = b.depth
-            + (over ? 0 : d.getWidth())
-	    + (!over && script != null ? script.height + script.depth + kern : 0);
-    }
-
-    public void draw(Canvas g2, float x, float y) {
-    g2.save();
-	drawDebug(g2, x, y);
-	base.draw(g2, x, y);
-	
-	float yVar = y - base.height - del.getWidth();
-	del.setDepth(del.getHeight() + del.getDepth());
-	del.setHeight(0);
-	if (over) { // draw delimiter and script above base box
-	    float transX = (float) (x + (del.height + del.depth) * 0.75), transY = yVar;
-	    g2.translate(transX, transY);
-	    g2.rotate((float) (Math.PI / 2));
-	    del.draw(g2, 0, 0);
-	    g2.restore();
-	    // draw superscript
-	    if (script != null) {
-		script.draw(g2, x, yVar - kern - script.depth);
-	    }
+		// calculate metrics of the box
+		width = b.getWidth();
+		height = b.height
+				+ (over ? d.getWidth() : 0)
+				+ (over && script != null ? script.height + script.depth + kern
+						: 0);
+		depth = b.depth
+				+ (over ? 0 : d.getWidth())
+				+ (!over && script != null ? script.height + script.depth
+						+ kern : 0);
 	}
 
-	yVar = y + base.depth;
-	if (!over) { // draw delimiter and script under base box
-	    float transX = (float) (x + (del.getHeight() + del.depth) * 0.75), transY = yVar;
-	    g2.translate(transX, transY);
-	    g2.rotate((float) (Math.PI / 2));
-	    del.draw(g2, 0, 0);
-	    g2.restore();
-	    yVar += del.getWidth();
-	  
-	    // draw subscript
-	    if (script != null) {
-		script.draw(g2, x, yVar + kern + script.height);
-	    }
-	}
-    }
+	public void draw(Canvas g2, float x, float y) {
+		g2.save();
+		drawDebug(g2, x, y);
+		base.draw(g2, x, y);
 
-    public int getLastFontId() {
-	return base.getLastFontId();
-    }
+		float yVar = y - base.height - del.getWidth();
+		del.setDepth(del.getHeight() + del.getDepth());
+		del.setHeight(0);
+		if (over) { // draw delimiter and script above base box
+			float transX = (float) (x + (del.height + del.depth) * 0.75), transY = yVar;
+			g2.translate(transX, transY);
+			g2.rotate((float) (Math.PI / 2));
+			del.draw(g2, 0, 0);
+			g2.restore();
+			// draw superscript
+			if (script != null) {
+				script.draw(g2, x, yVar - kern - script.depth);
+			}
+		}
+
+		yVar = y + base.depth;
+		if (!over) { // draw delimiter and script under base box
+			float transX = (float) (x + (del.getHeight() + del.depth) * 0.75), transY = yVar;
+			g2.translate(transX, transY);
+			g2.rotate((float) (Math.PI / 2));
+			del.draw(g2, 0, 0);
+			g2.restore();
+			yVar += del.getWidth();
+
+			// draw subscript
+			if (script != null) {
+				script.draw(g2, x, yVar + kern + script.height);
+			}
+		}
+	}
+
+	public int getLastFontId() {
+		return base.getLastFontId();
+	}
 }

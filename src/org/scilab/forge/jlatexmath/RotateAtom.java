@@ -34,52 +34,54 @@ import java.util.Map;
  * An atom representing a rotated Atom.
  */
 public class RotateAtom extends Atom {
-    
-    private Atom base;
-    private double angle;
-    private int option = -1;
-    private int xunit, yunit;
-    private float x, y;
-    
-    public RotateAtom(Atom base, String angle, String option) {
-	this.type = base.type;
-	this.base = base;
-	this.angle = Double.parseDouble(angle);
-	this.option = RotateBox.getOrigin(option);
-    }
 
-    public RotateAtom(Atom base, double angle, String option) {
-	this.type = base.type;
-	this.base = base;
-	this.angle = angle;
-	Map<String, String> map = ParseOption.parseMap(option);
-	if (map.containsKey("origin")) {
-	    this.option = RotateBox.getOrigin(map.get("origin"));
-	} else {
-	    if (map.containsKey("x")) {
-		float[] xinfo = SpaceAtom.getLength(map.get("x"));
-		this.xunit = (int) xinfo[0];
-		this.x = xinfo[1];
-	    } else {
-		this.xunit = TeXConstants.UNIT_POINT;
-		this.x = 0;
-	    }
-	    if (map.containsKey("y")) {
-		float[] yinfo = SpaceAtom.getLength(map.get("y"));
-		this.yunit = (int) yinfo[0];
-		this.y = yinfo[1];
-	    } else {
-		this.yunit = TeXConstants.UNIT_POINT;
-		this.y = 0;
-	    }
+	private Atom base;
+	private double angle;
+	private int option = -1;
+	private int xunit, yunit;
+	private float x, y;
+
+	public RotateAtom(Atom base, String angle, String option) {
+		this.type = base.type;
+		this.base = base;
+		this.angle = Double.parseDouble(angle);
+		this.option = RotateBox.getOrigin(option);
 	}
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	if (option != -1) {
-	    return new RotateBox(base.createBox(env), angle, option);
-	} else {
-	    return new RotateBox(base.createBox(env), angle, x * SpaceAtom.getFactor(xunit, env), y * SpaceAtom.getFactor(yunit, env));
-	} 
-    }
+
+	public RotateAtom(Atom base, double angle, String option) {
+		this.type = base.type;
+		this.base = base;
+		this.angle = angle;
+		Map<String, String> map = ParseOption.parseMap(option);
+		if (map.containsKey("origin")) {
+			this.option = RotateBox.getOrigin(map.get("origin"));
+		} else {
+			if (map.containsKey("x")) {
+				float[] xinfo = SpaceAtom.getLength(map.get("x"));
+				this.xunit = (int) xinfo[0];
+				this.x = xinfo[1];
+			} else {
+				this.xunit = TeXConstants.UNIT_POINT;
+				this.x = 0;
+			}
+			if (map.containsKey("y")) {
+				float[] yinfo = SpaceAtom.getLength(map.get("y"));
+				this.yunit = (int) yinfo[0];
+				this.y = yinfo[1];
+			} else {
+				this.yunit = TeXConstants.UNIT_POINT;
+				this.y = 0;
+			}
+		}
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		if (option != -1) {
+			return new RotateBox(base.createBox(env), angle, option);
+		} else {
+			return new RotateBox(base.createBox(env), angle, x
+					* SpaceAtom.getFactor(xunit, env), y
+					* SpaceAtom.getFactor(yunit, env));
+		}
+	}
 }

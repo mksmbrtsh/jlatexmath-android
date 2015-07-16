@@ -28,21 +28,23 @@
 
 package org.scilab.forge.jlatexmath;
 
-
 /**
- * An atom representing a boxed base atom. 
+ * An atom representing a boxed base atom.
  */
 public class DoubleFramedAtom extends FBoxAtom {
 
-    public DoubleFramedAtom(Atom base) {
-	super(base);
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	Box bbase = base.createBox(env);
-	float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	float space = INTERSPACE * SpaceAtom.getFactor(TeXConstants.UNIT_EM, env);
-	float sspace = 1.5f * drt + 0.5f * SpaceAtom.getFactor(TeXConstants.UNIT_POINT, env);
-	return new FramedBox(new FramedBox(bbase, 0.75f * drt, space), 1.5f * drt, sspace);
-    }
+	public DoubleFramedAtom(Atom base) {
+		super(base);
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		Box bbase = base.createBox(env);
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+		float space = INTERSPACE
+				* SpaceAtom.getFactor(TeXConstants.UNIT_EM, env);
+		float sspace = 1.5f * drt + 0.5f
+				* SpaceAtom.getFactor(TeXConstants.UNIT_POINT, env);
+		return new FramedBox(new FramedBox(bbase, 0.75f * drt, space),
+				1.5f * drt, sspace);
+	}
 }

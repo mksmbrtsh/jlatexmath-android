@@ -79,10 +79,10 @@ public class HorizontalRule extends Box {
 	if (speShift == 0) {
 		g2.drawRect(x, y - height, x + width, y, st);
 	} else {
-	    g2.drawRect(x, y - height + speShift, x + width, height + speShift, st);
+	    g2.drawRect(x, y - height + speShift, x + width, y + speShift, st);
 	}
-	st.setColor(c);
-	st.setStyle(s);
+		st.setColor(c);
+		st.setStyle(s);
 	st.setStrokeWidth(w);
     }
     

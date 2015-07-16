@@ -42,61 +42,70 @@ import org.w3c.dom.NodeList;
  * Parses and creates predefined TeXFormula objects form an XML-file.
  */
 public class PredefinedTeXFormulaParser {
-    
-    private static final String RESOURCE_DIR = "";
-    
-    public static final String RESOURCE_NAME = "PredefinedTeXFormulas.xml";
-    
-    private Element root;
-    private String type;
-        
-    public PredefinedTeXFormulaParser(InputStream file, String type) throws ResourceParseException, IOException {
-        try {
-	    this.type = type;
-	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	    factory.setIgnoringElementContentWhitespace(true);
-	    factory.setIgnoringComments(true);
-	    root = factory.newDocumentBuilder().parse(file).getDocumentElement();
-	} catch (Exception e) { // JDOMException or IOException
-            throw new XMLResourceParseException("", e);
-        }
-        file.close();
-    }
-    
-    public PredefinedTeXFormulaParser(String PredefFile, String type) throws ResourceParseException, IOException {
-        this(jLatexMath.getAssetManager().open(PredefFile), type);
-    }
 
-    public void parse(Map predefinedTeXFormulas) {
-        // get required string attribute
-        String enabledAll = getAttrValueAndCheckIfNotNull("enabled", root);
-        if ("true".equals(enabledAll)) { // parse formula's
-            // iterate all "Font"-elements
-	    NodeList list = root.getElementsByTagName(this.type);
-            for (int i = 0; i < list.getLength(); i++) {
-                Element formula = (Element)list.item(i);
-                // get required string attribute
-                String enabled = getAttrValueAndCheckIfNotNull("enabled", formula);
-                if ("true".equals (enabled)) { // parse this formula
-                    // get required string attribute
-                    String name = getAttrValueAndCheckIfNotNull("name", formula);
-                    
-                    // parse and build the formula and add it to the table
-                    if ("TeXFormula".equals(this.type))
-			predefinedTeXFormulas.put(name, (TeXFormula) new TeXFormulaParser(name, formula, this.type).parse());
-		    else 
-			predefinedTeXFormulas.put(name, (MacroInfo) new TeXFormulaParser(name, formula, this.type).parse());
-                }
-            }
-        }
-    }
+	private static final String RESOURCE_DIR = "";
 
-    private static String getAttrValueAndCheckIfNotNull(String attrName,
-            Element element) throws ResourceParseException {
-        String attrValue = element.getAttribute(attrName);
-        if (attrValue.equals(""))
-            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),
-                    attrName, null);
-        return attrValue;
-    }
+	public static final String RESOURCE_NAME = "PredefinedTeXFormulas.xml";
+
+	private Element root;
+	private String type;
+
+	public PredefinedTeXFormulaParser(InputStream file, String type)
+			throws ResourceParseException, IOException {
+		try {
+			this.type = type;
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			factory.setIgnoringElementContentWhitespace(true);
+			factory.setIgnoringComments(true);
+			root = factory.newDocumentBuilder().parse(file)
+					.getDocumentElement();
+		} catch (Exception e) { // JDOMException or IOException
+			throw new XMLResourceParseException("", e);
+		}
+		file.close();
+	}
+
+	public PredefinedTeXFormulaParser(String PredefFile, String type)
+			throws ResourceParseException, IOException {
+		this(jLatexMath.getAssetManager().open(PredefFile), type);
+	}
+
+	public void parse(Map predefinedTeXFormulas) {
+		// get required string attribute
+		String enabledAll = getAttrValueAndCheckIfNotNull("enabled", root);
+		if ("true".equals(enabledAll)) { // parse formula's
+			// iterate all "Font"-elements
+			NodeList list = root.getElementsByTagName(this.type);
+			for (int i = 0; i < list.getLength(); i++) {
+				Element formula = (Element) list.item(i);
+				// get required string attribute
+				String enabled = getAttrValueAndCheckIfNotNull("enabled",
+						formula);
+				if ("true".equals(enabled)) { // parse this formula
+					// get required string attribute
+					String name = getAttrValueAndCheckIfNotNull("name", formula);
+
+					// parse and build the formula and add it to the table
+					if ("TeXFormula".equals(this.type))
+						predefinedTeXFormulas.put(name,
+								(TeXFormula) new TeXFormulaParser(name,
+										formula, this.type).parse());
+					else
+						predefinedTeXFormulas.put(name,
+								(MacroInfo) new TeXFormulaParser(name, formula,
+										this.type).parse());
+				}
+			}
+		}
+	}
+
+	private static String getAttrValueAndCheckIfNotNull(String attrName,
+			Element element) throws ResourceParseException {
+		String attrValue = element.getAttribute(attrName);
+		if (attrValue.equals(""))
+			throw new XMLResourceParseException(RESOURCE_NAME,
+					element.getTagName(), attrName, null);
+		return attrValue;
+	}
 }

@@ -62,16 +62,17 @@ public class CharBox extends Box {
 		height = c.getHeight();
 		depth = c.getDepth();
 	}
+
 	public static float pxToSp(Context context, float px) {
-	    float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-	    return px/scaledDensity;
+		float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+		return px / scaledDensity;
 	}
-	
+
 	public static float pxToDp(Context context, int dp) {
-	    float density = context.getResources().getDisplayMetrics().density;
-	    return dp/density;
+		float density = context.getResources().getDisplayMetrics().density;
+		return dp / density;
 	}
-	
+
 	public void draw(Canvas g2, float x, float y) {
 		drawDebug(g2, x, y);
 		g2.save();

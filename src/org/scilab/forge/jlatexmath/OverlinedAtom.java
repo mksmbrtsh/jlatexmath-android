@@ -34,26 +34,27 @@ package org.scilab.forge.jlatexmath;
  */
 public class OverlinedAtom extends Atom {
 
-   // base atom to be overlined
-   private final Atom base;
+	// base atom to be overlined
+	private final Atom base;
 
-   public OverlinedAtom(Atom f) {
-      base = f;
-      type = TeXConstants.TYPE_ORDINARY; 
-   }
+	public OverlinedAtom(Atom f) {
+		base = f;
+		type = TeXConstants.TYPE_ORDINARY;
+	}
 
-   public Box createBox(TeXEnvironment env) {
-      float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+	public Box createBox(TeXEnvironment env) {
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
 
-      // cramp the style of the formula to be overlined and create vertical box
-      Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env
-            .crampStyle()));
-      OverBar ob = new OverBar(b, 3 * drt, drt);
+		// cramp the style of the formula to be overlined and create vertical
+		// box
+		Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env
+				.crampStyle()));
+		OverBar ob = new OverBar(b, 3 * drt, drt);
 
-      // baseline vertical box = baseline box b
-      ob.setDepth(b.getDepth());
-      ob.setHeight(b.getHeight() + 5 * drt);
+		// baseline vertical box = baseline box b
+		ob.setDepth(b.getDepth());
+		ob.setHeight(b.getHeight() + 5 * drt);
 
-      return ob;
-   }
+		return ob;
+	}
 }

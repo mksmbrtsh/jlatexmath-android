@@ -30,46 +30,47 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An common superclass for atoms that represent one single character
- * and access the font information. 
+ * An common superclass for atoms that represent one single character and access
+ * the font information.
  */
 public abstract class CharSymbol extends Atom {
 
-    /**
-     * Mrow will mark certain CharSymbol atoms as a text symbol.
-     * Msubsup wil use this property for a certain spacing rule.
-     */
-    private boolean textSymbol = false;
-    
-    /**
-     * Mark as text symbol (used by Dummy)
-     */
-    public void markAsTextSymbol() {
-	textSymbol = true;
-    }
-    
-    /**
-     * Remove the mark so the atom remains unchanged (used by Dummy)
-     */
-    public void removeMark() {
-	textSymbol = false;
-    }
-    
-    /**
-     * Tests if this atom is marked as a text symbol (used by Msubsup)
-     * 
-     * @return whether this CharSymbol is marked as a text symbol
-     */
-    public boolean isMarkedAsTextSymbol() {
-	return textSymbol;
-    }
-    
-    /**
-     * Get the CharFont-object that uniquely identifies the character that is represented
-     * by this atom.
-     * 
-     * @param tf the TeXFont containing all font related information
-     * @return a CharFont
-     */
-    public abstract CharFont getCharFont(TeXFont tf);
+	/**
+	 * Mrow will mark certain CharSymbol atoms as a text symbol. Msubsup wil use
+	 * this property for a certain spacing rule.
+	 */
+	private boolean textSymbol = false;
+
+	/**
+	 * Mark as text symbol (used by Dummy)
+	 */
+	public void markAsTextSymbol() {
+		textSymbol = true;
+	}
+
+	/**
+	 * Remove the mark so the atom remains unchanged (used by Dummy)
+	 */
+	public void removeMark() {
+		textSymbol = false;
+	}
+
+	/**
+	 * Tests if this atom is marked as a text symbol (used by Msubsup)
+	 * 
+	 * @return whether this CharSymbol is marked as a text symbol
+	 */
+	public boolean isMarkedAsTextSymbol() {
+		return textSymbol;
+	}
+
+	/**
+	 * Get the CharFont-object that uniquely identifies the character that is
+	 * represented by this atom.
+	 * 
+	 * @param tf
+	 *            the TeXFont containing all font related information
+	 * @return a CharFont
+	 */
+	public abstract CharFont getCharFont(TeXFont tf);
 }

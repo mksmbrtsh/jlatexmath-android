@@ -32,27 +32,27 @@ package org.scilab.forge.jlatexmath;
  * An atom representing a hline in array environment
  */
 public class HlineAtom extends Atom {
-    
-    private float width;
-    private float shift;
-    
-    public HlineAtom() {
-    }
-    
-    public void setWidth(float width) {
-	this.width = width;
-    }
 
-    public void setShift(float shift) {
-	this.shift = shift;
-    }
+	private float width;
+	private float shift;
 
-    public Box createBox(TeXEnvironment env) {
-	float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
-	Box b = new HorizontalRule(drt, width, shift, false);
-	VerticalBox vb = new VerticalBox();
-	vb.add(b);
-	vb.type = TeXConstants.TYPE_HLINE;
-	return vb;
-    } 
+	public HlineAtom() {
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public void setShift(float shift) {
+		this.shift = shift;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());
+		Box b = new HorizontalRule(drt, width, shift, false);
+		VerticalBox vb = new VerticalBox();
+		vb.add(b);
+		vb.type = TeXConstants.TYPE_HLINE;
+		return vb;
+	}
 }

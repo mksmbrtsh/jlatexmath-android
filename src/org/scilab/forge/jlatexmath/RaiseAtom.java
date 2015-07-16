@@ -33,48 +33,49 @@ package org.scilab.forge.jlatexmath;
  */
 public class RaiseAtom extends Atom {
 
-    private Atom base;
-    private int runit, hunit, dunit;
-    private float r, h, d;
+	private Atom base;
+	private int runit, hunit, dunit;
+	private float r, h, d;
 
-    public RaiseAtom(Atom base, int runit, float r, int hunit, float h, int dunit, float d) {
-	this.base = base;
-	this.runit = runit;
-	this.r = r;
-	this.hunit = hunit;
-	this.h = h;
-	this.dunit = dunit;
-	this.d = d;
-    }
-
-    public int getLeftType() {
-        return base.getLeftType();
-    }
-
-    public int getRightType() {
-        return base.getRightType();
-    }
-
-    public Box createBox(TeXEnvironment env) {
-        Box bbox = base.createBox(env);
-	if (runit == -1) {
-	    bbox.setShift(0);
-	} else {
-	    bbox.setShift(-r * SpaceAtom.getFactor(runit, env));
+	public RaiseAtom(Atom base, int runit, float r, int hunit, float h,
+			int dunit, float d) {
+		this.base = base;
+		this.runit = runit;
+		this.r = r;
+		this.hunit = hunit;
+		this.h = h;
+		this.dunit = dunit;
+		this.d = d;
 	}
 
-	if (hunit == -1) {
-	    return bbox;
+	public int getLeftType() {
+		return base.getLeftType();
 	}
 
-	HorizontalBox hbox = new HorizontalBox(bbox);
-	hbox.setHeight(h * SpaceAtom.getFactor(hunit, env));
-	if (dunit == -1) {
-	    hbox.setDepth(0);
-	} else {
-	    hbox.setDepth(d * SpaceAtom.getFactor(dunit, env));
+	public int getRightType() {
+		return base.getRightType();
 	}
 
-	return hbox;
-    }
+	public Box createBox(TeXEnvironment env) {
+		Box bbox = base.createBox(env);
+		if (runit == -1) {
+			bbox.setShift(0);
+		} else {
+			bbox.setShift(-r * SpaceAtom.getFactor(runit, env));
+		}
+
+		if (hunit == -1) {
+			return bbox;
+		}
+
+		HorizontalBox hbox = new HorizontalBox(bbox);
+		hbox.setHeight(h * SpaceAtom.getFactor(hunit, env));
+		if (dunit == -1) {
+			hbox.setDepth(0);
+		} else {
+			hbox.setDepth(d * SpaceAtom.getFactor(dunit, env));
+		}
+
+		return hbox;
+	}
 }

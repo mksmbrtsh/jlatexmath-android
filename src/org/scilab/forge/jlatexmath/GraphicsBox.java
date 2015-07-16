@@ -32,61 +32,56 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-
 /**
  * A box representing a box containing a graphics.
  */
 public class GraphicsBox extends Box {
 
-    public final static int BILINEAR = 0;
-    public final static int NEAREST_NEIGHBOR = 1;
-    public final static int BICUBIC = 2;
+	public final static int BILINEAR = 0;
+	public final static int NEAREST_NEIGHBOR = 1;
+	public final static int BICUBIC = 2;
 
-    private Bitmap image;
-    private float scl;
-    private Object interp;
+	private Bitmap image;
+	private float scl;
+	private Object interp;
 
-    public GraphicsBox(Bitmap image, float width, float height, float size, int interpolation) {
-	this.image = image;
-	this.width = width;
-	this.height = height;
-	this.scl = 1 / size;
-	depth = 0;
-	shift = 0;
-	/*switch (interpolation) {
-	case BILINEAR :
-	    interp = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
-	    break;
-	case NEAREST_NEIGHBOR :
-	    interp = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
-	    break;
-	case BICUBIC :
-	    interp = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
-	    break;
-	default :
-	    interp = null;
-	}*/
-    }
-   
-    public void draw(Canvas g2, float x, float y) {
-    	g2.save();
-	//Object oldKey = null;
-	//if (interp != null) {
-	//    oldKey = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
-	//    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, interp);
-	//}
-	g2.translate(x, y - height);
-	g2.scale(scl, scl);
-	g2.drawBitmap(image, 0, 0,null);
-	image.recycle();
-	//g2.setTransform(oldAt);
-	//if (oldKey != null) {
-	//    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldKey);
-	//}
-	g2.restore();
-    }
-    
-    public int getLastFontId() {
-	return 0;
-    }
+	public GraphicsBox(Bitmap image, float width, float height, float size,
+			int interpolation) {
+		this.image = image;
+		this.width = width;
+		this.height = height;
+		this.scl = 1 / size;
+		depth = 0;
+		shift = 0;
+		/*
+		 * switch (interpolation) { case BILINEAR : interp =
+		 * RenderingHints.VALUE_INTERPOLATION_BILINEAR; break; case
+		 * NEAREST_NEIGHBOR : interp =
+		 * RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR; break; case
+		 * BICUBIC : interp = RenderingHints.VALUE_INTERPOLATION_BICUBIC; break;
+		 * default : interp = null; }
+		 */
+	}
+
+	public void draw(Canvas g2, float x, float y) {
+		g2.save();
+		// Object oldKey = null;
+		// if (interp != null) {
+		// oldKey = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
+		// g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, interp);
+		// }
+		g2.translate(x, y - height);
+		g2.scale(scl, scl);
+		g2.drawBitmap(image, 0, 0, null);
+		image.recycle();
+		// g2.setTransform(oldAt);
+		// if (oldKey != null) {
+		// g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldKey);
+		// }
+		g2.restore();
+	}
+
+	public int getLastFontId() {
+		return 0;
+	}
 }

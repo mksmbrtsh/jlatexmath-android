@@ -33,160 +33,173 @@ package org.scilab.forge.jlatexmath;
  * An atom representing another atom with an accent symbol above it.
  */
 public class AccentedAtom extends Atom {
-    
-    // accent symbol
-    private final SymbolAtom accent;
-    private boolean acc = false;
-    private boolean changeSize = true;
-    
-    // base atom
-    protected Atom base = null;
-    protected Atom underbase = null;
-    
-    public AccentedAtom(Atom base, Atom accent) throws InvalidSymbolTypeException {
-	this.base = base;
-	if (base instanceof AccentedAtom)
-	    underbase = ((AccentedAtom)base).underbase;
-	else
-	    underbase = base;
 
-	if (!(accent instanceof SymbolAtom))
-	    throw new InvalidSymbolTypeException("Invalid accent");
-	
-	this.accent = (SymbolAtom)accent;
-	this.acc = true;
-    }
+	// accent symbol
+	private final SymbolAtom accent;
+	private boolean acc = false;
+	private boolean changeSize = true;
 
-    public AccentedAtom(Atom base, Atom accent, boolean changeSize) throws InvalidSymbolTypeException {
-	this(base, accent);
-	this.changeSize = changeSize;
-    }
-	
-    /**
-     * Creates an AccentedAtom from a base atom and an accent symbol defined by its name
-     *
-     * @param base base atom
-     * @param accentName name of the accent symbol to be put over the base atom
-     * @throws InvalidSymbolTypeException if the symbol is not defined as an accent ('acc')
-     * @throws SymbolNotFoundException if there's no symbol defined with the given name
-     */
-    public AccentedAtom(Atom base, String accentName)
-    throws InvalidSymbolTypeException, SymbolNotFoundException {
-        accent = SymbolAtom.get(accentName);
-        if (accent.type == TeXConstants.TYPE_ACCENT) {
-            this.base = base;
-	    if (base instanceof AccentedAtom)
-		underbase = ((AccentedAtom)base).underbase;
-	    else
-		underbase = base;
-	}
-        else
-            throw new InvalidSymbolTypeException("The symbol with the name '"
-                    + accentName + "' is not defined as an accent ("
-                    + TeXSymbolParser.TYPE_ATTR + "='acc') in '"
-                    + TeXSymbolParser.RESOURCE_NAME + "'!");
-    }
-    
-    /**
-     * Creates an AccentedAtom from a base atom and an accent symbol defined as a TeXFormula.
-     * This is used for parsing MathML.
-     *
-     * @param base base atom
-     * @param acc TeXFormula representing an accent (SymbolAtom)
-     * @throws InvalidTeXFormulaException if the given TeXFormula does not represent a
-     * 			single SymbolAtom (type "TeXConstants.TYPE_ACCENT")
-     * @throws InvalidSymbolTypeException if the symbol is not defined as an accent ('acc')
-     */
-    public AccentedAtom(Atom base, TeXFormula acc)
-    throws InvalidTeXFormulaException, InvalidSymbolTypeException {
-        if (acc == null)
-            throw new InvalidTeXFormulaException(
-                    "The accent TeXFormula can't be null!");
-        else {
-            Atom root = acc.root;
-            if (root instanceof SymbolAtom) {
-                accent = (SymbolAtom) root;
-                if (accent.type == TeXConstants.TYPE_ACCENT)
-                    this.base = base;
-                else
-                    throw new InvalidSymbolTypeException(
-                            "The accent TeXFormula represents a single symbol with the name '"
-                            + accent.getName()
-                            + "', but this symbol is not defined as an accent ("
-                            + TeXSymbolParser.TYPE_ATTR + "='acc') in '"
-                            + TeXSymbolParser.RESOURCE_NAME + "'!");
-            } else
-                throw new InvalidTeXFormulaException(
-                        "The accent TeXFormula does not represent a single symbol!");
-        }
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-        TeXFont tf = env.getTeXFont();
-        int style = env.getStyle();
-        
-	// set base in cramped style
-        Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env.crampStyle()));
-        
-        float u = b.getWidth();
-        float s = 0;
-        if (underbase instanceof CharSymbol)
-            s = tf.getSkew(((CharSymbol) underbase).getCharFont(tf), style);
-        
-	// retrieve best Char from the accent symbol
-        Char ch = tf.getChar(accent.getName(), style);
-        while (tf.hasNextLarger(ch)) {
-            Char larger = tf.getNextLarger(ch, style);
-            if (larger.getWidth() <= u)
-                ch = larger;
-            else
-                break;
-        }
-        
-        // calculate delta
-	float ec = -SpaceAtom.getFactor(TeXConstants.UNIT_MU, env);
-        float delta = acc ? ec : Math.min(b.getHeight(), tf.getXHeight(style, ch.getFontCode()));
-        
-        // create vertical box
-        VerticalBox vBox = new VerticalBox();
-        
-        // accent
-        Box y;
-        float italic = ch.getItalic();
-	Box cb = new CharBox(ch);
-	if (acc) 
-	    cb = accent.createBox(changeSize ? env.subStyle() : env);
+	// base atom
+	protected Atom base = null;
+	protected Atom underbase = null;
 
-	if (Math.abs(italic) > TeXFormula.PREC) {
-            y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
-            y.add(cb);
-        } else
-            y = cb;
-        
-        // if diff > 0, center accent, otherwise center base
-        float diff = (u - y.getWidth()) / 2;
-        y.setShift(s + (diff > 0 ? diff : 0));
-        if (diff < 0)
-            b = new HorizontalBox(b, y.getWidth(), TeXConstants.ALIGN_CENTER);
-        vBox.add(y);
-        
-        // kern
-	vBox.add(new StrutBox(0, changeSize ? -delta : -b.getHeight(), 0, 0));
-        // base
-        vBox.add(b);
-        
-        // set height and depth vertical box
-        float total = vBox.getHeight() + vBox.getDepth(), d = b.getDepth();
-        vBox.setDepth(d);
-        vBox.setHeight(total - d);
+	public AccentedAtom(Atom base, Atom accent)
+			throws InvalidSymbolTypeException {
+		this.base = base;
+		if (base instanceof AccentedAtom)
+			underbase = ((AccentedAtom) base).underbase;
+		else
+			underbase = base;
 
-	if (diff < 0) {
-	    HorizontalBox hb = new HorizontalBox(new StrutBox(diff, 0, 0, 0));
-	    hb.add(vBox);
-	    hb.setWidth(u);
-	    return hb;
+		if (!(accent instanceof SymbolAtom))
+			throw new InvalidSymbolTypeException("Invalid accent");
+
+		this.accent = (SymbolAtom) accent;
+		this.acc = true;
 	}
 
-        return vBox;
-    }
+	public AccentedAtom(Atom base, Atom accent, boolean changeSize)
+			throws InvalidSymbolTypeException {
+		this(base, accent);
+		this.changeSize = changeSize;
+	}
+
+	/**
+	 * Creates an AccentedAtom from a base atom and an accent symbol defined by
+	 * its name
+	 *
+	 * @param base
+	 *            base atom
+	 * @param accentName
+	 *            name of the accent symbol to be put over the base atom
+	 * @throws InvalidSymbolTypeException
+	 *             if the symbol is not defined as an accent ('acc')
+	 * @throws SymbolNotFoundException
+	 *             if there's no symbol defined with the given name
+	 */
+	public AccentedAtom(Atom base, String accentName)
+			throws InvalidSymbolTypeException, SymbolNotFoundException {
+		accent = SymbolAtom.get(accentName);
+		if (accent.type == TeXConstants.TYPE_ACCENT) {
+			this.base = base;
+			if (base instanceof AccentedAtom)
+				underbase = ((AccentedAtom) base).underbase;
+			else
+				underbase = base;
+		} else
+			throw new InvalidSymbolTypeException("The symbol with the name '"
+					+ accentName + "' is not defined as an accent ("
+					+ TeXSymbolParser.TYPE_ATTR + "='acc') in '"
+					+ TeXSymbolParser.RESOURCE_NAME + "'!");
+	}
+
+	/**
+	 * Creates an AccentedAtom from a base atom and an accent symbol defined as
+	 * a TeXFormula. This is used for parsing MathML.
+	 *
+	 * @param base
+	 *            base atom
+	 * @param acc
+	 *            TeXFormula representing an accent (SymbolAtom)
+	 * @throws InvalidTeXFormulaException
+	 *             if the given TeXFormula does not represent a single
+	 *             SymbolAtom (type "TeXConstants.TYPE_ACCENT")
+	 * @throws InvalidSymbolTypeException
+	 *             if the symbol is not defined as an accent ('acc')
+	 */
+	public AccentedAtom(Atom base, TeXFormula acc)
+			throws InvalidTeXFormulaException, InvalidSymbolTypeException {
+		if (acc == null)
+			throw new InvalidTeXFormulaException(
+					"The accent TeXFormula can't be null!");
+		else {
+			Atom root = acc.root;
+			if (root instanceof SymbolAtom) {
+				accent = (SymbolAtom) root;
+				if (accent.type == TeXConstants.TYPE_ACCENT)
+					this.base = base;
+				else
+					throw new InvalidSymbolTypeException(
+							"The accent TeXFormula represents a single symbol with the name '"
+									+ accent.getName()
+									+ "', but this symbol is not defined as an accent ("
+									+ TeXSymbolParser.TYPE_ATTR
+									+ "='acc') in '"
+									+ TeXSymbolParser.RESOURCE_NAME + "'!");
+			} else
+				throw new InvalidTeXFormulaException(
+						"The accent TeXFormula does not represent a single symbol!");
+		}
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		TeXFont tf = env.getTeXFont();
+		int style = env.getStyle();
+
+		// set base in cramped style
+		Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env
+				.crampStyle()));
+
+		float u = b.getWidth();
+		float s = 0;
+		if (underbase instanceof CharSymbol)
+			s = tf.getSkew(((CharSymbol) underbase).getCharFont(tf), style);
+
+		// retrieve best Char from the accent symbol
+		Char ch = tf.getChar(accent.getName(), style);
+		while (tf.hasNextLarger(ch)) {
+			Char larger = tf.getNextLarger(ch, style);
+			if (larger.getWidth() <= u)
+				ch = larger;
+			else
+				break;
+		}
+
+		// calculate delta
+		float ec = -SpaceAtom.getFactor(TeXConstants.UNIT_MU, env);
+		float delta = acc ? ec : Math.min(b.getHeight(),
+				tf.getXHeight(style, ch.getFontCode()));
+
+		// create vertical box
+		VerticalBox vBox = new VerticalBox();
+
+		// accent
+		Box y;
+		float italic = ch.getItalic();
+		Box cb = new CharBox(ch);
+		if (acc)
+			cb = accent.createBox(changeSize ? env.subStyle() : env);
+
+		if (Math.abs(italic) > TeXFormula.PREC) {
+			y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
+			y.add(cb);
+		} else
+			y = cb;
+
+		// if diff > 0, center accent, otherwise center base
+		float diff = (u - y.getWidth()) / 2;
+		y.setShift(s + (diff > 0 ? diff : 0));
+		if (diff < 0)
+			b = new HorizontalBox(b, y.getWidth(), TeXConstants.ALIGN_CENTER);
+		vBox.add(y);
+
+		// kern
+		vBox.add(new StrutBox(0, changeSize ? -delta : -b.getHeight(), 0, 0));
+		// base
+		vBox.add(b);
+
+		// set height and depth vertical box
+		float total = vBox.getHeight() + vBox.getDepth(), d = b.getDepth();
+		vBox.setDepth(d);
+		vBox.setHeight(total - d);
+
+		if (diff < 0) {
+			HorizontalBox hb = new HorizontalBox(new StrutBox(diff, 0, 0, 0));
+			hb.add(vBox);
+			hb.setWidth(u);
+			return hb;
+		}
+
+		return vBox;
+	}
 }

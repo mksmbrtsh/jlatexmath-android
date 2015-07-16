@@ -32,8 +32,8 @@ package org.scilab.forge.jlatexmath;
  * Signals that an error occured while registering an alphabet
  */
 public class AlphabetRegistrationException extends Exception {
-    
-    protected AlphabetRegistrationException(String str) {
-        super(str);
-    }
+
+	protected AlphabetRegistrationException(String str) {
+		super(str);
+	}
 }

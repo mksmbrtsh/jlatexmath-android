@@ -32,34 +32,34 @@ package org.scilab.forge.jlatexmath;
  * An atom with an ogonek.
  */
 public class OgonekAtom extends Atom {
-    
-    private static final SymbolAtom ogonek = SymbolAtom.get("ogonek");
-    private Atom base;
 
-    public OgonekAtom(Atom base) {
-	this.base = base;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	Box b = base.createBox(env);
-	VerticalBox vb = new VerticalBox();
-	vb.add(b);
-	Char ch = env.getTeXFont().getChar("ogonek", env.getStyle());
-	float italic = ch.getItalic();
-	Box ogonek = new CharBox(ch);
-	Box y;
-	if (Math.abs(italic) > TeXFormula.PREC) {
-            y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
-            y.add(ogonek);
-        } else
-            y = ogonek;
+	private static final SymbolAtom ogonek = SymbolAtom.get("ogonek");
+	private Atom base;
 
-	Box og = new HorizontalBox(y, b.getWidth(), TeXConstants.ALIGN_RIGHT);
-	vb.add(new StrutBox(0, -ogonek.getHeight(), 0, 0));
-	vb.add(og);
-	float f = vb.getHeight() + vb.getDepth();
-	vb.setHeight(b.getHeight());
-	vb.setDepth(f - b.getHeight());
-	return vb;
-    } 
+	public OgonekAtom(Atom base) {
+		this.base = base;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		Box b = base.createBox(env);
+		VerticalBox vb = new VerticalBox();
+		vb.add(b);
+		Char ch = env.getTeXFont().getChar("ogonek", env.getStyle());
+		float italic = ch.getItalic();
+		Box ogonek = new CharBox(ch);
+		Box y;
+		if (Math.abs(italic) > TeXFormula.PREC) {
+			y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));
+			y.add(ogonek);
+		} else
+			y = ogonek;
+
+		Box og = new HorizontalBox(y, b.getWidth(), TeXConstants.ALIGN_RIGHT);
+		vb.add(new StrutBox(0, -ogonek.getHeight(), 0, 0));
+		vb.add(og);
+		float f = vb.getHeight() + vb.getDepth();
+		vb.setHeight(b.getHeight());
+		vb.setDepth(f - b.getHeight());
+		return vb;
+	}
 }

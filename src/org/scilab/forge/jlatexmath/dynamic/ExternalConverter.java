@@ -29,7 +29,7 @@
 package org.scilab.forge.jlatexmath.dynamic;
 
 public interface ExternalConverter {
-    
-    public String getLaTeXString(String externalCode);
+
+	public String getLaTeXString(String externalCode);
 
 }

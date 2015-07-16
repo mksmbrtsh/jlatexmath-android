@@ -34,69 +34,59 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 
-
 /**
  * A box representing a box containing a graphics.
  */
 public class GeoGebraLogoBox extends Box {
 
-    private static final Integer gray = Color.rgb(102, 102, 102);
-    private static final Integer blue = Color.rgb(153, 153, 255);
+	private static final Integer gray = Color.rgb(102, 102, 102);
+	private static final Integer blue = Color.rgb(153, 153, 255);
 
-    //private static Paint st;
-    //private static Paint stC;
+	public GeoGebraLogoBox(float w, float h) {
+		this.depth = 0;
+		this.height = h;
+		this.width = w;
+		this.shift = 0;
+	}
 
-    public GeoGebraLogoBox(float w, float h) {
-	this.depth = 0;
-	this.height = h;
-	this.width = w;
-	this.shift = 0;
-	//st = new Paint();
-	//st.setStrokeWidth(3.79999995f);
-	//st.setColor(foreground);
-	//stC = new Paint();
-	//stC.setStrokeWidth(1f);
-	//stC.setColor(foreground);
-    }
-   
-    public void draw(Canvas g2, float x, float y) {
-    g2.save();
-    Paint st = jLatexMath.getPaint();
-    int c = st.getColor();
-    Style s = st.getStyle();
-    float w = st.getStrokeWidth();
-    
-	g2.translate(x + 0.25f * height / 2.15f, y - 1.75f / 2.15f * height);
-	st.setColor(gray);
-	st.setStrokeWidth(3.79999995f);
-	g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
-	g2.rotate((float)(-26 * Math.PI / 180), 20.5f, 17.5f);
-	g2.drawArc(new RectF(0f, 0f, 43f, 32f), 0f, 360f, false, st);
-	g2.rotate((float)(26 * Math.PI / 180), 20.5f, 17.5f);
-	st.setStyle(Style.STROKE);
-	drawCircle(st, g2, 16f, -5f);
-	drawCircle(st, g2, -1f, 7f);
-	drawCircle(st, g2, 5f, 28f);
-	drawCircle(st, g2, 27f, 24f);
-	drawCircle(st, g2, 36f, 3f);
-	
-	st.setColor(c);
-	st.setStyle(s);
-	st.setStrokeWidth(w);
-	g2.restore();
-    }
-    
-    private static void drawCircle(Paint st, Canvas g2, float x, float y) {
-	st.setColor(blue);
-	g2.translate(x, y);
-	g2.drawCircle(0, 0, 8, st);
-	st.setColor(Color.BLACK);
-	st.setStyle(Style.STROKE);
-	g2.drawCircle(0, 0, 8,st);
-	g2.translate(-x, -y);
-    }
-    
-   public int getLastFontId() {
-	return 0;
-    }
+	public void draw(Canvas g2, float x, float y) {
+		g2.save();
+		Paint st = jLatexMath.getPaint();
+		int c = st.getColor();
+		Style s = st.getStyle();
+		float w = st.getStrokeWidth();
+
+		g2.translate(x + 0.25f * height / 2.15f, y - 1.75f / 2.15f * height);
+		st.setColor(gray);
+		st.setStrokeWidth(3.79999995f);
+		g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
+		g2.rotate((float) (-26 * Math.PI / 180), 20.5f, 17.5f);
+		g2.drawArc(new RectF(0f, 0f, 43f, 32f), 0f, 360f, false, st);
+		g2.rotate((float) (26 * Math.PI / 180), 20.5f, 17.5f);
+		st.setStyle(Style.STROKE);
+		drawCircle(st, g2, 16f, -5f);
+		drawCircle(st, g2, -1f, 7f);
+		drawCircle(st, g2, 5f, 28f);
+		drawCircle(st, g2, 27f, 24f);
+		drawCircle(st, g2, 36f, 3f);
+
+		st.setColor(c);
+		st.setStyle(s);
+		st.setStrokeWidth(w);
+		g2.restore();
+	}
+
+	private static void drawCircle(Paint st, Canvas g2, float x, float y) {
+		st.setColor(blue);
+		g2.translate(x, y);
+		g2.drawCircle(0, 0, 8, st);
+		st.setColor(Color.BLACK);
+		st.setStyle(Style.STROKE);
+		g2.drawCircle(0, 0, 8, st);
+		g2.translate(-x, -y);
+	}
+
+	public int getLastFontId() {
+		return 0;
+	}
 }

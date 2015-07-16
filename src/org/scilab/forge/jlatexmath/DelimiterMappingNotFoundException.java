@@ -36,9 +36,10 @@ package org.scilab.forge.jlatexmath;
  */
 public class DelimiterMappingNotFoundException extends JMathTeXException {
 
-    protected DelimiterMappingNotFoundException(char delimiter) {
-	super("No mapping found for the character '" + delimiter + "'! "
-	      + "Insert a <" + TeXFormulaSettingsParser.CHARTODEL_MAPPING_EL
-	      + ">-element in '" + TeXFormulaSettingsParser.RESOURCE_NAME + "'.");
-    }
+	protected DelimiterMappingNotFoundException(char delimiter) {
+		super("No mapping found for the character '" + delimiter + "'! "
+				+ "Insert a <" + TeXFormulaSettingsParser.CHARTODEL_MAPPING_EL
+				+ ">-element in '" + TeXFormulaSettingsParser.RESOURCE_NAME
+				+ "'.");
+	}
 }

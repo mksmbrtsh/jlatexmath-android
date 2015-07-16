@@ -29,23 +29,24 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing a modification of style in a formula (e.g. textstyle or displaystyle).
+ * An atom representing a modification of style in a formula (e.g. textstyle or
+ * displaystyle).
  */
 public class TextStyleAtom extends Atom {
-    
-    private String style;
-    private Atom at;
-    
-    public TextStyleAtom(Atom at, String style) {
-	this.style = style;
-	this.at = at;
-    }
 
-    public Box createBox(TeXEnvironment env) {
-	String prevStyle = env.getTextStyle();
-	env.setTextStyle(style);
-	Box box = at.createBox(env);
-	env.setTextStyle(prevStyle);
-	return box;
-    } 
+	private String style;
+	private Atom at;
+
+	public TextStyleAtom(Atom at, String style) {
+		this.style = style;
+		this.at = at;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		String prevStyle = env.getTextStyle();
+		env.setTextStyle(style);
+		Box box = at.createBox(env);
+		env.setTextStyle(prevStyle);
+		return box;
+	}
 }

@@ -34,18 +34,19 @@ import org.scilab.forge.jlatexmath.AlphabetRegistration;
 
 public class GreekRegistration implements AlphabetRegistration {
 
-    public GreekRegistration() {
-    }
+	public GreekRegistration() {
+	}
 
-    public Character.UnicodeBlock[] getUnicodeBlock() {
-	return new Character.UnicodeBlock[]{Character.UnicodeBlock.GREEK, Character.UnicodeBlock.GREEK_EXTENDED};
-    }
+	public Character.UnicodeBlock[] getUnicodeBlock() {
+		return new Character.UnicodeBlock[] { Character.UnicodeBlock.GREEK,
+				Character.UnicodeBlock.GREEK_EXTENDED };
+	}
 
-    public Object getPackage() {
-	return this;
-    }
+	public Object getPackage() {
+		return this;
+	}
 
-    public String getTeXFontFileName() {
-	return "fonts/language_greek.xml";
-    }
+	public String getTeXFontFileName() {
+		return "fonts/language_greek.xml";
+	}
 }

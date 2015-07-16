@@ -29,39 +29,39 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing another atom with an overrided lefttype and righttype. This
- * affects the glue inserted before and after this atom.
+ * An atom representing another atom with an overrided lefttype and righttype.
+ * This affects the glue inserted before and after this atom.
  */
 public class TypedAtom extends Atom {
 
-    // new lefttype and righttype
-    private final int leftType;
-    private final int rightType;
-    
-    // atom for which new types are set
-    private final Atom atom;
-    
-    public TypedAtom(int leftType, int rightType, Atom atom) {
-	this.leftType = leftType;
-	this.rightType = rightType;
-	this.atom = atom;
-	this.type_limits = atom.type_limits;
-    }
-    
-    public Atom getBase() {
-	atom.type_limits = type_limits;
-	return atom;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	return atom.createBox(env);
-    }
-    
-    public int getLeftType() {
-	return leftType;
-    }
-    
-    public int getRightType() {
-	return rightType;
-    }
+	// new lefttype and righttype
+	private final int leftType;
+	private final int rightType;
+
+	// atom for which new types are set
+	private final Atom atom;
+
+	public TypedAtom(int leftType, int rightType, Atom atom) {
+		this.leftType = leftType;
+		this.rightType = rightType;
+		this.atom = atom;
+		this.type_limits = atom.type_limits;
+	}
+
+	public Atom getBase() {
+		atom.type_limits = type_limits;
+		return atom;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		return atom.createBox(env);
+	}
+
+	public int getLeftType() {
+		return leftType;
+	}
+
+	public int getRightType() {
+		return rightType;
+	}
 }

@@ -33,28 +33,28 @@ package org.scilab.forge.jlatexmath;
  */
 public class DdotsAtom extends Atom {
 
-    public DdotsAtom() {
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	Box ldots = TeXFormula.get("ldots").root.createBox(env);
-	float w = ldots.getWidth();
-	Box dot = SymbolAtom.get("ldotp").createBox(env);
-	HorizontalBox hb1 = new HorizontalBox(dot, w, TeXConstants.ALIGN_LEFT);
-	HorizontalBox hb2 = new HorizontalBox(dot, w, TeXConstants.ALIGN_CENTER);
-	HorizontalBox hb3 = new HorizontalBox(dot, w, TeXConstants.ALIGN_RIGHT);
-	Box pt4 = new SpaceAtom(TeXConstants.UNIT_MU, 0, 4, 0).createBox(env);
-	VerticalBox vb = new VerticalBox();
-	vb.add(hb1);
-	vb.add(pt4);
-	vb.add(hb2);
-	vb.add(pt4);
-	vb.add(hb3);
-	
-	float h = vb.getHeight() + vb.getDepth();
-	vb.setHeight(h);
-	vb.setDepth(0);
+	public DdotsAtom() {
+	}
 
-	return vb;
-    }  
+	public Box createBox(TeXEnvironment env) {
+		Box ldots = TeXFormula.get("ldots").root.createBox(env);
+		float w = ldots.getWidth();
+		Box dot = SymbolAtom.get("ldotp").createBox(env);
+		HorizontalBox hb1 = new HorizontalBox(dot, w, TeXConstants.ALIGN_LEFT);
+		HorizontalBox hb2 = new HorizontalBox(dot, w, TeXConstants.ALIGN_CENTER);
+		HorizontalBox hb3 = new HorizontalBox(dot, w, TeXConstants.ALIGN_RIGHT);
+		Box pt4 = new SpaceAtom(TeXConstants.UNIT_MU, 0, 4, 0).createBox(env);
+		VerticalBox vb = new VerticalBox();
+		vb.add(hb1);
+		vb.add(pt4);
+		vb.add(hb2);
+		vb.add(pt4);
+		vb.add(hb3);
+
+		float h = vb.getHeight() + vb.getDepth();
+		vb.setHeight(h);
+		vb.setDepth(0);
+
+		return vb;
+	}
 }

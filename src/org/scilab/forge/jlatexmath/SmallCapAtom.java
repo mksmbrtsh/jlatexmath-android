@@ -29,21 +29,21 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing a small capital atom. 
+ * An atom representing a small capital atom.
  */
 public class SmallCapAtom extends Atom {
-    
-    protected Atom base;
-    
-    public SmallCapAtom(Atom base) {
-	this.base = base;
-    }
-    
-    public Box createBox(TeXEnvironment env) {
-	boolean prev = env.getSmallCap();
-	env.setSmallCap(true);
-	Box box = base.createBox(env);
-	env.setSmallCap(prev);
-	return box; 
-    }   
+
+	protected Atom base;
+
+	public SmallCapAtom(Atom base) {
+		this.base = base;
+	}
+
+	public Box createBox(TeXEnvironment env) {
+		boolean prev = env.getSmallCap();
+		env.setSmallCap(true);
+		Box box = base.createBox(env);
+		env.setSmallCap(prev);
+		return box;
+	}
 }
