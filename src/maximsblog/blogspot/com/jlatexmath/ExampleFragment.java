@@ -59,6 +59,24 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 	}
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putString("latex", mLatex);
+		outState.putFloat("textsize", mTextSize);
+		outState.putInt("tag", mTag);
+		super.onSaveInstanceState(outState);
+	};
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			mLatex = savedInstanceState.getString("latex");
+			mTextSize = savedInstanceState.getFloat("textsize");
+			mTag = savedInstanceState.getInt("tag");
+		}
+	};
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -68,6 +86,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		layout.findViewById(R.id.save).setOnClickListener(this);
 
 		TeXFormula formula = new TeXFormula(mLatex);
+
 		TeXIcon icon = formula.new TeXIconBuilder()
 				.setStyle(TeXConstants.STYLE_DISPLAY).setSize(mTextSize)
 				.build();
@@ -111,7 +130,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 			File file = new File(dir, fname);
 			if (file.exists())
 				file.delete();
-			
+
 			try {
 				FileOutputStream out = new FileOutputStream(file);
 				mImage.compress(Bitmap.CompressFormat.PNG, 90, out);
