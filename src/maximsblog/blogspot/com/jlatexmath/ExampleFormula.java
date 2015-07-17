@@ -58,9 +58,9 @@ public class ExampleFormula {
 	private static String mExample4 = "\\begin{array}{|c|c|c|c|}\n"
 	+ "\\multicolumn{4}{c}{\\shadowbox{\\text{\\Huge An image from the \\LaTeX3 project}}}\\cr\n"
 	+ "\\hline\n"
-	+ "\\text{Left}\\includegraphics{file:///android_asset/lion.png}\\text{Right} & \\text{Left}\\includegraphics[width=3cm,interpolation=bicubic]{file:///android_asset/lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=45,width=3cm]{file:///android_asset/lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=160]{file:///android_asset/lion.png}\\text{Right} \\cr\n"
+	+ "\\text{Left}\\includegraphics{lion.png}\\text{Right} & \\text{Left}\\includegraphics[width=3cm,interpolation=bicubic]{lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=45,width=3cm]{lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=160]{lion.png}\\text{Right} \\cr\n"
 	+ "\\hline\n"
-	+ "\\text{\\backslash includegraphics\\{file:///android_asset/lion.png\\}} & \\text{\\backslash includegraphics[width=3cm,interpolation=bicubic]\\{file:///android_asset/lion.png\\}} & \\text{\\backslash includegraphics[angle=45,width=3cm]\\{file:///android_asset/lion.png\\}} & \\text{\\backslash includegraphics[angle=160]\\{file:///android_asset/lion.png\\}}\\cr\n"
+	+ "\\text{\\backslash includegraphics\\{lion.png\\}} & \\text{\\backslash includegraphics[width=3cm,interpolation=bicubic]\\{lion.png\\}} & \\text{\\backslash includegraphics[angle=45,width=3cm]\\{lion.png\\}} & \\text{\\backslash includegraphics[angle=160]\\{lion.png\\}}\\cr\n"
 	+ "\\hline\n"
 	+ "\\end{array}\n";
 	

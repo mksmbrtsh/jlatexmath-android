@@ -3,6 +3,7 @@ package maximsblog.blogspot.com.jlatexmath;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import org.scilab.forge.jlatexmath.Insets;
@@ -11,10 +12,6 @@ import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
 import org.scilab.forge.jlatexmath.TeXFormula.TeXIconBuilder;
 import org.scilab.forge.jlatexmath.jLatexMath;
-
-
-
-
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -35,21 +32,27 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-public class ExampleActivity extends FragmentActivity implements OnPageChangeListener, OnClickListener {
+public class ExampleActivity extends FragmentActivity implements
+		OnPageChangeListener {
 
 	private ViewPager mPager;
 	private PagesAdapter mAdapter;
+	private String[] mExamples; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		jLatexMath.init(this);
+		mExamples = ExampleFormula.getFormulaArray();
+		File lion = moveLionFiletoCacheFile();
+		mExamples[3] = mExamples[3].replaceAll("lion.png", lion.getAbsolutePath());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new PagesAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mAdapter);
-		mPager.addOnPageChangeListener (this);
-		findViewById(R.id.save).setOnClickListener(this);
+		mPager.addOnPageChangeListener(this);
+		setTitle(getString(R.string.app_name) + ": Example" + 1);
+
 	}
 
 	private class PagesAdapter extends FragmentPagerAdapter {
@@ -60,12 +63,16 @@ public class ExampleActivity extends FragmentActivity implements OnPageChangeLis
 
 		@Override
 		public android.support.v4.app.Fragment getItem(int position) {
-			return ExampleFragment.newInstance(ExampleFormula.getFormulaArray()[position]);
+			int size = 20;
+			if(position == 3 || position == 6)
+				size = 10;
+			return ExampleFragment
+					.newInstance(mExamples[position], size, position );
 		}
 
 		@Override
 		public int getCount() {
-			return ExampleFormula.getFormulaArray().length;
+			return mExamples.length;
 		}
 
 	}
@@ -81,12 +88,36 @@ public class ExampleActivity extends FragmentActivity implements OnPageChangeLis
 	@Override
 	public void onPageSelected(int position) {
 		setTitle(getString(R.string.app_name) + ": Example" + (position + 1));
-		
+
 	}
 
-	@Override
-	public void onClick(View v) {
-		mPager.getCurrentItem();
+
+	public File moveLionFiletoCacheFile() {
+		File cacheFile = new File(getCacheDir(), "lion.png");
+		if (!cacheFile.exists()) {
+			try {
+				InputStream inputStream = getAssets().open("lion.png");
+				try {
+					FileOutputStream outputStream = new FileOutputStream(
+							cacheFile);
+					try {
+						byte[] buf = new byte[1024];
+						int len;
+						while ((len = inputStream.read(buf)) > 0) {
+							outputStream.write(buf, 0, len);
+						}
+					} finally {
+						outputStream.close();
+					}
+				} finally {
+					inputStream.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return cacheFile;
 	}
 
 }

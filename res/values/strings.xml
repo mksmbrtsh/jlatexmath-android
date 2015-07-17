@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">jLaTeXMath</string>
     <string name="save">Save pic</string>
+    <string name="saved">Saved:</string>
+    <string name="err">Error:</string>
 </resources>
