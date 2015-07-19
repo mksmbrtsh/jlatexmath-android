@@ -102,6 +102,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		int h = getResources().getDisplayMetrics().heightPixels;
 
 		Bitmap scaleimage = scaleBitmapAndKeepRation(mImage, h, w);
+		mImage.recycle();
 		mImageView.setImageBitmap(scaleimage);
 		/**/
 
@@ -119,6 +120,11 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 				TargetBmp.getWidth(), TargetBmp.getHeight(), m, true);
 		return scaledBitmap;
 	}
+	@Override
+	public void onDestroy() {
+		//mImage.recycle();
+		super.onDestroy();
+	};
 
 	@Override
 	public void onClick(View v) {

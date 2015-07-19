@@ -64,7 +64,7 @@ public class ExampleActivity extends FragmentActivity implements
 		@Override
 		public android.support.v4.app.Fragment getItem(int position) {
 			int size = 20;
-			if(position == 3 || position == 6)
+			if(position == 6)
 				size = 10;
 			return ExampleFragment
 					.newInstance(mExamples[position], size, position );
