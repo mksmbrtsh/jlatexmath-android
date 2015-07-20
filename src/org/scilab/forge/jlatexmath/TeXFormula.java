@@ -45,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
+
 import maximsblog.blogspot.com.jlatexmath.R;
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
@@ -55,6 +56,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.util.TypedValue;
 
 /**
  * Represents a logical mathematical formula that will be displayed (by creating
@@ -709,7 +711,7 @@ public class TeXFormula {
 		 * @return the builder, used for chaining
 		 */
 		public TeXIconBuilder setSize(final float size) {
-			this.size = size;
+			this.size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size / PIXELS_PER_POINT, jLatexMath.getContext().getResources().getDisplayMetrics());
 			return this;
 		}
 

@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -33,11 +34,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 public class ExampleActivity extends FragmentActivity implements
-		OnPageChangeListener {
+		OnPageChangeListener, OnClickListener {
 
 	private ViewPager mPager;
 	private PagesAdapter mAdapter;
-	private String[] mExamples; 
+	private String[] mExamples;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class ExampleActivity extends FragmentActivity implements
 		mPager.setAdapter(mAdapter);
 		mPager.addOnPageChangeListener(this);
 		setTitle(getString(R.string.app_name) + ": Example" + 1);
+		
 
 	}
 
@@ -63,11 +65,8 @@ public class ExampleActivity extends FragmentActivity implements
 
 		@Override
 		public android.support.v4.app.Fragment getItem(int position) {
-			int size = 20;
-			if(position == 6)
-				size = 10;
 			return ExampleFragment
-					.newInstance(mExamples[position], size, position );
+					.newInstance(mExamples[position], position );
 		}
 
 		@Override
@@ -118,6 +117,11 @@ public class ExampleActivity extends FragmentActivity implements
 			}
 		}
 		return cacheFile;
+	}
+
+	@Override
+	public void onClick(View v) {
+		mAdapter.notifyDataSetChanged();
 	}
 
 }

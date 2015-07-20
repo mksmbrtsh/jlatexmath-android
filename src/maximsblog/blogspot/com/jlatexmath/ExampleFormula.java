@@ -64,7 +64,7 @@ public class ExampleFormula {
 	+ "\\hline\n"
 	+ "\\end{array}\n";*/
 	
-	private static String mExample4 = "sin^2(x)+cos^2(x)=1";
+	private static String mExample4 = "sp";
 	
 	private static String mExample5 = "\\begin{array}{|c|l|||r|c|}"
 	+ "\\hline"
