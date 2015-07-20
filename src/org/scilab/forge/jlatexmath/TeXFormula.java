@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.Stack;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,8 +46,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
 
+import maximsblog.blogspot.com.jlatexmath.R;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -956,13 +959,25 @@ public class TeXFormula {
 
 		icon.setForeground(fg == null ? Color.BLACK : fg);
 		icon.paintIcon(g2, 0, 0);
-
-		/*
-		 * try { FileImageOutputStream imout = new FileImageOutputStream(new
-		 * File(out)); ImageIO.write(image, format, imout); imout.flush();
-		 * imout.close(); } catch (IOException ex) {
-		 * System.err.println("I/O error : Cannot generate " + out); }
-		 */
+		File file = new File(out);
+		Bitmap.CompressFormat formatBitmap = CompressFormat.PNG;
+		switch (format) {
+		case "png":
+			formatBitmap = CompressFormat.PNG; 
+			break;
+		case "jpeg":
+			formatBitmap = CompressFormat.JPEG;
+		case "webp":
+			formatBitmap = CompressFormat.WEBP;
+		}
+		try {
+			FileOutputStream imout = new FileOutputStream(file);
+			image.compress(formatBitmap, 90, imout);
+			imout.flush();
+			imout.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void createPNG(int style, float size, String out, Integer bg,
@@ -970,15 +985,13 @@ public class TeXFormula {
 		createImage("png", style, size, out, bg, fg, bg == null);
 	}
 
-	public void createGIF(int style, float size, String out, Integer bg,
+	public void createWEBP(int style, float size, String out, Integer bg,
 			Integer fg) {
-		createImage("gif", style, size, out, bg, fg, bg == null);
+		createImage("webp", style, size, out, bg, fg, bg == null);
 	}
 
 	public void createJPEG(int style, float size, String out, Integer bg,
 			Integer fg) {
-		// There is a bug when a BufferedImage has a component alpha so we
-		// disabel it
 		createImage("jpeg", style, size, out, bg, fg, false);
 	}
 
