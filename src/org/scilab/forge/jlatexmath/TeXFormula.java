@@ -45,8 +45,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
-
 import maximsblog.blogspot.com.jlatexmath.R;
+import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -942,8 +942,9 @@ public class TeXFormula {
 				.setInterLineSpacing(interlineUnit, interline).build();
 	}
 
-	public void createImage(String format, int style, float size, String out,
-			Integer bg, Integer fg, boolean transparency) {
+	public void createImage(Bitmap.CompressFormat format, int style,
+			float size, String out, Integer bg, Integer fg, boolean transparency)
+			throws IOException {
 		TeXIcon icon = createTeXIcon(style, size);
 		icon.setInsets(new Insets(1, 1, 1, 1));
 		int w = icon.getIconWidth(), h = icon.getIconHeight();
@@ -960,39 +961,27 @@ public class TeXFormula {
 		icon.setForeground(fg == null ? Color.BLACK : fg);
 		icon.paintIcon(g2, 0, 0);
 		File file = new File(out);
-		Bitmap.CompressFormat formatBitmap = CompressFormat.PNG;
-		switch (format) {
-		case "png":
-			formatBitmap = CompressFormat.PNG; 
-			break;
-		case "jpeg":
-			formatBitmap = CompressFormat.JPEG;
-		case "webp":
-			formatBitmap = CompressFormat.WEBP;
-		}
-		try {
-			FileOutputStream imout = new FileOutputStream(file);
-			image.compress(formatBitmap, 90, imout);
-			imout.flush();
-			imout.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		FileOutputStream imout = new FileOutputStream(file);
+		image.compress(format, 90, imout);
+		imout.flush();
+		imout.close();
 	}
 
 	public void createPNG(int style, float size, String out, Integer bg,
-			Integer fg) {
-		createImage("png", style, size, out, bg, fg, bg == null);
+			Integer fg) throws IOException {
+		createImage(Bitmap.CompressFormat.PNG, style, size, out, bg, fg,
+				bg == null);
 	}
 
+	@SuppressLint("NewApi")
 	public void createWEBP(int style, float size, String out, Integer bg,
-			Integer fg) {
-		createImage("webp", style, size, out, bg, fg, bg == null);
+			Integer fg) throws IOException {
+		createImage(Bitmap.CompressFormat.WEBP, style, size, out, bg, fg, bg == null);
 	}
 
 	public void createJPEG(int style, float size, String out, Integer bg,
-			Integer fg) {
-		createImage("jpeg", style, size, out, bg, fg, false);
+			Integer fg) throws IOException {
+		createImage(Bitmap.CompressFormat.JPEG, style, size, out, bg, fg, false);
 	}
 
 	/**
