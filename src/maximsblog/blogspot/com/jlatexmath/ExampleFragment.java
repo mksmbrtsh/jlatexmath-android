@@ -83,7 +83,6 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		mImageView = (ImageView) layout.findViewById(R.id.imageView1);
 		mSizeText = (EditText) layout.findViewById(R.id.size);
 		layout.findViewById(R.id.button1).setOnClickListener(this);
-		layout.findViewById(R.id.save).setOnClickListener(this);
 		setformula();
 
 		return layout;
@@ -95,7 +94,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		TeXFormula formula = new TeXFormula(mLatex);
 		TeXIcon icon = formula.new TeXIconBuilder()
 				.setStyle(TeXConstants.STYLE_DISPLAY).setSize(mTextSize)
-				.setWidth(TeXConstants.UNIT_CC, 1, TeXConstants.ALIGN_LEFT)
+				.setWidth(TeXConstants.UNIT_PIXEL, w/2, TeXConstants.ALIGN_LEFT).setIsMaxWidth(true)
 				.build();
 		icon.setInsets(new Insets(5, 5, 5, 5));
 
@@ -113,17 +112,11 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 	
 	public Bitmap scaleBitmapAndKeepRation(Bitmap targetBmp,
 			int reqHeightInPixels, int reqWidthInPixels) {
-		/*
-		 * if (targetBmp.getWidth() > reqWidthInPixels || targetBmp.getHeight()
-		 * > reqHeightInPixels) { Matrix m = new Matrix(); m.setRectToRect( new
-		 * RectF(0, 0, targetBmp.getWidth(), targetBmp.getHeight()), new
-		 * RectF(0, 0, reqWidthInPixels, reqHeightInPixels),
-		 * Matrix.ScaleToFit.CENTER); Bitmap scaledBitmap =
-		 * Bitmap.createBitmap(targetBmp, 0, 0, targetBmp.getWidth(),
-		 * targetBmp.getHeight(), m, true); mImage.recycle(); return
-		 * scaledBitmap; }
-		 */
-		return targetBmp;
+		Bitmap bitmap = Bitmap.createBitmap(reqWidthInPixels, reqHeightInPixels, Config.ARGB_8888);
+		Canvas g =new Canvas(bitmap);
+		g.drawBitmap(targetBmp, 0, 0, null);
+		targetBmp.recycle();
+		return bitmap;
 	}
 
 	@Override

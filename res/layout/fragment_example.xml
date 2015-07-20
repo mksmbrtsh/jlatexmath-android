@@ -87,11 +87,4 @@
         android:scaleType="matrix"
         android:background="@android:color/white" />
 
- <Button
-     android:id="@+id/save"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_alignParentBottom="true"
-     android:text="@string/save" />
-
 </LinearLayout>
