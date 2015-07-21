@@ -60,9 +60,9 @@ public class GeoGebraLogoBox extends Box {
 		st.setColor(gray);
 		st.setStrokeWidth(3.79999995f);
 		g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
-		g2.rotate((float) (-26 * Math.PI / 180), 20.5f, 17.5f);
+		g2.rotate((float) Math.toDegrees((-26 * Math.PI / 180)), 20.5f, 17.5f);
 		g2.drawArc(new RectF(0f, 0f, 43f, 32f), 0f, 360f, false, st);
-		g2.rotate((float) (26 * Math.PI / 180), 20.5f, 17.5f);
+		g2.rotate((float) Math.toDegrees((26 * Math.PI / 180)), 20.5f, 17.5f);
 		st.setStyle(Style.STROKE);
 		drawCircle(st, g2, 16f, -5f);
 		drawCircle(st, g2, -1f, 7f);

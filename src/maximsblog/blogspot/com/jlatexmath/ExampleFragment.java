@@ -94,7 +94,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		TeXFormula formula = new TeXFormula(mLatex);
 		TeXIcon icon = formula.new TeXIconBuilder()
 				.setStyle(TeXConstants.STYLE_DISPLAY).setSize(mTextSize)
-				.setWidth(TeXConstants.UNIT_PIXEL, w/2, TeXConstants.ALIGN_LEFT).setIsMaxWidth(true)
+				.setWidth(TeXConstants.UNIT_PIXEL, w, TeXConstants.ALIGN_LEFT).setIsMaxWidth(true).setInterLineSpacing(TeXConstants.UNIT_PIXEL, jLatexMath.getLeading(mTextSize))
 				.build();
 		icon.setInsets(new Insets(5, 5, 5, 5));
 

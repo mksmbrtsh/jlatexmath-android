@@ -91,7 +91,7 @@ public class OverUnderBox extends Box {
 		if (over) { // draw delimiter and script above base box
 			float transX = (float) (x + (del.height + del.depth) * 0.75), transY = yVar;
 			g2.translate(transX, transY);
-			g2.rotate((float) (Math.PI / 2));
+			g2.rotate((float) Math.toDegrees((Math.PI / 2)));
 			del.draw(g2, 0, 0);
 			g2.restore();
 			// draw superscript
@@ -104,7 +104,7 @@ public class OverUnderBox extends Box {
 		if (!over) { // draw delimiter and script under base box
 			float transX = (float) (x + (del.getHeight() + del.depth) * 0.75), transY = yVar;
 			g2.translate(transX, transY);
-			g2.rotate((float) (Math.PI / 2));
+			g2.rotate((float) Math.toDegrees((float) (Math.PI / 2)));
 			del.draw(g2, 0, 0);
 			g2.restore();
 			yVar += del.getWidth();

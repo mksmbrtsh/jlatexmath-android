@@ -55,16 +55,7 @@ public class ExampleFormula {
     + "\\rotatebox{30}{\\sum_{n=1}^{+\\infty}}\\quad\\mbox{Mirror rorriM}\\reflectbox{\\mbox{Mirror rorriM}}"
     + "\\end{array}";
 	
-/*	private static String mExample4 = "\\begin{array}{|c|c|c|c|}\n"
-	+ "\\multicolumn{4}{c}{\\shadowbox{\\text{\\Huge An image from the \\LaTeX3 project}}}\\cr\n"
-	+ "\\hline\n"
-	+ "\\text{Left}\\includegraphics{lion.png}\\text{Right} & \\text{Left}\\includegraphics[width=3cm,interpolation=bicubic]{lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=45,width=3cm]{lion.png}\\text{Right} & \\text{Left}\\includegraphics[angle=160]{lion.png}\\text{Right} \\cr\n"
-	+ "\\hline\n"
-	+ "\\text{\\backslash includegraphics\\{lion.png\\}} & \\text{\\backslash includegraphics[width=3cm,interpolation=bicubic]\\{lion.png\\}} & \\text{\\backslash includegraphics[angle=45,width=3cm]\\{lion.png\\}} & \\text{\\backslash includegraphics[angle=160]\\{lion.png\\}}\\cr\n"
-	+ "\\hline\n"
-	+ "\\end{array}\n";*/
-	
-	private static String mExample4 = "sp";
+	private static String mExample4 = "a \\slash b \\lambda c \u8855 d \\ominus e \\oplus f \\otimes g ⊗ a";
 	
 	private static String mExample5 = "\\begin{array}{|c|l|||r|c|}"
 	+ "\\hline"

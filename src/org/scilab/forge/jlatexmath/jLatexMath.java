@@ -17,6 +17,7 @@ public class jLatexMath {
 		st.setStyle(Style.FILL_AND_STROKE);
 		st.setColor(Color.BLACK);
 		st.setStrokeWidth(1);
+		new TeXFormula();
 	}
 
 	public static AssetManager getAssetManager() {
@@ -30,5 +31,10 @@ public class jLatexMath {
 
 	public static Paint getPaint() {
 		return st;
+	}
+	
+	public static float getLeading(float textSize){
+		st.setTextSize(textSize);
+		return st.getFontSpacing();
 	}
 }
