@@ -55,7 +55,7 @@ public class ExampleFormula {
     + "\\rotatebox{30}{\\sum_{n=1}^{+\\infty}}\\quad\\mbox{Mirror rorriM}\\reflectbox{\\mbox{Mirror rorriM}}"
     + "\\end{array}";
 	
-	private static String mExample4 = "a \\slash b \\lambda c \u8855 d \\ominus e \\oplus f \\otimes g ⊗ a";
+	private static String mExample4 = "\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{n} \\right)^n = e ";
 	
 	private static String mExample5 = "\\begin{array}{|c|l|||r|c|}"
 	+ "\\hline"
@@ -74,7 +74,7 @@ public class ExampleFormula {
 	
 	private static String mExample7 = "\\mbox{abc abc abc abc abc abc abc abc abc abc abc abc abc abc\\\\abc abc abc abc abc abc abc\\\\abc abc abc abc abc abc abc}\\\\1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1";
 	
-	private static String[] mFormulaArray = new String[] {mExample1,mExample2,mExample3,mExample4,mExample5,mExample6,mExample7};
+	private static String[] mFormulaArray = new String[] {"About", mExample1,mExample2,mExample3,mExample4,mExample5,mExample6,mExample7};
 	
 	public static String[] getFormulaArray(){
 		return mFormulaArray;

@@ -1,0 +1,6 @@
+Copyright (C) 2015 Maksim Bartosh <mksm.brtsh@gmail.com> 
+Copyright (C) 2009-2011 DENIZET Calixte
+Copyright (C) Kris Coolsaet
+Copyright (C) Nico Van Cleemput
+Copyright (C) Kurt Vermeulen
+Copyright 2004-2007 Universiteit Gent

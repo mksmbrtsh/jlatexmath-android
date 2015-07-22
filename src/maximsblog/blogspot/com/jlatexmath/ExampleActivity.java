@@ -46,13 +46,11 @@ public class ExampleActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 		jLatexMath.init(this);
 		mExamples = ExampleFormula.getFormulaArray();
-		File lion = moveLionFiletoCacheFile();
-		mExamples[3] = mExamples[3].replaceAll("lion.png", lion.getAbsolutePath());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new PagesAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mAdapter);
 		mPager.addOnPageChangeListener(this);
-		setTitle(getString(R.string.app_name) + ": Example" + 1);
+		setTitle(getString(R.string.app_name) + ": About");
 		
 
 	}
@@ -65,7 +63,10 @@ public class ExampleActivity extends FragmentActivity implements
 
 		@Override
 		public android.support.v4.app.Fragment getItem(int position) {
-			return ExampleFragment
+			if(position == 0)
+				return AboutFragment.newInstance();
+			else
+				return ExampleFragment
 					.newInstance(mExamples[position], position );
 		}
 
@@ -86,38 +87,10 @@ public class ExampleActivity extends FragmentActivity implements
 
 	@Override
 	public void onPageSelected(int position) {
-		setTitle(getString(R.string.app_name) + ": Example" + (position + 1));
+		setTitle(getString(R.string.app_name) + ": Example" + (position));
 
 	}
 
-
-	public File moveLionFiletoCacheFile() {
-		File cacheFile = new File(getCacheDir(), "lion.png");
-		if (!cacheFile.exists()) {
-			try {
-				InputStream inputStream = getAssets().open("lion.png");
-				try {
-					FileOutputStream outputStream = new FileOutputStream(
-							cacheFile);
-					try {
-						byte[] buf = new byte[1024];
-						int len;
-						while ((len = inputStream.read(buf)) > 0) {
-							outputStream.write(buf, 0, len);
-						}
-					} finally {
-						outputStream.close();
-					}
-				} finally {
-					inputStream.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		return cacheFile;
-	}
 
 	@Override
 	public void onClick(View v) {

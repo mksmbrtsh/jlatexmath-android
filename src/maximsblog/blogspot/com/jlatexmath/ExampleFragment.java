@@ -33,7 +33,8 @@ import android.widget.Toast;
 
 public class ExampleFragment extends Fragment implements OnClickListener {
 
-	public static android.support.v4.app.Fragment newInstance(String latex, int tag) {
+	public static android.support.v4.app.Fragment newInstance(String latex,
+			int tag) {
 		ExampleFragment fragment = new ExampleFragment();
 		fragment.setTag(tag);
 		fragment.setFormula(latex);
@@ -41,7 +42,6 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 	}
 
 	private ImageView mImageView;
-	Bitmap mImage;
 	private String mLatex;
 	private float mTextSize = 10;
 	private int mTag;
@@ -50,7 +50,6 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 	private void setFormula(String latex) {
 		mLatex = latex;
 	}
-
 
 	private void setTag(int tag) {
 		mTag = tag;
@@ -77,12 +76,12 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		LinearLayout layout = (LinearLayout) inflater.inflate(
 				R.layout.fragment_example, container, false);
-		mImageView = (ImageView) layout.findViewById(R.id.imageView1);
+		mImageView = (ImageView) layout.findViewById(R.id.logo);
 		mSizeText = (EditText) layout.findViewById(R.id.size);
-		layout.findViewById(R.id.button1).setOnClickListener(this);
+		layout.findViewById(R.id.set_textsize).setOnClickListener(this);
 		setformula();
 
 		return layout;
@@ -93,27 +92,31 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 		int h = getResources().getDisplayMetrics().heightPixels;
 		TeXFormula formula = new TeXFormula(mLatex);
 		TeXIcon icon = formula.new TeXIconBuilder()
-				.setStyle(TeXConstants.STYLE_DISPLAY).setSize(mTextSize)
-				.setWidth(TeXConstants.UNIT_PIXEL, w, TeXConstants.ALIGN_LEFT).setIsMaxWidth(true).setInterLineSpacing(TeXConstants.UNIT_PIXEL, jLatexMath.getLeading(mTextSize))
-				.build();
+				.setStyle(TeXConstants.STYLE_DISPLAY)
+				.setSize(mTextSize)
+				.setWidth(TeXConstants.UNIT_PIXEL, w, TeXConstants.ALIGN_LEFT)
+				.setIsMaxWidth(true)
+				.setInterLineSpacing(TeXConstants.UNIT_PIXEL,
+						jLatexMath.getLeading(mTextSize)).build();
 		icon.setInsets(new Insets(5, 5, 5, 5));
 
-		mImage = Bitmap.createBitmap(icon.getIconWidth(), icon.getIconHeight(),
+		Bitmap image = Bitmap.createBitmap(icon.getIconWidth(), icon.getIconHeight(),
 				Config.ARGB_8888);
 
-		Canvas g2 = new Canvas(mImage);
+		Canvas g2 = new Canvas(image);
 		g2.drawColor(Color.WHITE);
 		icon.paintIcon(g2, 0, 0);
 
-		Bitmap scaleimage = scaleBitmapAndKeepRation(mImage, h, w);
+		Bitmap scaleimage = scaleBitmapAndKeepRation(image, h, w);
 
 		mImageView.setImageBitmap(scaleimage);
 	}
-	
+
 	public Bitmap scaleBitmapAndKeepRation(Bitmap targetBmp,
 			int reqHeightInPixels, int reqWidthInPixels) {
-		Bitmap bitmap = Bitmap.createBitmap(reqWidthInPixels, reqHeightInPixels, Config.ARGB_8888);
-		Canvas g =new Canvas(bitmap);
+		Bitmap bitmap = Bitmap.createBitmap(reqWidthInPixels,
+				reqHeightInPixels, Config.ARGB_8888);
+		Canvas g = new Canvas(bitmap);
 		g.drawBitmap(targetBmp, 0, 0, null);
 		targetBmp.recycle();
 		return bitmap;
@@ -126,33 +129,9 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.button1) {
+		if (v.getId() == R.id.set_textsize) {
 			mTextSize = Integer.valueOf(mSizeText.getText().toString());
 			setformula();
-		} else {
-			File dir = getActivity().getExternalCacheDir();
-			String r;
-			if (dir != null) {
-				dir.mkdirs();
-				String fname = "Example" + (mTag + 1) + ".png";
-				File file = new File(dir, fname);
-				if (file.exists())
-					file.delete();
-
-				try {
-					FileOutputStream out = new FileOutputStream(file);
-					mImage.compress(Bitmap.CompressFormat.PNG, 90, out);
-					out.flush();
-					out.close();
-					r = getString(R.string.saved) + ' '
-							+ file.getAbsolutePath();
-				} catch (Exception e) {
-					e.printStackTrace();
-					r = getString(R.string.err) + ' ' + e.toString();
-				}
-			} else
-				r = getString(R.string.err);
-			Toast.makeText(getActivity(), r, Toast.LENGTH_LONG).show();
 		}
 	}
 }
