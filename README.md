@@ -2,8 +2,8 @@
 ![MainScreen](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141601.png)
 <br>Android JLaTeXMath Library - Displays LaTeX commands.
 ## About
-I find [this page!](http://forge.scilab.org/index.php/p/jlatexmath/page/GSOC-2014) and think, why not?
-Android JLaTeXMath is an fork with a lot of modifications to support [!jlatexmath](http://forge.scilab.org/index.php/p/jlatexmath) in Android OS.<br>
+I find [this page](http://forge.scilab.org/index.php/p/jlatexmath/page/GSOC-2014) and think, why not?
+Android JLaTeXMath is an fork with a lot of modifications to support [jlatexmath](http://forge.scilab.org/index.php/p/jlatexmath) in Android OS.<br>
 Minimal SDK is 9. Tested on Android 2.3.4, 4.4.4 and 5.0.1<br>
 © 2015 Maksim Bartosh <mksm.brtsh@gmail.com><br>
 See AUTHORS file for all contributors' information.
