@@ -31,11 +31,11 @@ g2.drawColor(Color.WHITE);
 icon.paintIcon(g2, 0, 0);
 ```
 ## Fealture
-1 support russian and greek fonts;
-2 Library create bitmaps. If bitmap draw in screen, then OS core may be throw exception Out of memory;
-3 Text size set in SP (look android docs);
-4 If InterLineSpacing setup, then formula may be create in multiline mode (Example7);
-5 Library support GraphicsBox, set absolutly path to file. Bitmap not scaled! OS core may be throw exception Out of memory.
+1. support russian and greek fonts;
+2. Library create bitmaps. If bitmap draw in screen, then OS core may be throw exception Out of memory;
+3. Text size set in SP (look android docs);
+4. If InterLineSpacing setup, then formula may be create in multiline mode (Example7);
+5. Library support GraphicsBox, set absolutly path to file. Bitmap not scaled! OS core may be throw exception Out of memory.
 ## Project base
 android-support-v4.jar not must field. You can delete this lib.
 ## Screenshots
