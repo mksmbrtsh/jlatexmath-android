@@ -1,5 +1,6 @@
 ## Android JLaTeXMath
 ![MainScreen](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141601.png)
+[google play test application](https://play.google.com/store/apps/details?id=maximsblog.blogspot.com.jlatexmath)
 <br>Android JLaTeXMath Library - Displays LaTeX commands.
 ## About
 I find [this page](http://forge.scilab.org/index.php/p/jlatexmath/page/GSOC-2014) and think, why not?<br>
