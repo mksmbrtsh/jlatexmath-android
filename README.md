@@ -4,7 +4,7 @@
 ## About
 I find [this page](http://forge.scilab.org/index.php/p/jlatexmath/page/GSOC-2014) and think, why not?<br>
 Android JLaTeXMath is an fork with a lot of modifications to support [jlatexmath](http://forge.scilab.org/index.php/p/jlatexmath) in Android OS.<br>
-Minimal SDK is 9. Tested on Android 2.3.4, 4.4.4 and 5.0.1<br>
+Minimal SDK is 9. Tested on Android 2.3.4, 4.0.2, 4.4.4 and 5.0.1<br>
 © 2015 Maksim Bartosh <mksm.brtsh@gmail.com><br>
 See AUTHORS file for all contributors' information.
 ## Usage
@@ -32,7 +32,7 @@ g2.drawColor(Color.WHITE);
 icon.paintIcon(g2, 0, 0);
 ```
 ## Fealture
-1. support russian and greek fonts;
+1. Support russian and greek fonts;
 2. Library create bitmaps. If bitmap draw in screen, then OS core may be throw exception Out of memory;
 3. Text size set in SP (look android docs);
 4. If InterLineSpacing setup, then formula may be create in multiline mode (Example7);
