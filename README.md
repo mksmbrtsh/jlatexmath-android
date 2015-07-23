@@ -36,6 +36,8 @@ icon.paintIcon(g2, 0, 0);
 3. Text size set in SP (look android docs);
 4. If InterLineSpacing setup, then formula may be create in multiline mode (Example7);
 5. Library support GraphicsBox, set absolutly path to file. Bitmap not scaled! OS core may be throw exception Out of memory.
+
+
 ## Project base
 android-support-v4.jar not must field. You can delete this lib.
 ## Screenshots
