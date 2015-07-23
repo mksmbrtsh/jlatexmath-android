@@ -3,10 +3,9 @@
     <string name="app_name">Android JLaTeXMath</string>
     <string name="about_text">
         Version 1.0\n\n
-        Ported by: <a href="mailto:mksmbtrsh@gmail.com">Maksim Bartosh</a>\n\n
-        
         Android JLaTeXMath Library - Displays LaTeX commands.\n
-Android JLaTeXMath is an fork with a lot of modifications to support this library in Android OS.\n\n
+        Ported by: <a href="mailto:mksmbtrsh@gmail.com">Maksim Bartosh</a>\n\n
+		Android JLaTeXMath is an fork with a lot of modifications to support this library in Android OS.\n\n
         
         <a href="https://github.com/mksmbrtsh/android-jlatexmath">Source Code in github</a>\n
         (Pull requests welcome :)\n\n

@@ -43,7 +43,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 
 	private ImageView mImageView;
 	private String mLatex;
-	private float mTextSize = 10;
+	private float mTextSize = 16;
 	private int mTag;
 	private EditText mSizeText;
 
