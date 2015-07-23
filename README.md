@@ -50,7 +50,7 @@ android-support-v4.jar not must field. You can delete this lib.
 ![Screen6](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141823.png)<br>
 ![Screen7](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141833.png)
 ### Examples
-```
+```jave
 private static String mExample1 = "\\begin{array}{lr}\\mbox{\\textcolor{Blue}{Russian}}&\\mbox{\\textcolor{Melon}{Greek}}\\\\"
 			+ "\\mbox{"
 			+ "привет мир".toUpperCase()
