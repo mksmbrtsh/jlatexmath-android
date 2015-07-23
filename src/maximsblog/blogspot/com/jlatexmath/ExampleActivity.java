@@ -87,7 +87,10 @@ public class ExampleActivity extends FragmentActivity implements
 
 	@Override
 	public void onPageSelected(int position) {
-		setTitle(getString(R.string.app_name) + ": Example" + (position));
+		if(position == 0)
+			setTitle(getString(R.string.app_name) + ": About");
+		else
+			setTitle(getString(R.string.app_name) + ": Example" + (position));
 
 	}
 

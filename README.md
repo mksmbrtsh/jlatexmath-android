@@ -2,7 +2,7 @@
 Android JLaTeXMath Library - Displays LaTeX commands.
 ### About
 Android JLaTeXMath is an fork with a lot of modifications to support JLaTeXMath library in Android OS.<br>
-Minimal SDK is 9. Tested on Android 2.3.6, 4.4, 5.0.1<br>
+Minimal SDK is 9. Tested on Android 2.3.4, 4.4, 5.0.1<br>
 © 2015 Maksim Bartosh <mksm.brtsh@gmail.com><br>
 See AUTHORS file for all contributors' information.
 ### Usage
