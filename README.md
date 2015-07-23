@@ -124,4 +124,4 @@ private static String mExample1 = "\\begin{array}{lr}\\mbox{\\textcolor{Blue}{Ru
 	
 	private static String mExample7 = "\\mbox{abc abc abc abc abc abc abc abc abc abc abc abc abc abc\\\\abc abc abc abc abc abc abc\\\\abc abc abc abc abc abc abc}\\\\1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1";
 ```
-See you again, dude 2015. 
+See you again, dude:) 2015. 
