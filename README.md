@@ -11,7 +11,7 @@ See AUTHORS file for all contributors' information.
 Assets not support in android library. This project is a skeleton application.<br>
 To used JLaTeXMath need init it by command:<br>
 ```java
-jLatexMath.init(Context context); \\ init library: load fonts, create paint, etc.
+jLatexMath.init(context); \\ init library: load fonts, create paint, etc.
 ```
 <br>To compilite math formula used TeXFormula class:<br>
 ```java
