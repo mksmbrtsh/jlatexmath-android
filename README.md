@@ -10,15 +10,15 @@ See AUTHORS file for all contributors' information.
 ## Usage
 Assets not support in android library. This project is a skeleton application.<br>
 To used JLaTeXMath need init it by command:<br>
-```
+```java
 jLatexMath.init(Context context); \\ init library: load fonts, create paint, etc.
 ```
 <br>To compilite math formula used TeXFormula class:<br>
-```
+```java
 TeXFormula formula = new TeXFormula(mLatex);
 ```
 <br>To create bitmap used TeXIcon class:<br>
-```
+```java
 TeXIcon icon = formula.new TeXIconBuilder()
 .setStyle(TeXConstants.STYLE_DISPLAY)
 .setSize(12)
