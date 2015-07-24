@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-import org.scilab.forge.jlatexmath.Insets;
-import org.scilab.forge.jlatexmath.TeXConstants;
-import org.scilab.forge.jlatexmath.TeXFormula;
-import org.scilab.forge.jlatexmath.TeXIcon;
-import org.scilab.forge.jlatexmath.TeXFormula.TeXIconBuilder;
-import org.scilab.forge.jlatexmath.jLatexMath;
-
+import maximsblog.blogspot.com.jlatexmath.core.Insets;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula.TeXIconBuilder;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -44,7 +43,7 @@ public class ExampleActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		jLatexMath.init(this);
+		AjLatexMath.init(this);
 		mExamples = ExampleFormula.getFormulaArray();
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new PagesAdapter(getSupportFragmentManager());

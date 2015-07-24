@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Random;
 
-import org.scilab.forge.jlatexmath.Insets;
-import org.scilab.forge.jlatexmath.TeXConstants;
-import org.scilab.forge.jlatexmath.TeXFormula;
-import org.scilab.forge.jlatexmath.TeXIcon;
-import org.scilab.forge.jlatexmath.jLatexMath;
-
+import maximsblog.blogspot.com.jlatexmath.core.Insets;
+import maximsblog.blogspot.com.jlatexmath.core.TeXConstants;
+import maximsblog.blogspot.com.jlatexmath.core.TeXFormula;
+import maximsblog.blogspot.com.jlatexmath.core.TeXIcon;
+import maximsblog.blogspot.com.jlatexmath.core.AjLatexMath;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -97,7 +96,7 @@ public class ExampleFragment extends Fragment implements OnClickListener {
 				.setWidth(TeXConstants.UNIT_PIXEL, w, TeXConstants.ALIGN_LEFT)
 				.setIsMaxWidth(true)
 				.setInterLineSpacing(TeXConstants.UNIT_PIXEL,
-						jLatexMath.getLeading(mTextSize)).build();
+						AjLatexMath.getLeading(mTextSize)).build();
 		icon.setInsets(new Insets(5, 5, 5, 5));
 
 		Bitmap image = Bitmap.createBitmap(icon.getIconWidth(), icon.getIconHeight(),
