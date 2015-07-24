@@ -16,7 +16,7 @@ AjLatexMath.init(context); \\ init library: load fonts, create paint, etc.
 ```
 <br>To compilite math formula used TeXFormula class:<br>
 ```java
-TeXFormula formula = new TeXFormula(mLatex);
+TeXFormula formula = new TeXFormula(formulaString);
 ```
 <br>To create bitmap used TeXIcon class:<br>
 ```java
