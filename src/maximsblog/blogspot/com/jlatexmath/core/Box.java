@@ -288,10 +288,9 @@ public abstract class Box {
 	protected void startDraw(Canvas g2, float x, float y) {
 		// old color
 		prevColor = AjLatexMath.getPaint().getColor();
-		if (background != null) { // draw background
+		if (background != null&& background != -1) { // draw background
 			AjLatexMath.getPaint().setColor(background);
-			// g2.fill(new Rectangle2D.Float(x, y - height, width, height +
-			// depth));
+			g2.drawRect(x, y, x+width, y-height + depth, AjLatexMath.getPaint());
 		}
 		if (foreground == null) {
 			AjLatexMath.getPaint().setColor(prevColor); // old foreground color
