@@ -21,6 +21,7 @@ public class ExampleFormula {
 			+ "&\\\\"
 			+ "\\mbox{\\textcolor{Turquoise}{Bielorussian}}&\\mbox{\\textcolor{LimeGreen}{Ukrainian}}\\\\"
 			+ "\\mbox{прывітаньне Свет}&\\mbox{привіт світ}\\\\"
+			+ "\\mbox{Исходный пересекаются}&\\mbox{проверка тся и сх}\\\\"
 			+ "\\end{array}";
 
 	private static String mExample2 = "\\begin{array}{l}"

@@ -76,12 +76,8 @@
    <Char code="1063" width="0.524996" height="0.611112" />
    <Char code="1056" width="0.524996" height="0.611112" />
    <Char code="1057" width="0.524996" height="0.611112" >
-      <Lig code="1061" ligCode="1064"/>
-      <Lig code="1093" ligCode="1064"/>
    </Char>
    <Char code="1058" width="0.524996" height="0.611112" >
-      <Lig code="1057" ligCode="1062"/>
-      <Lig code="1089" ligCode="1062"/>
    </Char>
    <Char code="1059" width="0.524996" height="0.611112" />
    <Char code="1042" width="0.524996" height="0.611112" />
@@ -137,10 +133,8 @@
    <Char code="1095" width="0.524996" height="0.430555" />
    <Char code="1088" width="0.524996" height="0.430555" depth="0.222223" />
    <Char code="1089" width="0.524996" height="0.430555" >
-      <Lig code="1093" ligCode="1096"/>
    </Char>
    <Char code="1090" width="0.524996" height="0.430555" >
-      <Lig code="1089" ligCode="1094"/>
    </Char>
    <Char code="1091" width="0.524996" height="0.430555" depth="0.222223" />
    <Char code="1074" width="0.524996" height="0.430555" />

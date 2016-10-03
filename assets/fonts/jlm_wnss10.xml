@@ -357,12 +357,8 @@
       <Kern code="1113" val="-0.083334"/>
    </Char>
    <Char code="1057" width="0.638891" height="0.694445" >
-      <Lig code="1061" ligCode="1064"/>
-      <Lig code="1093" ligCode="1064"/>
    </Char>
    <Char code="1058" width="0.680557" height="0.694445" >
-      <Lig code="1057" ligCode="1062"/>
-      <Lig code="1089" ligCode="1062"/>
       <Kern code="1040" val="-0.083334"/>
       <Kern code="1044" val="-0.083334"/>
       <Kern code="1051" val="-0.055555"/>
@@ -538,14 +534,12 @@
       <Kern code="1103" val="-0.027779"/>
    </Char>
    <Char code="1089" width="0.444446" height="0.444445" >
-      <Lig code="1093" ligCode="1096"/>
       <Kern code="1076" val="-0.027779"/>
       <Kern code="1078" val="-0.027779"/>
       <Kern code="1093" val="-0.027779"/>
       <Kern code="1103" val="-0.027779"/>
    </Char>
    <Char code="1090" width="0.458334" height="0.444445" italic="0.019444" >
-      <Lig code="1089" ligCode="1094"/>
       <Kern code="1076" val="-0.027779"/>
       <Kern code="1083" val="-0.027779"/>
       <Kern code="1113" val="-0.027779"/>
