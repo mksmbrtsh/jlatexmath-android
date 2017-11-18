@@ -1,7 +1,10 @@
 ## aJLaTeXMath
-![MainScreen](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141601.png)
-<br>[google play test application](https://play.google.com/store/apps/details?id=maximsblog.blogspot.com.jlatexmath)
-<br>aJLaTeXMath Library - Displays LaTeX commands.
+[![](https://owncloud.org/wp-content/themes/owncloudorgnew/assets/img/clients/buttons/googleplay.png)](https://play.google.com/store/apps/details?id=maximsblog.blogspot.com.jlatexmath)    
+aJLaTeXMath Library - Displays LaTeX commands.  
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Get%20jlatexmath-android%20170%20free%204&url=https://github.com/mksmbrtsh/jlatexmath-android&via=mksmbrtsh&hashtags=timestatistic,android,androidapp)  
+[![](https://upload.wikimedia.org/wikipedia/ru/d/d6/Sberbank.svg)](https://www.sberbank.ru/ru/person)  
+Russian bank card: 4817 7601 3803 3687
+![MainScreen](https://raw.githubusercontent.com/mksmbrtsh/jlatexmath-android/master/device-2015-07-23-141601.png)  
 ## About
 I find [this page](http://forge.scilab.org/index.php/p/jlatexmath/page/GSOC-2014) and think, why not?<br>
 aJLaTeXMath is an fork with a lot of modifications to support [jlatexmath](http://forge.scilab.org/index.php/p/jlatexmath) in Android OS.<br>
